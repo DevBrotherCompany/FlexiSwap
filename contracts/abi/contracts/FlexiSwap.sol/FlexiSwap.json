@@ -1,0 +1,362 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tradeId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "counterOfferIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "CounterOfferAccepted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "counterOfferer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "tradeId",
+        "type": "int256"
+      },
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "nftAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bool",
+                "name": "isEmptyToken",
+                "type": "bool"
+              }
+            ],
+            "internalType": "struct Item[]",
+            "name": "items",
+            "type": "tuple[]"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Offer",
+        "name": "counterOffer",
+        "type": "tuple"
+      }
+    ],
+    "name": "CounterOfferCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "accpter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "tradeId",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "offerIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "TradeAccepted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tradeId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "initiator",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bool",
+                    "name": "isEmptyToken",
+                    "type": "bool"
+                  }
+                ],
+                "internalType": "struct Item[]",
+                "name": "items",
+                "type": "tuple[]"
+              }
+            ],
+            "internalType": "struct Offer",
+            "name": "givings",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bool",
+                    "name": "isEmptyToken",
+                    "type": "bool"
+                  }
+                ],
+                "internalType": "struct Item[]",
+                "name": "items",
+                "type": "tuple[]"
+              }
+            ],
+            "internalType": "struct Offer[]",
+            "name": "receivings",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "offerer",
+                "type": "address"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "bool",
+                    "name": "isEmptyToken",
+                    "type": "bool"
+                  }
+                ],
+                "internalType": "struct Item[]",
+                "name": "items",
+                "type": "tuple[]"
+              }
+            ],
+            "internalType": "struct CounterOffer[]",
+            "name": "counterOffers",
+            "type": "tuple[]"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Trade",
+        "name": "trade",
+        "type": "tuple"
+      }
+    ],
+    "name": "TradeCreated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tradeId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "counterOfferIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "acceptCounterOffer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tradeId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "offerIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "acceptOffer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tradeId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "nftAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bool",
+                "name": "isEmptyToken",
+                "type": "bool"
+              }
+            ],
+            "internalType": "struct Item[]",
+            "name": "items",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Offer",
+        "name": "offer",
+        "type": "tuple"
+      }
+    ],
+    "name": "createCounterOffer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "nftAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bool",
+                "name": "isEmptyToken",
+                "type": "bool"
+              }
+            ],
+            "internalType": "struct Item[]",
+            "name": "items",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Offer",
+        "name": "givings",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "nftAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bool",
+                "name": "isEmptyToken",
+                "type": "bool"
+              }
+            ],
+            "internalType": "struct Item[]",
+            "name": "items",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Offer[]",
+        "name": "receivings",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "createTrade",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
