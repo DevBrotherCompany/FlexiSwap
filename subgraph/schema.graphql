@@ -1,6 +1,53 @@
-type ExampleEntity @entity {
-  id: ID!
-  count: BigInt!
-  tradeId: BigInt! # uint256
-  counterOfferIndex: BigInt! # uint256
+type GivingsOfferItem @entity(immutable: true) {
+  id: Bytes!
+  tokenAddress: Bytes!
+  tokenId: BigInt!
+  offer: GivingsOffer!
+}
+
+type GivingsOffer @entity(immutable: true) {
+  id: Bytes!
+  items: [GivingsOfferItem!]! @derivedFrom(field: "offer")
+  trade: Trade!
+}
+
+type ReceivingsOfferItem @entity(immutable: true) {
+  id: Bytes!
+  tokenAddress: Bytes!
+  tokenId: BigInt
+  offer: ReceivingsOffer!
+}
+
+type ReceivingsOffer @entity(immutable: true) {
+  id: Bytes!
+  items: [ReceivingsOfferItem!]! @derivedFrom(field: "offer")
+  trade: Trade!
+}
+
+type CounterOfferItem @entity(immutable: true) {
+  id: Bytes!
+  tokenAddress: Bytes!
+  tokenId: BigInt!
+  offer: CounterOffer!
+}
+
+type CounterOffer @entity(immutable: true) {
+  id: Bytes!
+  createdAt: Int!
+  offererAddress: Bytes!
+  items: [CounterOfferItem!]! @derivedFrom(field: "offer")
+  trade: Trade!
+}
+
+type Trade @entity {
+  id: Bytes!
+  createdAt: Int!
+  finishedAt: Int
+  initiatorAddress: Bytes!
+  givings: GivingsOffer! @derivedFrom(field: "trade")
+  receivings: [ReceivingsOffer!]! @derivedFrom(field: "trade")
+  counterOffers: [CounterOffer!]! @derivedFrom(field: "trade")
+  acceptedReceivingsOffer: ReceivingsOffer
+  acceptedCounterOffer: CounterOffer
+  counterAgentAddress: Bytes
 }
