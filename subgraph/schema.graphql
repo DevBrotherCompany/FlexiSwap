@@ -1,0 +1,6 @@
+type ExampleEntity @entity {
+  id: ID!
+  count: BigInt!
+  tradeId: BigInt! # uint256
+  counterOfferIndex: BigInt! # uint256
+}
