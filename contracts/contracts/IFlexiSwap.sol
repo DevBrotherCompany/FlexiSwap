@@ -29,8 +29,8 @@ interface IFlexiSwap {
 
     // mapping(uint => Trade) trades;
     event TradeCreated(uint256 tradeId, Trade trade);
-    event TradeAccepted(address accpter, int256 tradeId, uint256 offerIndex);
-    event CounterOfferCreated(address counterOfferer, int256 tradeId, Offer counterOffer);
+    event TradeAccepted(address accepter, int256 tradeId, uint256 offerIndex);
+    event CounterOfferCreated(address counterOfferer, uint256 tradeId, uint256 counterOfferIndex, Offer counterOffer);
     event CounterOfferAccepted(uint256 tradeId, uint256 counterOfferIndex);
 
     function createTrade(Offer memory givings, Offer[] memory receivings) external;

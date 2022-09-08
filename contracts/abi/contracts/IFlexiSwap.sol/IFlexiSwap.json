@@ -29,9 +29,15 @@
       },
       {
         "indexed": false,
-        "internalType": "int256",
+        "internalType": "uint256",
         "name": "tradeId",
-        "type": "int256"
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "counterOfferIndex",
+        "type": "uint256"
       },
       {
         "components": [
@@ -53,13 +59,13 @@
                 "type": "bool"
               }
             ],
-            "internalType": "struct Item[]",
+            "internalType": "struct IFlexiSwap.Item[]",
             "name": "items",
             "type": "tuple[]"
           }
         ],
         "indexed": false,
-        "internalType": "struct Offer",
+        "internalType": "struct IFlexiSwap.Offer",
         "name": "counterOffer",
         "type": "tuple"
       }
@@ -73,7 +79,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "accpter",
+        "name": "accepter",
         "type": "address"
       },
       {
@@ -128,12 +134,12 @@
                     "type": "bool"
                   }
                 ],
-                "internalType": "struct Item[]",
+                "internalType": "struct IFlexiSwap.Item[]",
                 "name": "items",
                 "type": "tuple[]"
               }
             ],
-            "internalType": "struct Offer",
+            "internalType": "struct IFlexiSwap.Offer",
             "name": "givings",
             "type": "tuple"
           },
@@ -157,12 +163,12 @@
                     "type": "bool"
                   }
                 ],
-                "internalType": "struct Item[]",
+                "internalType": "struct IFlexiSwap.Item[]",
                 "name": "items",
                 "type": "tuple[]"
               }
             ],
-            "internalType": "struct Offer[]",
+            "internalType": "struct IFlexiSwap.Offer[]",
             "name": "receivings",
             "type": "tuple[]"
           },
@@ -191,18 +197,18 @@
                     "type": "bool"
                   }
                 ],
-                "internalType": "struct Item[]",
+                "internalType": "struct IFlexiSwap.Item[]",
                 "name": "items",
                 "type": "tuple[]"
               }
             ],
-            "internalType": "struct CounterOffer[]",
+            "internalType": "struct IFlexiSwap.CounterOffer[]",
             "name": "counterOffers",
             "type": "tuple[]"
           }
         ],
         "indexed": false,
-        "internalType": "struct Trade",
+        "internalType": "struct IFlexiSwap.Trade",
         "name": "trade",
         "type": "tuple"
       }
@@ -273,12 +279,12 @@
                 "type": "bool"
               }
             ],
-            "internalType": "struct Item[]",
+            "internalType": "struct IFlexiSwap.Item[]",
             "name": "items",
             "type": "tuple[]"
           }
         ],
-        "internalType": "struct Offer",
+        "internalType": "struct IFlexiSwap.Offer",
         "name": "offer",
         "type": "tuple"
       }
@@ -310,12 +316,12 @@
                 "type": "bool"
               }
             ],
-            "internalType": "struct Item[]",
+            "internalType": "struct IFlexiSwap.Item[]",
             "name": "items",
             "type": "tuple[]"
           }
         ],
-        "internalType": "struct Offer",
+        "internalType": "struct IFlexiSwap.Offer",
         "name": "givings",
         "type": "tuple"
       },
@@ -339,12 +345,12 @@
                 "type": "bool"
               }
             ],
-            "internalType": "struct Item[]",
+            "internalType": "struct IFlexiSwap.Item[]",
             "name": "items",
             "type": "tuple[]"
           }
         ],
-        "internalType": "struct Offer[]",
+        "internalType": "struct IFlexiSwap.Offer[]",
         "name": "receivings",
         "type": "tuple[]"
       }
