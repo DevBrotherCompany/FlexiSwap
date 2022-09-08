@@ -1,38 +1,38 @@
 type GivingsOfferItem @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   tokenAddress: Bytes!
   tokenId: BigInt!
   offer: GivingsOffer!
 }
 
 type GivingsOffer @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   items: [GivingsOfferItem!]! @derivedFrom(field: "offer")
   trade: Trade!
 }
 
 type ReceivingsOfferItem @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   tokenAddress: Bytes!
   tokenId: BigInt
   offer: ReceivingsOffer!
 }
 
 type ReceivingsOffer @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   items: [ReceivingsOfferItem!]! @derivedFrom(field: "offer")
   trade: Trade!
 }
 
 type CounterOfferItem @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   tokenAddress: Bytes!
   tokenId: BigInt!
   offer: CounterOffer!
 }
 
 type CounterOffer @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   createdAt: Int!
   offererAddress: Bytes!
   items: [CounterOfferItem!]! @derivedFrom(field: "offer")
@@ -40,7 +40,7 @@ type CounterOffer @entity(immutable: true) {
 }
 
 type Trade @entity {
-  id: Bytes!
+  id: ID!
   createdAt: Int!
   finishedAt: Int
   initiatorAddress: Bytes!
