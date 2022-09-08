@@ -1,57 +1,57 @@
-import { BigInt } from "@graphprotocol/graph-ts"
 import {
-  FlexiSwap,
+  TradeCreated,
   CounterOfferAccepted,
   CounterOfferCreated,
   TradeAccepted,
-  TradeCreated
 } from "../generated/FlexiSwap/FlexiSwap"
-import { ExampleEntity } from "../generated/schema"
+import {
+  GivingsOffer,
+  GivingsOfferItem,
+  ReceivingsOffer,
+  ReceivingsOfferItem,
+  Trade,
+} from "../generated/schema"
 
-export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+export function handleTradeCreated(event: TradeCreated): void {
+  const tradeId = event.params.tradeId.toString();
+  const trade = new Trade(tradeId);
+  trade.createdAt = event.block.timestamp.toI32();
+  trade.initiatorAddress = event.params.trade.initiator;
+  trade.save();
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+  const givings = new GivingsOffer(trade.id);
+  givings.trade = trade.id;
+  givings.save();
 
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
+  for (let i = 0; i < event.params.trade.givings.items.length; i++) {
+    const itemId = trade.id + i.toString();
+    const item = new GivingsOfferItem(itemId);
+    item.tokenAddress = event.params.trade.givings.items[i].nftAddress;
+    item.tokenId = event.params.trade.givings.items[i].tokenId;
+    item.offer = givings.id;
+    item.save();
   }
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+  for (let i = 0; i < event.params.trade.receivings.length; i++) {
+    const receivingsId = event.params.tradeId.toString() + i.toString();
+    const receivings = new ReceivingsOffer(receivingsId);
+    receivings.trade = trade.id;
+    receivings.save();
 
-  // Entity fields can be set based on event parameters
-  entity.tradeId = event.params.tradeId
-  entity.counterOfferIndex = event.params.counterOfferIndex
-
-  // Entities can be written to the store with `.save()`
-  entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // None
+    for (let j = 0; j < event.params.trade.receivings[i].items.length; j++) {
+      const itemId = receivings.id + j.toString();
+      const item = new ReceivingsOfferItem(itemId);
+      item.tokenAddress = event.params.trade.receivings[i].items[j].nftAddress;
+      item.tokenId = event.params.trade.receivings[i].items[j].isEmptyToken
+        ? null
+        : event.params.trade.receivings[i].items[j].tokenId;
+      item.save();
+    }
+  }
 }
+
+export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {}
 
 export function handleCounterOfferCreated(event: CounterOfferCreated): void {}
 
 export function handleTradeAccepted(event: TradeAccepted): void {}
-
-export function handleTradeCreated(event: TradeCreated): void {}
