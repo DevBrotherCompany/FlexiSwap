@@ -1,0 +1,33 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FlexiSwap
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: FlexiSwap
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TradeCreated
+        - TradeAccepted
+        - CounterOfferCreated
+        - CounterOfferAccepted
+      abis:
+        - name: FlexiSwap
+          file: ../contracts/abi/contracts/FlexiSwap.sol/FlexiSwap.json
+      eventHandlers:
+        - event: TradeCreated(uint256,(address,((address,uint256,bool)[]),((address,uint256,bool)[])[],(address,(address,uint256,bool)[])[]))
+          handler: handleTradeCreated
+        - event: TradeAccepted(address,int256,uint256)
+          handler: handleTradeAccepted
+        - event: CounterOfferCreated(address,uint256,uint256,((address,uint256,bool)[]))
+          handler: handleCounterOfferCreated
+        - event: CounterOfferAccepted(uint256,uint256)
+          handler: handleCounterOfferAccepted
+      file: ./src/flexi-swap.ts
