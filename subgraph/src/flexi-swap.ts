@@ -78,4 +78,15 @@ export function handleCounterOfferCreated(event: CounterOfferCreated): void {
   }
 }
 
-export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {}
+export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {
+  const tradeId = event.params.tradeId.toString();
+  const offerId = tradeId + event.params.counterOfferIndex.toString();
+  const offer = CounterOffer.load(offerId);
+  if (!offer) return;
+
+  const trade = new Trade(tradeId);
+  trade.finishedAt = event.block.timestamp.toI32();
+  trade.acceptedCounterOffer = offer.id;
+  trade.counterAgentAddress = offer.offererAddress;
+  trade.save();
+}
