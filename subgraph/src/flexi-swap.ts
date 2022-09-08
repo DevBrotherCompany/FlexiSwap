@@ -4,7 +4,14 @@ import {
   TradeAccepted,
   TradeCreated,
 } from "../generated/FlexiSwap/FlexiSwap"
-import { GivingsOffer, GivingsOfferItem, ReceivingsOffer, ReceivingsOfferItem, Trade, } from "../generated/schema"
+import {
+  CounterOffer, CounterOfferItem,
+  GivingsOffer,
+  GivingsOfferItem,
+  ReceivingsOffer,
+  ReceivingsOfferItem,
+  Trade,
+} from "../generated/schema"
 
 export function handleTradeCreated(event: TradeCreated): void {
   const tradeId = event.params.tradeId.toString();
@@ -53,6 +60,22 @@ export function handleTradeAccepted(event: TradeAccepted): void {
   trade.save();
 }
 
-export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {}
+export function handleCounterOfferCreated(event: CounterOfferCreated): void {
+  const tradeId = event.params.tradeId.toString();
+  const offerId = tradeId + event.params.counterOfferIndex.toString();
+  const offer = new CounterOffer(offerId);
+  offer.offererAddress = event.params.counterOfferer;
+  offer.trade = tradeId;
+  offer.save();
 
-export function handleCounterOfferCreated(event: CounterOfferCreated): void {}
+  for (let i = 0; i < event.params.counterOffer.items.length; i++) {
+    const itemId = offer.id + i.toString();
+    const item = new CounterOfferItem(itemId);
+    item.tokenAddress = event.params.counterOffer.items[i].nftAddress;
+    item.tokenId = event.params.counterOffer.items[i].tokenId;
+    item.offer = offer.id;
+    item.save();
+  }
+}
+
+export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {}
