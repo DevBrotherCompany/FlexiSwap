@@ -1,16 +1,10 @@
 import {
-  TradeCreated,
   CounterOfferAccepted,
   CounterOfferCreated,
   TradeAccepted,
+  TradeCreated,
 } from "../generated/FlexiSwap/FlexiSwap"
-import {
-  GivingsOffer,
-  GivingsOfferItem,
-  ReceivingsOffer,
-  ReceivingsOfferItem,
-  Trade,
-} from "../generated/schema"
+import { GivingsOffer, GivingsOfferItem, ReceivingsOffer, ReceivingsOfferItem, Trade, } from "../generated/schema"
 
 export function handleTradeCreated(event: TradeCreated): void {
   const tradeId = event.params.tradeId.toString();
@@ -50,8 +44,15 @@ export function handleTradeCreated(event: TradeCreated): void {
   }
 }
 
+export function handleTradeAccepted(event: TradeAccepted): void {
+  const tradeId = event.params.tradeId.toString();
+  const trade = new Trade(tradeId);
+  trade.finishedAt = event.block.timestamp.toI32();
+  trade.acceptedReceivingsOffer = trade.id + event.params.offerIndex.toString();
+  trade.counterAgentAddress = event.params.accepter;
+  trade.save();
+}
+
 export function handleCounterOfferAccepted(event: CounterOfferAccepted): void {}
 
 export function handleCounterOfferCreated(event: CounterOfferCreated): void {}
-
-export function handleTradeAccepted(event: TradeAccepted): void {}
