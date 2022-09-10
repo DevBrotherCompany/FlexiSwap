@@ -18,7 +18,7 @@ export const TradesSidebar: React.FC = () => {
       <FlexiButton variant={"contained"}>Create trade</FlexiButton>
       <Subtitle className={classes.subtitle}>Marketplace</Subtitle>
       <SidebarList />
-      {isAuthenticated && (
+      {!isAuthenticated && (
         <div className={classes.connectWrapper}>
           <MetamaskButton className={classes.connect}>
             Connect wallet
