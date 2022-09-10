@@ -1,40 +1,20 @@
-import React, { PropsWithChildren, useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React, { PropsWithChildren, Suspense } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { UnLoggedInView } from "pages/UnLoggedInView/UnLoggedInView";
-import { useAuth } from "hooks";
-import { AppRouter } from "shared/AppRouter/AppRouter";
-import { FlexiButton } from "components/FlexiButton/FlexiButton";
-import { MetamaskButton } from "components/MetamaskButton/MetamaskButton";
+import { RouteName } from "shared/routes";
+
+const AllTrades = React.lazy(() => import("pages/AllTrades/AllTrades"));
+const MyTrades = React.lazy(() => import("pages/MyTrades/MyTrades"));
 
 export const AppLayout: React.FC<PropsWithChildren> = () => {
-  const { isAuthenticated } = useAuth();
-  const [loading, setLoading] = useState(false);
   return (
-    <>
-      <FlexiButton loading={loading} onClick={() => setLoading(true)}>
-        Press me
-      </FlexiButton>
-      <MetamaskButton onClick={() => setLoading(false)}>
-        Press me
-      </MetamaskButton>
+    <Suspense fallback={<h1>Loading...</h1>}>
       <Router>
-        {!isAuthenticated ? (
-          <div
-            style={{
-              width: "100vw",
-              height: "100vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <UnLoggedInView />
-          </div>
-        ) : (
-          <AppRouter />
-        )}
+        <Routes>
+          <Route path={RouteName.AllTrades} element={<AllTrades />} />
+          <Route path={RouteName.MyTrades} element={<MyTrades />} />
+        </Routes>
       </Router>
-    </>
+    </Suspense>
   );
 };
