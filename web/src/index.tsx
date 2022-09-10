@@ -5,16 +5,16 @@ import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 
 import App from "./components/App/App";
-import { Connector } from "./shared/Connector/Connector";
+import { Web3Connector } from "./shared/Web3Connector/Web3Connector";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Connector>
+    <Web3Connector>
       <App />
-    </Connector>
+    </Web3Connector>
   </React.StrictMode>
 );
 

@@ -14,22 +14,24 @@ const commonTheme = {
 export const darkTheme = createTheme({
   ...commonTheme,
   palette: {
-    // mode: "dark",
+    mode: "dark",
     primary: {
       main: "#F39C12",
+      contrastText: "#FDFFF9",
     },
     secondary: {
-      main: "#F39C12",
+      main: "#2F3237",
+      contrastText: "#D9D9D9",
     },
     background: {
-      default: "#F39C12",
-      paper: "#F39C12",
+      default: "#1C1F25",
+      paper: "#2F3237",
     },
     error: {
       main: "#F39C12",
     },
     text: {
-      primary: "rgba(20,19,19,0.87)",
+      primary: "#D9D9D9",
       secondary: "rgba(28,24,24,0.54)",
     },
   },

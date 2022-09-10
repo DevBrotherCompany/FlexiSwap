@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 
 import { ButtonProps } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -6,23 +6,17 @@ import LoadingButton from "@mui/lab/LoadingButton";
 export interface FlexiButtonProps extends ButtonProps {
   loading?: boolean;
   loadingPosition?: "start" | "end";
+  loadingIndicator?: ReactNode;
 }
 
-const FlexiButton: FC<FlexiButtonProps> = ({
+export const FlexiButton: FC<FlexiButtonProps> = ({
   children,
-  loadingPosition = "end",
   variant = "contained",
   ...props
 }) => {
   return (
-    <LoadingButton
-      {...props}
-      loadingPosition={loadingPosition}
-      variant={variant}
-    >
+    <LoadingButton {...props} variant={variant}>
       {children}
     </LoadingButton>
   );
 };
-
-export default FlexiButton;
