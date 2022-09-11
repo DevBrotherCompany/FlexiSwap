@@ -1,12 +1,13 @@
 import React, { memo } from "react";
 
-import { TradesSidebar } from "shared/TradesSidebar/TradesSidebar";
+import { TradesLayout } from "shared/TradesSidebar/TradesLayout";
+import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
 const AllTrades: React.FC = () => {
   return (
-    <>
-      <TradesSidebar />
-    </>
+    <TradesLayout>
+      <FlexiTitle>All trades</FlexiTitle>
+    </TradesLayout>
   );
 };
 

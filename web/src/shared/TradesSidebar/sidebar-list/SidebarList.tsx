@@ -22,7 +22,7 @@ export const SidebarList: React.FC<SidebarListProps> = () => {
   };
 
   return (
-    <List>
+    <List className={classes.list}>
       {list.map(({ title, link }) => (
         <ListItem key={title} className={classes.listItem}>
           <FlexiLink to={link} active={checkActive(link)}>

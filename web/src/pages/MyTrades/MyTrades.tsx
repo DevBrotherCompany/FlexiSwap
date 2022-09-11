@@ -1,8 +1,13 @@
 import React from "react";
-import { TradesSidebar } from "shared/TradesSidebar/TradesSidebar";
+import { TradesLayout } from "shared/TradesSidebar/TradesLayout";
+import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
 const MyTrades: React.FC = () => {
-  return <TradesSidebar />;
+  return (
+    <TradesLayout>
+      <FlexiTitle>My trades</FlexiTitle>
+    </TradesLayout>
+  );
 };
 
 export default MyTrades;
