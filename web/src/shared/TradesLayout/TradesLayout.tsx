@@ -5,13 +5,13 @@ import { AppBar, Toolbar } from "@mui/material";
 
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
 import { Sidebar } from "components/Sidebar/Sidebar";
-import { MetamaskButton } from "components/MetamaskButton/MetamaskButton";
 import { FlexiInput } from "components/FlexiInput/FlexiInput";
 
 import { useAuth } from "hooks";
 
 import { Subtitle } from "./text/Subtitle";
 import { SidebarList } from "./sidebar-list/SidebarList";
+import { ConnectWallet } from "./ConnectWallet/ConnectWallet";
 
 interface TradesLayoutProps extends PropsWithChildren {
   onSearchChange?: (value: string) => void;
@@ -22,7 +22,7 @@ export const TradesLayout: React.FC<TradesLayoutProps> = ({
   children,
 }) => {
   const classes = useTradesSidebarStyles();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange && onSearchChange(e.target.value);
@@ -43,16 +43,7 @@ export const TradesLayout: React.FC<TradesLayoutProps> = ({
         <FlexiButton variant={"contained"}>Create trade</FlexiButton>
         <Subtitle className={classes.subtitle}>Marketplace</Subtitle>
         <SidebarList />
-        {!isAuthenticated && (
-          <div className={classes.connectWrapper}>
-            <MetamaskButton
-              onClick={() => login({ signingMessage: "Hello from FlexiSwap!" })}
-              className={classes.connect}
-            >
-              Connect wallet
-            </MetamaskButton>
-          </div>
-        )}
+        {!isAuthenticated && <ConnectWallet />}
       </Sidebar>
       {children}
     </main>

@@ -5,6 +5,9 @@ import { RouteName } from "shared/routes";
 
 const AllTrades = React.lazy(() => import("pages/AllTrades/AllTrades"));
 const MyTrades = React.lazy(() => import("pages/MyTrades/MyTrades"));
+const MyCounteroffers = React.lazy(
+  () => import("pages/MyCounteroffers/MyCounteroffers")
+);
 
 export const AppLayout: React.FC<PropsWithChildren> = () => {
   return (
@@ -13,6 +16,10 @@ export const AppLayout: React.FC<PropsWithChildren> = () => {
         <Routes>
           <Route path={RouteName.AllTrades} element={<AllTrades />} />
           <Route path={RouteName.MyTrades} element={<MyTrades />} />
+          <Route
+            path={RouteName.MyCounterOffers}
+            element={<MyCounteroffers />}
+          />
         </Routes>
       </Router>
     </Suspense>

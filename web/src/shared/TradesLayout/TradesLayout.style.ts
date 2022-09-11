@@ -20,9 +20,4 @@ export const useTradesSidebarStyles = makeStyles((theme: Theme) => ({
   },
   input: { width: "100% !important" },
   subtitle: { marginTop: "30px !important" },
-  connectWrapper: {
-    position: "fixed",
-    bottom: "50px",
-  },
-  connect: { width: "100% !important" },
 }));

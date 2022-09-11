@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { TradesLayout } from "shared/TradesSidebar/TradesLayout";
+import { TradesLayout } from "shared/TradesLayout/TradesLayout";
 import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
 const AllTrades: React.FC = () => {
