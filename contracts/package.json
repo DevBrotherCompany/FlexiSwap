@@ -2,8 +2,12 @@
   "devDependencies": {
     "@defi-wonderland/smock": "^2.2.0",
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@nomiclabs/hardhat-ganache": "^2.0.1",
     "dotenv": "^16.0.2",
     "hardhat": "^2.11.1",
     "hardhat-abi-exporter": "^2.10.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3"
   }
 }
