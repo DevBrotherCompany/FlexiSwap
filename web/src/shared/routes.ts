@@ -1,5 +1,5 @@
 export const enum RouteName {
-  AllTrades = "/trades",
+  AllTrades = "/",
   MyTrades = "/my-trades",
   MyCounterOffers = "/my-counter-offers",
 }

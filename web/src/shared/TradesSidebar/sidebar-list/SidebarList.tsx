@@ -12,11 +12,20 @@ interface SidebarListProps {}
 export const SidebarList: React.FC<SidebarListProps> = () => {
   const classes = useSidebarListStyles();
   const { pathname } = useLocation();
+
+  const formatPath = (str: string) => str.split("/")[1];
+
+  const checkActive = (link: string) => {
+    return link === "/"
+      ? pathname === "/"
+      : formatPath(pathname).includes(formatPath(link));
+  };
+
   return (
     <List>
       {list.map(({ title, link }) => (
         <ListItem key={title} className={classes.listItem}>
-          <FlexiLink to={link} active={pathname.includes(link)}>
+          <FlexiLink to={link} active={checkActive(link)}>
             {title}
           </FlexiLink>
         </ListItem>
