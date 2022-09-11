@@ -23,7 +23,7 @@ export const FlexiButton: FC<FlexiButtonProps> = ({
   return (
     <LoadingButton
       {...props}
-      className={cn(className, { [classes.slim]: slim })}
+      className={cn(classes.btn, className, { [classes.slim]: slim })}
       variant={variant}
     >
       {children}

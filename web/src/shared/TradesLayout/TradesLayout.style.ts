@@ -6,11 +6,12 @@ export const headerHeight = 103;
 
 export const useTradesSidebarStyles = makeStyles((theme: Theme) => ({
   wrapper: {
-    paddingLeft: `${sidebarWidth + 10}px`,
+    paddingLeft: `${sidebarWidth + 45}px`,
     paddingTop: `${headerHeight + 22}px`,
+    paddingRight: "22px",
   },
   appbar: {
-    paddingLeft: `${sidebarWidth}px`,
+    paddingLeft: `${sidebarWidth + 21}px`,
     paddingTop: "23px",
     backgroundColor: `${theme.palette.background.default} !important`,
     height: `${headerHeight}px !important`,
