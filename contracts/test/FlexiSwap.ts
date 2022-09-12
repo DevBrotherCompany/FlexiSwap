@@ -274,5 +274,35 @@ describe("FlexiSwap contract", function () {
 				"InvalidTradeOffersItemNumber"
 			);
 		});
+
+		it("should revert if called by trade creator", async function () {
+			const { hardhatFlexiSwap, addr1, addr2 } = await loadFixture(
+				deployFlexiSwapFixture
+			);
+
+			const _tradeGivings: IFlexiSwap.ItemStruct[] = generateItems(2);
+
+			const _tradeReceivings: IFlexiSwap.ItemStruct[][] = [
+				generateItems(2),
+				generateItems(4),
+			];
+
+			await hardhatFlexiSwap
+				.connect(addr1)
+				.createTrade(_tradeGivings, _tradeReceivings);
+
+			const tradeId = 1;
+
+			const _counterOfferItems: IFlexiSwap.ItemStruct[] = generateItems(0);
+
+			const counterOfferCreated = hardhatFlexiSwap
+				.connect(addr1)
+				.createCounterOffer(tradeId, _counterOfferItems);
+
+			await expect(counterOfferCreated).to.be.revertedWithCustomError(
+				hardhatFlexiSwap,
+				"InvalidForTradeOwner"
+			);
+		});
 	});
 });
