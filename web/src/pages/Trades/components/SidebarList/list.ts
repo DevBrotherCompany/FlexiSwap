@@ -1,4 +1,4 @@
-import { RouteName } from "../../routes";
+import { RouteName } from "shared/routes";
 
 interface ISidebarItem {
   title: string;

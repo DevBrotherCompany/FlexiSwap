@@ -2,6 +2,8 @@ import React from "react";
 import { useNftListStyles } from "./NftList.style";
 
 import { INft } from "interfaces";
+import { useListInfo } from "./useListInfo";
+import { NftMoreBlock } from "../NftMoreBlock/NftMoreBlock";
 
 interface NftListProps {
   list: INft[];
@@ -9,7 +11,7 @@ interface NftListProps {
 
 export const NftList: React.FC<NftListProps> = ({ list }) => {
   const classes = useNftListStyles();
-  const displayItems = list.slice(0, 3);
+  const { displayItems, isMany, additionalCount } = useListInfo(list);
   return (
     <ul className={classes.list}>
       {displayItems.map((nft) => (
@@ -19,6 +21,7 @@ export const NftList: React.FC<NftListProps> = ({ list }) => {
           </p>
         </li>
       ))}
+      {isMany && <NftMoreBlock count={additionalCount} />}
     </ul>
   );
 };

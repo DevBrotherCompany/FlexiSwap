@@ -2,6 +2,7 @@ import React, { PropsWithChildren } from "react";
 
 import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { Style } from "styles/variables";
 
 import cn from "classnames";
 
@@ -10,7 +11,7 @@ export const useSubtitleStyles = makeStyles(() => ({
     fontWeight: "500 !important",
     fontSize: "14px !important",
     lineHeight: "17px !important",
-    color: "#696161",
+    color: Style.additionalBackground,
   },
 }));
 

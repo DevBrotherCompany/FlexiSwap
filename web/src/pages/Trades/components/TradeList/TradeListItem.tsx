@@ -14,6 +14,8 @@ interface TradeListItemProps {
 
 export const TradeListItem: React.FC<TradeListItemProps> = ({ item }) => {
   const { user, date, offer, counterOffer } = item;
+  const counterOffersCount = counterOffer.length - 1;
+  console.log("===counterOffer===", counterOffer);
   return (
     <>
       {/*TODO: make right calc of date of the start of trade*/}
@@ -28,6 +30,12 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({ item }) => {
         </Grid>
         <Grid item>
           <NftList list={counterOffer} />
+          {counterOffersCount > 0 && (
+            <p>
+              {counterOffersCount} more offer{counterOffersCount > 1 ? "s" : ""}
+              ...
+            </p>
+          )}
         </Grid>
       </Grid>
       <Grid container>

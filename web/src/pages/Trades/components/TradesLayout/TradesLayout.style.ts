@@ -1,6 +1,8 @@
 import { makeStyles } from "@mui/styles";
-import { sidebarWidth } from "components/Sidebar/Sidebar.style";
 import { Theme } from "@mui/material/styles";
+
+import { Style } from "styles/variables";
+import { sidebarWidth } from "components/Sidebar/Sidebar.style";
 
 export const headerHeight = 103;
 
@@ -16,7 +18,7 @@ export const useTradesSidebarStyles = makeStyles((theme: Theme) => ({
     backgroundColor: `${theme.palette.background.default} !important`,
     height: `${headerHeight}px !important`,
     backgroundImage: "none !important",
-    borderBottom: "1px solid #696161",
+    borderBottom: `1px solid ${Style.additionalBackground}`,
     opacity: ".6",
   },
   input: { width: "100% !important" },
