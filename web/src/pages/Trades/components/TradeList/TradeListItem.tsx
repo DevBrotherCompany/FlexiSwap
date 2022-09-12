@@ -3,9 +3,10 @@ import React from "react";
 import { Grid } from "@mui/material";
 
 import { ITrade } from "interfaces";
+import { FlexiButton } from "components/FlexiButton/FlexiButton";
+
 import { TradeHeader } from "../TradeHeader/TradeHeader";
 import { NftList } from "../NftList/NftList";
-import { FlexiButton } from "../../../../components/FlexiButton/FlexiButton";
 
 interface TradeListItemProps {
   item: ITrade;

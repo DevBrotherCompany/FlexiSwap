@@ -13,7 +13,7 @@ export const NftList: React.FC<NftListProps> = ({ list }) => {
   return (
     <ul className={classes.list}>
       {displayItems.map((nft) => (
-        <li className={classes.listItem}>
+        <li key={nft.id} className={classes.listItem}>
           <p className={classes.imgWrapper}>
             <img src={nft.img} alt={nft.name} className={classes.img} />
           </p>

@@ -1,7 +1,6 @@
 import { makeStyles } from "@mui/styles";
-import { Theme } from "@mui/material/styles";
 
-export const useNftListStyles = makeStyles((theme: Theme) => ({
+export const useNftListStyles = makeStyles(() => ({
   list: {
     display: "flex",
     alignItems: "center",
