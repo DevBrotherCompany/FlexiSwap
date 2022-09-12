@@ -1,24 +1,12 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
-// hierarchy of structs
-// Trade => [Offer]
-
 interface IFlexiSwap {
     struct Trade {
         address initiator;
-        Offer givings;
-        Offer[] receivings;
-        CounterOffer[] counterOffers;
-    }
-
-    struct Offer {
-        Item[] items;
-    }
-
-    struct CounterOffer {
-        address  offerer;
-        Item[] items;
+        uint256 givingsId;
+        uint256[] receivingsIds;
+        uint256[] counterOffersIds;
     }
 
     struct Item {
@@ -27,17 +15,36 @@ interface IFlexiSwap {
         bool isEmptyToken;
     }
 
-    // mapping(uint => Trade) trades;
-    event TradeCreated(uint256 tradeId, Trade trade);
-    event TradeAccepted(address accepter, int256 tradeId, uint256 offerIndex);
-    event CounterOfferCreated(address counterOfferer, uint256 tradeId, uint256 counterOfferIndex, Offer counterOffer);
-    event CounterOfferAccepted(uint256 tradeId, uint256 counterOfferIndex);
+    error TradeDoesNotExist(uint256 tradeId);
+    error OfferDoesNotExist(uint256 tradeId, uint256 itemsId);
+    error CounterOfferDoesNotExist(uint256 tradeId, uint256 itemsId);
+    error InvalidTradeOffersNumber();
+    error InvalidTradeOffersItemNumber();
+    error TradeOwnerOnly();
+    error InvalidForTradeOwner();
 
-    function createTrade(Offer memory givings, Offer[] memory receivings) external;
+    event TradeCreated(
+        uint256 tradeId,
+        Trade trade,
+        Item[] givings,
+        Item[][] receivings
+    );
+    event TradeAccepted(address accepter, int256 tradeId, uint256 itemsId);
+    event CounterOfferCreated(
+        address counterOfferer,
+        uint256 tradeId,
+        uint256 itemsId,
+        Item[] offerItems
+    );
+    event CounterOfferAccepted(uint256 tradeId, uint256 itemsId);
 
-    function acceptOffer(uint256 tradeId, uint256 offerIndex) external;
+    function createTrade(Item[] memory _givings, Item[][] memory _receivings)
+        external;
 
-    function createCounterOffer(uint256 tradeId, Offer memory offer) external;
+    function acceptOffer(uint256 _tradeId, uint256 _itemsId) external;
 
-    function acceptCounterOffer(uint256 tradeId, uint256 counterOfferIndex) external;
+    function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)
+        external;
+
+    function acceptCounterOffer(uint256 _tradeId, uint256 _itemsId) external;
 }
