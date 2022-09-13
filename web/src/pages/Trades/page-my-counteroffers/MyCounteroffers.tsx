@@ -1,7 +1,7 @@
 import React from "react";
 
 import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
-import { TradesLayout } from "shared/TradesLayout/TradesLayout";
+import { TradesLayout } from "../components/TradesLayout/TradesLayout";
 
 const MyCounteroffers: React.FC = () => {
   return (

@@ -19,7 +19,7 @@ export const TradeHeader: React.FC<TradeHeaderProps> = ({
       <Grid item>
         <UserName>{userName}</UserName> <WalletAddress>{address}</WalletAddress>
       </Grid>
-      <Grid item>{tradeDate} days ago</Grid>
+      <Grid item>{tradeDate}</Grid>
     </Grid>
   );
 };

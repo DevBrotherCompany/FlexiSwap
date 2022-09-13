@@ -10,3 +10,16 @@ export interface ITrade {
   offer: INft[];
   counterOffer: INft[];
 }
+
+// export interface ITrade1 {
+//   id: ID
+//   createdAt: Int!
+//   finishedAt: Int
+//   initiatorAddress: Bytes!
+//   givings: GivingsOffer! @derivedFrom(field: "trade")
+//   receivings: [ReceivingsOffer!]! @derivedFrom(field: "trade")
+//   counterOffers: [CounterOffer!]! @derivedFrom(field: "trade")
+//   acceptedReceivingsOffer: ReceivingsOffer
+//   acceptedCounterOffer: CounterOffer
+//   counterAgentAddress: Bytes
+// }

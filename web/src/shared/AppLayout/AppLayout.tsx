@@ -3,10 +3,14 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { RouteName } from "shared/routes";
 
-const AllTrades = React.lazy(() => import("pages/AllTrades/AllTrades"));
-const MyTrades = React.lazy(() => import("pages/MyTrades/MyTrades"));
+const AllTrades = React.lazy(
+  () => import("pages/Trades/page-all-trades/AllTrades")
+);
+const MyTrades = React.lazy(
+  () => import("pages/Trades/page-my-trades/MyTrades")
+);
 const MyCounteroffers = React.lazy(
-  () => import("pages/MyCounteroffers/MyCounteroffers")
+  () => import("pages/Trades/page-my-counteroffers/MyCounteroffers")
 );
 
 export const AppLayout: React.FC<PropsWithChildren> = () => {

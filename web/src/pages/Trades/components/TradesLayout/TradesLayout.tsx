@@ -9,9 +9,9 @@ import { FlexiInput } from "components/FlexiInput/FlexiInput";
 
 import { useAuth } from "hooks";
 
-import { Subtitle } from "./text/Subtitle";
-import { SidebarList } from "./sidebar-list/SidebarList";
-import { ConnectWallet } from "./ConnectWallet/ConnectWallet";
+import { Subtitle } from "../Text/Subtitle";
+import { SidebarList } from "../SidebarList/SidebarList";
+import { ConnectWallet } from "../ConnectWallet/ConnectWallet";
 
 interface TradesLayoutProps extends PropsWithChildren {
   onSearchChange?: (value: string) => void;

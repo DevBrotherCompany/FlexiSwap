@@ -1,10 +1,9 @@
 import React from "react";
 
-import { TradesLayout } from "shared/TradesLayout/TradesLayout";
-
 import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
-import { TradeList } from "./components/TradeList/TradeList";
+import { TradesLayout } from "../components/TradesLayout/TradesLayout";
+import { TradeList } from "../components/TradeList/TradeList";
 
 import { trades } from "MOCK";
 

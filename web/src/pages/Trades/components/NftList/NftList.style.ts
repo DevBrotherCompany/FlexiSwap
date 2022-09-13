@@ -1,7 +1,6 @@
 import { makeStyles } from "@mui/styles";
-import { Theme } from "@mui/material/styles";
 
-export const useNftListStyles = makeStyles((theme: Theme) => ({
+export const useNftListStyles = makeStyles(() => ({
   list: {
     display: "flex",
     alignItems: "center",
@@ -14,6 +13,11 @@ export const useNftListStyles = makeStyles((theme: Theme) => ({
   imgWrapper: {
     width: "100px",
     height: "100px",
+    transition: ".3s all",
+    cursor: "pointer",
+    "&:hover": {
+      transform: "scale(1.2)",
+    },
   },
   img: {
     width: "100%",
