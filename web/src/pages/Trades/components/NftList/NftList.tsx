@@ -21,7 +21,14 @@ export const NftList: React.FC<NftListProps> = ({ list }) => {
           </p>
         </li>
       ))}
-      {isMany && <NftMoreBlock count={additionalCount} />}
+      {isMany && (
+        <li className={classes.listItem}>
+          <NftMoreBlock count={additionalCount} />
+        </li>
+      )}
+      {/*<li className={classes.listItem}>*/}
+      {/*  <NftCollectionBlock />*/}
+      {/*</li>*/}
     </ul>
   );
 };

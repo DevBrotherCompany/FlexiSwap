@@ -13,6 +13,11 @@ export const useNftListStyles = makeStyles(() => ({
   imgWrapper: {
     width: "100px",
     height: "100px",
+    transition: ".3s all",
+    cursor: "pointer",
+    "&:hover": {
+      transform: "scale(1.2)",
+    },
   },
   img: {
     width: "100%",
