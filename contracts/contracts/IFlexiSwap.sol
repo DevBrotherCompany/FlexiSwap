@@ -6,7 +6,7 @@ interface IFlexiSwap {
         address initiator;
         uint256 givingsId;
         uint256[] receivingsIds;
-        uint256[] counterOffersIds;
+        uint256[] counterOfferItemsIds;
     }
 
     struct Item {
@@ -18,6 +18,10 @@ interface IFlexiSwap {
     error TradeDoesNotExist(uint256 tradeId);
     error OfferDoesNotExist(uint256 tradeId, uint256 itemsId);
     error CounterOfferDoesNotExist(uint256 tradeId, uint256 itemsId);
+    error CounterOfferAlreadyExists(
+        uint256 tradeId,
+        uint256 counterOfferItemsId
+    );
     error InvalidTradeOffersNumber();
     error InvalidTradeOffersItemNumber();
     error TradeOwnerOnly();

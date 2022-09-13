@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { FlexiSwap, FlexiSwap__factory, IFlexiSwap } from "../typechain-types";
+import { FlexiSwap__factory, IFlexiSwap } from "../typechain-types";
 
 function generateItems(itemsCount: number): IFlexiSwap.ItemStruct[] {
 	let items: IFlexiSwap.ItemStruct[] = [];
@@ -293,7 +293,7 @@ describe("FlexiSwap contract", function () {
 
 			const tradeId = 1;
 
-			const _counterOfferItems: IFlexiSwap.ItemStruct[] = generateItems(0);
+			const _counterOfferItems: IFlexiSwap.ItemStruct[] = generateItems(2);
 
 			const counterOfferCreated = hardhatFlexiSwap
 				.connect(addr1)
@@ -302,6 +302,40 @@ describe("FlexiSwap contract", function () {
 			await expect(counterOfferCreated).to.be.revertedWithCustomError(
 				hardhatFlexiSwap,
 				"InvalidForTradeOwner"
+			);
+		});
+
+		it("should revert if called twice by the same user", async function () {
+			const { hardhatFlexiSwap, addr1, addr2 } = await loadFixture(
+				deployFlexiSwapFixture
+			);
+
+			const _tradeGivings: IFlexiSwap.ItemStruct[] = generateItems(2);
+
+			const _tradeReceivings: IFlexiSwap.ItemStruct[][] = [
+				generateItems(2),
+				generateItems(4),
+			];
+
+			await hardhatFlexiSwap
+				.connect(addr1)
+				.createTrade(_tradeGivings, _tradeReceivings);
+
+			const tradeId = 1;
+
+			const _counterOfferItems: IFlexiSwap.ItemStruct[] = generateItems(2);
+
+			await hardhatFlexiSwap
+				.connect(addr2)
+				.createCounterOffer(tradeId, _counterOfferItems);
+
+			const counterOfferCreated = hardhatFlexiSwap
+				.connect(addr2)
+				.createCounterOffer(tradeId, _counterOfferItems);
+
+			await expect(counterOfferCreated).to.be.revertedWithCustomError(
+				hardhatFlexiSwap,
+				"CounterOfferAlreadyExists"
 			);
 		});
 	});

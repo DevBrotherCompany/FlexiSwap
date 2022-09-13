@@ -8,6 +8,22 @@
       },
       {
         "internalType": "uint256",
+        "name": "counterOfferItemsId",
+        "type": "uint256"
+      }
+    ],
+    "name": "CounterOfferAlreadyExists",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tradeId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "itemsId",
         "type": "uint256"
       }
@@ -182,7 +198,7 @@
           },
           {
             "internalType": "uint256[]",
-            "name": "counterOffersIds",
+            "name": "counterOfferItemsIds",
             "type": "uint256[]"
           }
         ],
