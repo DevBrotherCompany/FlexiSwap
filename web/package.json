@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/lab": "^5.0.0-alpha.98",
@@ -16,6 +17,7 @@
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "classnames": "^2.3.1",
+    "graphql": "^16.6.0",
     "moralis": "^2.3.1",
     "moralis-v1": "^1.11.0",
     "node-sass": "^7.0.1",

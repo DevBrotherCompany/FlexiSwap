@@ -2,19 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
 
+import { ApolloProvider } from "@apollo/client";
 import reportWebVitals from "./reportWebVitals";
 
-import App from "./components/App/App";
+import { apolloClient } from "./graphql";
 import { Web3Connector } from "./shared/Web3Connector/Web3Connector";
+
+import App from "./components/App/App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <Web3Connector>
-      <App />
-    </Web3Connector>
+    <ApolloProvider client={apolloClient}>
+      <Web3Connector>
+        <App />
+      </Web3Connector>
+    </ApolloProvider>
   </React.StrictMode>
 );
 
