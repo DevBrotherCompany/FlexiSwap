@@ -1,26 +1,44 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
+import "./FlexiSwapValidator.sol";
+import "./FlexiSwapCore.sol";
 import "./IFlexiSwap.sol";
 
-contract FlexiSwap is IFlexiSwap {
+contract FlexiSwap is FlexiSwapValidator {
     constructor() {
         // constructor
     }
 
-    function createTrade(Offer memory givings, Offer[] memory receivings) external  {
-        revert("Not implemented");
+    function createTrade(Item[] memory _givings, Item[][] memory _receivings)
+        public
+        virtual
+        override
+    {
+        super.createTrade(_givings, _receivings);
     }
 
-    function acceptOffer(uint256 tradeId, uint256 offerIndex) external override {
-        revert("Not implemented");
+    function acceptOffer(uint256 _tradeId, uint256 _itemsId)
+        public
+        virtual
+        override
+    {
+        super.acceptOffer(_tradeId, _itemsId);
     }
 
-    function createCounterOffer(uint256 tradeId, Offer memory offer) external override {
-        revert("Not implemented");
+    function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)
+        public
+        virtual
+        override
+    {
+        super.createCounterOffer(_tradeId, _offerItems);
     }
 
-    function acceptCounterOffer(uint256 tradeId, uint256 counterOfferIndex) external override {
-        revert("Not implemented");
+    function acceptCounterOffer(uint256 _tradeId, uint256 _itemsId)
+        public
+        virtual
+        override
+    {
+        super.acceptCounterOffer(_tradeId, _itemsId);
     }
 }
