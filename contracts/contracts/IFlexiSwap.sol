@@ -33,7 +33,7 @@ interface IFlexiSwap {
         Item[] givings,
         Item[][] receivings
     );
-    event TradeAccepted(address accepter, int256 tradeId, uint256 itemsId);
+    event TradeAccepted(address accepter, uint256 tradeId, uint256 itemsId);
     event CounterOfferCreated(
         address counterOfferer,
         uint256 tradeId,
