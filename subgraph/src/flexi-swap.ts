@@ -63,18 +63,18 @@ export function handleTradeAccepted(event: TradeAccepted): void {
 }
 
 export function handleCounterOfferCreated(event: CounterOfferCreated): void {
-  const tradeId = event.params.tradeId.toString();
-  const offerId = tradeId + event.params.counterOfferIndex.toString();
-  const offer = new CounterOffer(offerId);
+  const flexiSwap = FlexiSwap.bind(event.address);
+
+  const offer = new CounterOffer(event.params.itemsId.toString());
   offer.offererAddress = event.params.counterOfferer;
-  offer.trade = tradeId;
+  offer.trade = event.params.tradeId.toString();
   offer.save();
 
-  for (let i = 0; i < event.params.counterOffer.items.length; i++) {
-    const itemId = offer.id + i.toString();
-    const item = new CounterOfferItem(itemId);
-    item.tokenAddress = event.params.counterOffer.items[i].nftAddress;
-    item.tokenId = event.params.counterOffer.items[i].tokenId;
+  const items = flexiSwap.items(event.params.itemsId);
+  for (let i = 0; i < items.length; i++) {
+    const item = new CounterOfferItem(offer.id + i.toString());
+    item.tokenAddress = items[i].nftAddress;
+    item.tokenId = items[i].tokenId;
     item.offer = offer.id;
     item.save();
   }
