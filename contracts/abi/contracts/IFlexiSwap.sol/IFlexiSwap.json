@@ -117,29 +117,6 @@
         "internalType": "uint256",
         "name": "itemsId",
         "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEmptyToken",
-            "type": "bool"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IFlexiSwap.Item[]",
-        "name": "offerItems",
-        "type": "tuple[]"
       }
     ],
     "name": "CounterOfferCreated",

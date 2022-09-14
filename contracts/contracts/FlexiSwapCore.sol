@@ -96,8 +96,7 @@ contract FlexiSwapCore is IFlexiSwap {
         emit CounterOfferCreated(
             msg.sender,
             _tradeId,
-            counterOfferItemsId,
-            _offerItems
+            counterOfferItemsId
         );
     }
 
