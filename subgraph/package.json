@@ -2,7 +2,7 @@
   "name": "@flexiswap/subgraph",
   "license": "MIT",
   "scripts": {
-    "prepare:rinkeby": "npx mustache config/rinkeby.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:rinkeby": "node ./scripts/make-flexi-swap-abi.js && npx mustache config/rinkeby.json subgraph.yaml.mustache > subgraph.yaml",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ flexiswap",
@@ -16,6 +16,7 @@
     "@graphprotocol/graph-ts": "0.27.0"
   },
   "devDependencies": {
+    "@types/node": "^18.7.18",
     "matchstick-as": "0.5.0",
     "mustache": "^4.2.0"
   }

@@ -20,13 +20,13 @@ dataSources:
         - CounterOfferAccepted
       abis:
         - name: FlexiSwap
-          file: ../contracts/abi/contracts/FlexiSwap.sol/FlexiSwap.json
+          file: abi/FlexiSwap.json
       eventHandlers:
-        - event: TradeCreated(uint256,(address,((address,uint256,bool)[]),((address,uint256,bool)[])[],(address,(address,uint256,bool)[])[]))
+        - event: TradeCreated(uint256,(address,uint256,uint256[],uint256[]))
           handler: handleTradeCreated
-        - event: TradeAccepted(address,int256,uint256)
+        - event: TradeAccepted(address,uint256,uint256)
           handler: handleTradeAccepted
-        - event: CounterOfferCreated(address,uint256,uint256,((address,uint256,bool)[]))
+        - event: CounterOfferCreated(address,uint256,uint256)
           handler: handleCounterOfferCreated
         - event: CounterOfferAccepted(uint256,uint256)
           handler: handleCounterOfferAccepted
