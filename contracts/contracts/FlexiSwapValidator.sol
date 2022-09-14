@@ -11,14 +11,14 @@ contract FlexiSwapValidator is FlexiSwapCore {
     }
 
     modifier tradeExists(uint256 tradeId) {
-        if (trades[tradeId].initiator == address(0)) {
+        if (_trades[tradeId].initiator == address(0)) {
             revert TradeDoesNotExist(tradeId);
         }
         _;
     }
 
     modifier offerExists(uint256 tradeId, uint256 itemsId) {
-        Trade memory trade = trades[tradeId];
+        Trade memory trade = _trades[tradeId];
         for (uint256 i = 0; i < trade.receivingsIds.length; i++) {
             if (trade.receivingsIds[i] == itemsId) {
                 _;
@@ -30,7 +30,7 @@ contract FlexiSwapValidator is FlexiSwapCore {
     }
 
     modifier counterOfferExists(uint256 tradeId, uint256 itemsId) {
-        Trade memory trade = trades[tradeId];
+        Trade memory trade = _trades[tradeId];
         for (uint256 i = 0; i < trade.counterOfferItemsIds.length; i++) {
             if (trade.counterOfferItemsIds[i] == itemsId) {
                 _;
@@ -73,24 +73,24 @@ contract FlexiSwapValidator is FlexiSwapCore {
     }
 
     modifier notTradeOwner(uint256 tradeId) {
-        if (trades[tradeId].initiator == msg.sender) {
+        if (_trades[tradeId].initiator == msg.sender) {
             revert InvalidForTradeOwner();
         }
         _;
     }
 
     modifier isTradeOwner(uint256 tradeId) {
-        if (trades[tradeId].initiator != msg.sender) {
+        if (_trades[tradeId].initiator != msg.sender) {
             revert TradeOwnerOnly();
         }
         _;
     }
 
     modifier notExistingCounterOffer(uint256 tradeId, address counterOfferer) {
-        Trade memory trade = trades[tradeId];
+        Trade memory trade = _trades[tradeId];
         for (uint256 i = 0; i < trade.counterOfferItemsIds.length; i++) {
             uint counterOfferItemsId = trade.counterOfferItemsIds[i];
-            if (counterOfferer == counterOfferInitiators[counterOfferItemsId]) {
+            if (counterOfferer == _counterOfferInitiators[counterOfferItemsId]) {
                 revert CounterOfferAlreadyExists(tradeId, counterOfferItemsId);
             }
         }
