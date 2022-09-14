@@ -55,10 +55,9 @@ export function handleTradeCreated(event: TradeCreated): void {
 }
 
 export function handleTradeAccepted(event: TradeAccepted): void {
-  const tradeId = event.params.tradeId.toString();
-  const trade = new Trade(tradeId);
+  const trade = new Trade(event.params.tradeId.toString());
   trade.finishedAt = event.block.timestamp.toI32();
-  trade.acceptedReceivingsOffer = trade.id + event.params.offerIndex.toString();
+  trade.acceptedReceivingsOffer = event.params.itemsId.toString();
   trade.counterAgentAddress = event.params.accepter;
   trade.save();
 }
