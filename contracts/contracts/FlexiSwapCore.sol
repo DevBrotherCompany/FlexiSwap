@@ -35,6 +35,14 @@ contract FlexiSwapCore is IFlexiSwap {
         return itemsId;
     }
 
+    function trade(uint256 _tradeId) external view returns (Trade memory) {
+        return _trades[_tradeId];
+    }
+
+    function items(uint256 _itemsId) external view returns (Item[] memory) {
+        return _items[_itemsId];
+    }
+
     function createTrade(Item[] memory _givings, Item[][] memory _receivings)
         public
         virtual

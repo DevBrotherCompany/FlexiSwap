@@ -37,6 +37,10 @@ interface IFlexiSwap {
     );
     event CounterOfferAccepted(uint256 tradeId, uint256 itemsId);
 
+    function trade(uint256 _tradeId) external view returns (Trade memory);
+
+    function items(uint256 _itemsId) external view returns (Item[] memory);
+
     function createTrade(Item[] memory _givings, Item[][] memory _receivings)
         external;
 
