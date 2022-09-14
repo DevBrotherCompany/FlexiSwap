@@ -211,52 +211,6 @@
         "internalType": "struct IFlexiSwap.Trade",
         "name": "trade",
         "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEmptyToken",
-            "type": "bool"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IFlexiSwap.Item[]",
-        "name": "givings",
-        "type": "tuple[]"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEmptyToken",
-            "type": "bool"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IFlexiSwap.Item[][]",
-        "name": "receivings",
-        "type": "tuple[][]"
       }
     ],
     "name": "TradeCreated",

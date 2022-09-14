@@ -63,7 +63,7 @@ contract FlexiSwapCore is IFlexiSwap {
 
         _trades[tradeId] = trade;
 
-        emit TradeCreated(tradeId, trade, _givings, _receivings);
+        emit TradeCreated(tradeId, trade);
     }
 
     function acceptOffer(uint256 _tradeId, uint256 _itemsId)

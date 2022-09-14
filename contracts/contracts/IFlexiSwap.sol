@@ -27,12 +27,7 @@ interface IFlexiSwap {
     error TradeOwnerOnly();
     error InvalidForTradeOwner();
 
-    event TradeCreated(
-        uint256 tradeId,
-        Trade trade,
-        Item[] givings,
-        Item[][] receivings
-    );
+    event TradeCreated(uint256 tradeId, Trade trade);
     event TradeAccepted(address accepter, uint256 tradeId, uint256 itemsId);
     event CounterOfferCreated(
         address counterOfferer,
