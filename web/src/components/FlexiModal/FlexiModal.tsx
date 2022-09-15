@@ -1,45 +1,46 @@
 import React, { FC, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
+import { useFlexiModalStyles } from "./FlexiModal.style";
+import { Dialog, DialogProps } from "@mui/material";
 
 import { Portal } from "shared/Portal/Portal";
+import { FlexiCard } from "../FlexiCard/FlexiCard";
 
-interface FlexiModalProps {}
+export interface FlexiModalProps extends DialogProps {
+  cardClassName?: string;
+  onClose?: () => void;
+}
 
-export const FlexiModal: FC<FlexiModalProps> = () => {
-  const [open, setOpen] = useState(false);
+export const FlexiModal: FC<FlexiModalProps> = ({
+  maxWidth = "lg",
+  open,
+  cardClassName,
+  onClose,
+  children,
+  ...props
+}) => {
+  const classes = useFlexiModalStyles();
+  const [isOpen, setIsOpen] = useState(open);
 
   const handleClose = () => {
-    setOpen(false);
+    setIsOpen(false);
+    onClose && onClose();
   };
 
   return (
     <Portal>
       <Dialog
-        open={open}
+        {...props}
+        open={isOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth
+        maxWidth={maxWidth}
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        {/*<DialogActions>*/}
-        {/*  <Button onClick={handleClose}>Disagree</Button>*/}
-        {/*  <Button onClick={handleClose} autoFocus>*/}
-        {/*    Agree*/}
-        {/*  </Button>*/}
-        {/*</DialogActions>*/}
+        <button onClick={handleClose} className={classes.cross}>
+          +
+        </button>
+        <FlexiCard className={cardClassName}>{children}</FlexiCard>
       </Dialog>
     </Portal>
   );

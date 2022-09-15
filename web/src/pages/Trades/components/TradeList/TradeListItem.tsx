@@ -2,7 +2,7 @@ import React from "react";
 
 import { Grid } from "@mui/material";
 
-import { ITrade } from "interfaces";
+import { INft, ITrade } from "interfaces";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
 
 import { TradeHeader } from "../TradeHeader/TradeHeader";
@@ -10,9 +10,13 @@ import { NftList } from "../NftList/NftList";
 
 interface TradeListItemProps {
   item: ITrade;
+  onClick?: (item: INft) => void;
 }
 
-export const TradeListItem: React.FC<TradeListItemProps> = ({ item }) => {
+export const TradeListItem: React.FC<TradeListItemProps> = ({
+  item,
+  onClick,
+}) => {
   const { user, date, offer, counterOffer } = item;
   const counterOffersCount = counterOffer.length - 1;
   return (
@@ -25,7 +29,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({ item }) => {
       />
       <Grid container justifyContent={"space-between"}>
         <Grid item>
-          <NftList list={offer} />
+          <NftList list={offer} onClick={onClick} />
         </Grid>
         <Grid item>
           <NftList list={counterOffer} />

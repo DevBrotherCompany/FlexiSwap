@@ -5,4 +5,5 @@ export interface INft {
   name: string;
   collection: ID;
   img?: string;
+  address?: string;
 }
