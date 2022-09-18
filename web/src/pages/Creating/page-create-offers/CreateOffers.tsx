@@ -2,13 +2,13 @@ import React from "react";
 
 import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
-import { OfferLayout } from "./OfferLayout/OfferLayout";
+import { OffersLayout } from "./OffersLayout/OffersLayout";
 
 const CreateOffers: React.FC = () => {
   return (
-    <OfferLayout>
+    <OffersLayout>
       <FlexiTitle>Select NFTs for offer</FlexiTitle>
-    </OfferLayout>
+    </OffersLayout>
   );
 };
 
