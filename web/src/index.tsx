@@ -3,10 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 
 import { ApolloProvider } from "@apollo/client";
+import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 
 import { apolloClient } from "./packages/graphql";
 import { Web3Connector } from "./shared/Web3Connector/Web3Connector";
+import { store } from "./storage/store";
 
 import App from "./components/App/App";
 
@@ -16,11 +18,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={apolloClient}>
-      <Web3Connector>
-        <App />
-      </Web3Connector>
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={apolloClient}>
+        <Web3Connector>
+          <App />
+        </Web3Connector>
+      </ApolloProvider>
+    </Provider>
   </React.StrictMode>
 );
 
