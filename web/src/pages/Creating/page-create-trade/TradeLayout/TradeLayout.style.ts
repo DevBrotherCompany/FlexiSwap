@@ -7,4 +7,5 @@ export const useTradeLayoutStyles = makeStyles(() => ({
     paddingLeft: `${sidebarWidth + 50}px`,
     paddingTop: "34px",
   },
+  btn: { marginTop: "50px !important" },
 }));

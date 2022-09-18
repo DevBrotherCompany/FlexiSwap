@@ -1,6 +1,8 @@
 import React, { PropsWithChildren } from "react";
 import { useTradesSidebarStyles } from "./TradesLayout.style";
 
+import { useNavigate } from "react-router-dom";
+
 import { AppBar, Toolbar } from "@mui/material";
 
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
@@ -12,6 +14,7 @@ import { useAuth } from "hooks";
 
 import { SidebarList } from "../SidebarList/SidebarList";
 import { ConnectWallet } from "../ConnectWallet/ConnectWallet";
+import { RouteName } from "../../../../shared/routes";
 
 interface TradesLayoutProps extends PropsWithChildren {
   onSearchChange?: (value: string) => void;
@@ -23,9 +26,14 @@ export const TradesLayout: React.FC<TradesLayoutProps> = ({
 }) => {
   const classes = useTradesSidebarStyles();
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange && onSearchChange(e.target.value);
+  };
+
+  const handleCreateTrade = () => {
+    navigate(RouteName.CreateTrade);
   };
 
   return (
@@ -40,7 +48,7 @@ export const TradesLayout: React.FC<TradesLayoutProps> = ({
         </Toolbar>
       </AppBar>
       <Sidebar>
-        <FlexiButton variant={"contained"}>Create trade</FlexiButton>
+        <FlexiButton onClick={handleCreateTrade}>Create trade</FlexiButton>
         <FlexiSubtitle className={classes.subtitle}>Marketplace</FlexiSubtitle>
         <SidebarList />
         {!isAuthenticated && <ConnectWallet />}
