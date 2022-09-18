@@ -6,10 +6,10 @@ import { AppBar, Toolbar } from "@mui/material";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
 import { Sidebar } from "components/Sidebar/Sidebar";
 import { FlexiInput } from "components/FlexiInput/FlexiInput";
+import { FlexiSubtitle } from "components/FlexiSubtitle/FlexiSubtitle";
 
 import { useAuth } from "hooks";
 
-import { Subtitle } from "../Text/Subtitle";
 import { SidebarList } from "../SidebarList/SidebarList";
 import { ConnectWallet } from "../ConnectWallet/ConnectWallet";
 
@@ -41,7 +41,7 @@ export const TradesLayout: React.FC<TradesLayoutProps> = ({
       </AppBar>
       <Sidebar>
         <FlexiButton variant={"contained"}>Create trade</FlexiButton>
-        <Subtitle className={classes.subtitle}>Marketplace</Subtitle>
+        <FlexiSubtitle className={classes.subtitle}>Marketplace</FlexiSubtitle>
         <SidebarList />
         {!isAuthenticated && <ConnectWallet />}
       </Sidebar>

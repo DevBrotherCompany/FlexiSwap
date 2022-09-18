@@ -5,7 +5,7 @@ import "./index.scss";
 import { ApolloProvider } from "@apollo/client";
 import reportWebVitals from "./reportWebVitals";
 
-import { apolloClient } from "./graphql";
+import { apolloClient } from "./packages/graphql";
 import { Web3Connector } from "./shared/Web3Connector/Web3Connector";
 
 import App from "./components/App/App";

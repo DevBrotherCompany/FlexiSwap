@@ -1,3 +1,3 @@
 export * from "./useAuth";
-export * from "./useDebaunced";
+export * from "./useDebounced";
 export * from "./useModalState";

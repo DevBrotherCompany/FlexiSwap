@@ -13,6 +13,13 @@ const MyCounteroffers = React.lazy(
   () => import("pages/Trades/page-my-counteroffers/MyCounteroffers")
 );
 
+const CreateTrade = React.lazy(
+  () => import("pages/Creating/page-create-trade/CreateTrade")
+);
+const CreateOffers = React.lazy(
+  () => import("pages/Creating/page-create-offers/CreateOffers")
+);
+
 export const AppLayout: React.FC<PropsWithChildren> = () => {
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
@@ -24,6 +31,8 @@ export const AppLayout: React.FC<PropsWithChildren> = () => {
             path={RouteName.MyCounterOffers}
             element={<MyCounteroffers />}
           />
+          <Route path={RouteName.CreateTrade} element={<CreateTrade />} />
+          <Route path={RouteName.CreateOffers} element={<CreateOffers />} />
         </Routes>
       </Router>
     </Suspense>

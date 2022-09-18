@@ -14,7 +14,6 @@ export const useFlexiLinkStyles = makeStyles((theme: Theme) => ({
   },
   activeButtonBase: { backgroundColor: "#2B2C31 !important" },
   link: {
-    padding: "10px 15px",
     width: "100%",
     color: `${theme.palette.text.primary} !important`,
     textDecoration: "none !important",
@@ -23,7 +22,16 @@ export const useFlexiLinkStyles = makeStyles((theme: Theme) => ({
       color: `${theme.palette.primary.main} !important`,
     },
   },
+  linkButton: {
+    padding: "10px 15px",
+  },
   active: {
     color: `${theme.palette.primary.main} !important`,
+  },
+  disabled: {
+    cursor: "default",
+    "&:hover": {
+      color: `${theme.palette.text.primary} !important`,
+    },
   },
 }));
