@@ -5,7 +5,7 @@ export default {
   title: "FlexiModal",
 };
 
-export const Default = () => <FlexiModal />;
+export const Default = () => <FlexiModal open={true} />;
 
 Default.story = {
   name: "default",

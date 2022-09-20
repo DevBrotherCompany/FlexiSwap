@@ -11,8 +11,9 @@ export const offer: INft[] = [
   {
     id: 1,
     name: "Nft 1",
-    collection: "collection",
+    collection: "Ape NFT",
     img,
+    address: "0x0000000000000002",
   },
   {
     id: 2,

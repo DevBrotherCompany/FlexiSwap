@@ -1,22 +1,18 @@
-import React, { FC, PropsWithChildren } from "react";
-import { useSidebarStyles } from "./Sidebar.style";
+import React, { FC } from 'react'
+import { useSidebarStyles } from './Sidebar.style'
 
-import { Drawer } from "@mui/material";
+import { Drawer } from '@mui/material'
 
-import { FlexiLogo } from "components/FlexiLogo/FlexiLogo";
+import { FlexiLogo } from 'components/FlexiLogo/FlexiLogo'
 
-interface SidebarProps extends PropsWithChildren {}
+interface SidebarProps {}
 
 export const Sidebar: FC<SidebarProps> = ({ children }) => {
-  const classes = useSidebarStyles();
+  const classes = useSidebarStyles()
   return (
-    <Drawer
-      variant={"permanent"}
-      anchor={"left"}
-      classes={{ paper: classes.wrapper }}
-    >
+    <Drawer variant={'permanent'} anchor={'left'} classes={{ paper: classes.wrapper }}>
       <FlexiLogo className={classes.logo} />
       {children}
     </Drawer>
-  );
-};
+  )
+}
