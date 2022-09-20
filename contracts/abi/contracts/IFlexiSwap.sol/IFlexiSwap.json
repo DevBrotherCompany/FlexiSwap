@@ -117,29 +117,6 @@
         "internalType": "uint256",
         "name": "itemsId",
         "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEmptyToken",
-            "type": "bool"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IFlexiSwap.Item[]",
-        "name": "offerItems",
-        "type": "tuple[]"
       }
     ],
     "name": "CounterOfferCreated",
@@ -156,9 +133,9 @@
       },
       {
         "indexed": false,
-        "internalType": "int256",
+        "internalType": "uint256",
         "name": "tradeId",
-        "type": "int256"
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -206,52 +183,6 @@
         "internalType": "struct IFlexiSwap.Trade",
         "name": "trade",
         "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEmptyToken",
-            "type": "bool"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IFlexiSwap.Item[]",
-        "name": "givings",
-        "type": "tuple[]"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEmptyToken",
-            "type": "bool"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IFlexiSwap.Item[][]",
-        "name": "receivings",
-        "type": "tuple[][]"
       }
     ],
     "name": "TradeCreated",
@@ -378,6 +309,83 @@
     "name": "createTrade",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_itemsId",
+        "type": "uint256"
+      }
+    ],
+    "name": "items",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nftAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isEmptyToken",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct IFlexiSwap.Item[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tradeId",
+        "type": "uint256"
+      }
+    ],
+    "name": "trade",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "initiator",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "givingsId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "receivingsIds",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "counterOfferItemsIds",
+            "type": "uint256[]"
+          }
+        ],
+        "internalType": "struct IFlexiSwap.Trade",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

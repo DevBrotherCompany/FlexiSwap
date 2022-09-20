@@ -27,20 +27,18 @@ interface IFlexiSwap {
     error TradeOwnerOnly();
     error InvalidForTradeOwner();
 
-    event TradeCreated(
-        uint256 tradeId,
-        Trade trade,
-        Item[] givings,
-        Item[][] receivings
-    );
-    event TradeAccepted(address accepter, int256 tradeId, uint256 itemsId);
+    event TradeCreated(uint256 tradeId, Trade trade);
+    event TradeAccepted(address accepter, uint256 tradeId, uint256 itemsId);
     event CounterOfferCreated(
         address counterOfferer,
         uint256 tradeId,
-        uint256 itemsId,
-        Item[] offerItems
+        uint256 itemsId
     );
     event CounterOfferAccepted(uint256 tradeId, uint256 itemsId);
+
+    function trade(uint256 _tradeId) external view returns (Trade memory);
+
+    function items(uint256 _itemsId) external view returns (Item[] memory);
 
     function createTrade(Item[] memory _givings, Item[][] memory _receivings)
         external;

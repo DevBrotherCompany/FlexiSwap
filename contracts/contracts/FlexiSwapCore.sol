@@ -11,13 +11,13 @@ contract FlexiSwapCore is IFlexiSwap {
     Counters.Counter internal _itemsIds;
 
     // tradeId => trade
-    mapping(uint256 => Trade) internal trades;
+    mapping(uint256 => Trade) internal _trades;
 
     // itemsId => items[]
-    mapping(uint256 => Item[]) internal items;
+    mapping(uint256 => Item[]) internal _items;
 
     // itemsId => initiatorAddress
-    mapping(uint256 => address) internal counterOfferInitiators;
+    mapping(uint256 => address) internal _counterOfferInitiators;
 
     constructor() {
         // constructor
@@ -30,9 +30,17 @@ contract FlexiSwapCore is IFlexiSwap {
         uint256 itemsId = _itemsIds.current();
         _itemsIds.increment();
         for (uint256 i = 0; i < _itemsToRegister.length; i++) {
-            items[itemsId].push(_itemsToRegister[i]);
+            _items[itemsId].push(_itemsToRegister[i]);
         }
         return itemsId;
+    }
+
+    function trade(uint256 _tradeId) external view returns (Trade memory) {
+        return _trades[_tradeId];
+    }
+
+    function items(uint256 _itemsId) external view returns (Item[] memory) {
+        return _items[_itemsId];
     }
 
     function createTrade(Item[] memory _givings, Item[][] memory _receivings)
@@ -61,9 +69,9 @@ contract FlexiSwapCore is IFlexiSwap {
             counterOfferItemsIds: new uint256[](0)
         });
 
-        trades[tradeId] = trade;
+        _trades[tradeId] = trade;
 
-        emit TradeCreated(tradeId, trade, _givings, _receivings);
+        emit TradeCreated(tradeId, trade);
     }
 
     function acceptOffer(uint256 _tradeId, uint256 _itemsId)
@@ -81,15 +89,14 @@ contract FlexiSwapCore is IFlexiSwap {
     {
         uint256 counterOfferItemsId = registerItemsToStorage(_offerItems);
 
-        trades[_tradeId].counterOfferItemsIds.push(counterOfferItemsId);
-        
-        counterOfferInitiators[counterOfferItemsId] = msg.sender;
+        _trades[_tradeId].counterOfferItemsIds.push(counterOfferItemsId);
+
+        _counterOfferInitiators[counterOfferItemsId] = msg.sender;
 
         emit CounterOfferCreated(
             msg.sender,
             _tradeId,
-            counterOfferItemsId,
-            _offerItems
+            counterOfferItemsId
         );
     }
 
