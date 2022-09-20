@@ -25,7 +25,7 @@ export const YourSelection: React.FC<YourSelectionProps> = ({ selected }) => {
 
   const areNftsSelected = selected.length > 0;
   return (
-    <>
+    <main>
       <section className={classes.container}>
         <SectionTitle>Your selection</SectionTitle>
         <YourSelectionList selected={selected} />
@@ -34,6 +34,6 @@ export const YourSelection: React.FC<YourSelectionProps> = ({ selected }) => {
       <div className={classes.btnContainer}>
         <FlexiButton onClick={handleCreateOffers}>Create offers</FlexiButton>
       </div>
-    </>
+    </main>
   );
 };
