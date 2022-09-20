@@ -1,20 +1,17 @@
-import React, { PropsWithChildren } from "react";
+import React from 'react'
 
-import { Sidebar } from "components/Sidebar/Sidebar";
-import { FlexiSubtitle } from "components/FlexiSubtitle/FlexiSubtitle";
+import { Sidebar } from 'components/Sidebar/Sidebar'
+import { FlexiSubtitle } from 'components/FlexiSubtitle/FlexiSubtitle'
 
-interface CreatingSidebarProps extends PropsWithChildren {
-  subtitle?: string;
+interface CreatingSidebarProps {
+  subtitle?: string
 }
 
-export const CreatingSidebar: React.FC<CreatingSidebarProps> = ({
-  subtitle = "Create trade",
-  children,
-}) => {
+export const CreatingSidebar: React.FC<CreatingSidebarProps> = ({ subtitle = 'Create trade', children }) => {
   return (
     <Sidebar>
       <FlexiSubtitle>{subtitle}</FlexiSubtitle>
       {children}
     </Sidebar>
-  );
-};
+  )
+}

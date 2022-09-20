@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC } from "react";
 import { useFlexiLinkStyles } from "./FlexiLink.style";
 
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { ButtonBase } from "@mui/material";
 import cn from "classnames";
 
-interface FlexiLinkProps extends PropsWithChildren {
+interface FlexiLinkProps {
   to?: string;
   className?: string;
   active?: boolean;

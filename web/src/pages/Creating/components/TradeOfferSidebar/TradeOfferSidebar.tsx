@@ -1,17 +1,15 @@
-import React, { PropsWithChildren } from "react";
+import React from 'react'
 
-import { CreatingSidebar } from "../CreatingSidebar/CreatingSidebar";
-import { TradeOfferStepper } from "../TradeOfferStepper/TradeOfferStepper";
+import { CreatingSidebar } from '../CreatingSidebar/CreatingSidebar'
+import { TradeOfferStepper } from '../TradeOfferStepper/TradeOfferStepper'
 
-interface TradeOfferSidebarProps extends PropsWithChildren {}
+interface TradeOfferSidebarProps {}
 
-export const TradeOfferSidebar: React.FC<TradeOfferSidebarProps> = ({
-  children,
-}) => {
+export const TradeOfferSidebar: React.FC<TradeOfferSidebarProps> = ({ children }) => {
   return (
     <CreatingSidebar>
       <TradeOfferStepper />
       {children}
     </CreatingSidebar>
-  );
-};
+  )
+}

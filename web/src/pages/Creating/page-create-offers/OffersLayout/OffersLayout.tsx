@@ -1,12 +1,12 @@
-import React, { PropsWithChildren } from "react";
-import { useOfferLayoutStyles } from "./OffersLayout.style";
+import React from 'react'
+import { useOfferLayoutStyles } from './OffersLayout.style'
 
-import { TradeOfferSidebar } from "pages/Creating/components/TradeOfferSidebar/TradeOfferSidebar";
+import { TradeOfferSidebar } from 'pages/Creating/components/TradeOfferSidebar/TradeOfferSidebar'
 
-interface OfferLayoutProps extends PropsWithChildren {}
+interface OfferLayoutProps {}
 
 export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
-  const classes = useOfferLayoutStyles();
+  const classes = useOfferLayoutStyles()
   return (
     <main className={classes.container}>
       <TradeOfferSidebar>
@@ -16,5 +16,5 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
       </TradeOfferSidebar>
       {children}
     </main>
-  );
-};
+  )
+}

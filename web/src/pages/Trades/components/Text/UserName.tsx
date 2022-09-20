@@ -1,22 +1,22 @@
-import React, { PropsWithChildren } from "react";
-import { makeStyles } from "@mui/styles";
+import React from 'react'
+import { makeStyles } from '@mui/styles'
 
-import cn from "classnames";
-import { Typography } from "@mui/material";
+import cn from 'classnames'
+import { Typography } from '@mui/material'
 
-interface UserNameProps extends PropsWithChildren {
-  className?: string;
+interface UserNameProps {
+  className?: string
 }
 
 export const useUserNames = makeStyles(() => ({
-  name: { color: "#FFF" },
-}));
+  name: { color: '#FFF' },
+}))
 
 export const UserName: React.FC<UserNameProps> = ({ className, children }) => {
-  const classes = useUserNames();
+  const classes = useUserNames()
   return (
-    <Typography className={cn(classes.name, className)} component={"span"}>
+    <Typography className={cn(classes.name, className)} component={'span'}>
       {children}
     </Typography>
-  );
-};
+  )
+}

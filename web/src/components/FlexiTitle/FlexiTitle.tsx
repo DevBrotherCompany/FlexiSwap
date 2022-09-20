@@ -1,14 +1,14 @@
-import React, { FC, PropsWithChildren } from "react";
-import { useFlexiTitleStyles } from "./FlexiTitle.style";
-import { Typography } from "@mui/material";
+import React, { FC } from 'react'
+import { useFlexiTitleStyles } from './FlexiTitle.style'
+import { Typography } from '@mui/material'
 
-interface FlexiTitleProps extends PropsWithChildren {}
+interface FlexiTitleProps {}
 
 export const FlexiTitle: FC<FlexiTitleProps> = ({ children }) => {
-  const classes = useFlexiTitleStyles();
+  const classes = useFlexiTitleStyles()
   return (
-    <Typography variant={"h1"} className={classes.title}>
+    <Typography variant={'h1'} className={classes.title}>
       {children}
     </Typography>
-  );
-};
+  )
+}
