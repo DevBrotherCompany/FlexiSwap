@@ -1,5 +1,5 @@
 {
-  "name": "@flexiswap/server",
+  "name": "@flexiswap/metadata-provider",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -21,17 +21,22 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@apollo/federation": "^0.36.1",
+    "@apollo/subgraph": "^2.1.1",
     "@nestjs/apollo": "^10.1.0",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^10.1.1",
     "@nestjs/platform-express": "^9.0.0",
     "apollo-server-express": "^3.10.2",
+    "ethers": "^5.7.1",
     "graphql": "^16.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
