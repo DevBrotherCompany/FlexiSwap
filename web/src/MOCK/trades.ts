@@ -54,6 +54,24 @@ export const counterOffer: INft[] = [
     collection: "collection",
     img,
   },
+  {
+    id: 13,
+    name: "Nft 7",
+    collection: "collection",
+    img,
+  },
+  {
+    id: 14,
+    name: "Nft 7",
+    collection: "collection",
+    img,
+  },
+  {
+    id: 15,
+    name: "Nft 7",
+    collection: "collection",
+    img,
+  },
 ];
 
 export const trades: ITrade[] = [

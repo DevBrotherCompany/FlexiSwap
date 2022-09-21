@@ -9,15 +9,24 @@ import { TradeListItem } from "./TradeListItem";
 interface TradeListProps {
   list: ITrade[];
   onClick?: (item: INft) => void;
+  onClickCollection?: (item: INft[]) => void;
 }
 
-export const TradeList: React.FC<TradeListProps> = ({ list, onClick }) => {
+export const TradeList: React.FC<TradeListProps> = ({
+  list,
+  onClick,
+  onClickCollection,
+}) => {
   const classes = useTradeListStyles();
   return (
     <section className={classes.list}>
       {list.map((item) => (
         <FlexiCard key={item.id} className={classes.card}>
-          <TradeListItem item={item} onClick={onClick} />
+          <TradeListItem
+            item={item}
+            onClick={onClick}
+            onClickCollection={onClickCollection}
+          />
         </FlexiCard>
       ))}
     </section>

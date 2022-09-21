@@ -8,17 +8,25 @@ import { FlexiButton } from "components/FlexiButton/FlexiButton";
 import { TradeHeader } from "../TradeHeader/TradeHeader";
 import { NftList } from "../NftList/NftList";
 
+import { ArrowSvg } from "./arrowSvg";
+import { NftCollectionBlock } from "../NftCollectionBlock/NftCollectionBlock";
+
 interface TradeListItemProps {
   item: ITrade;
   onClick?: (item: INft) => void;
+  onClickCollection?: (item: INft[]) => void;
 }
 
 export const TradeListItem: React.FC<TradeListItemProps> = ({
   item,
   onClick,
+  onClickCollection,
 }) => {
   const { user, date, offer, counterOffer } = item;
   const counterOffersCount = counterOffer.length - 1;
+
+  const mock_isCollection = Math.random() > 0.5;
+
   return (
     <>
       {/*TODO: make right calc of date of the start of trade*/}
@@ -31,8 +39,26 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
         <Grid item>
           <NftList list={offer} onClick={onClick} />
         </Grid>
+
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          width={"fit-content"}
+          paddingBottom={"5%"}
+        >
+          {ArrowSvg}
+        </Grid>
+
         <Grid item>
-          <NftList list={counterOffer} />
+          {mock_isCollection ? (
+            <NftList list={counterOffer} onClick={onClick} />
+          ) : (
+            <NftCollectionBlock
+              collection={counterOffer}
+              onClick={onClickCollection}
+            />
+          )}
           {/* TODO move to separate component */}
           {counterOffersCount > 0 && (
             <p>

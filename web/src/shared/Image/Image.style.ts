@@ -7,5 +7,6 @@ export const useImageStyles = makeStyles(() => ({
     height: "100%",
     borderRadius: "6px",
     objectFit: "cover",
+    userSelect: "none",
   },
 }));

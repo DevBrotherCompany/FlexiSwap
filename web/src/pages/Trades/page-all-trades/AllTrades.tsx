@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import { useDebounce, useModalsState } from "hooks";
-import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
+import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 import { NftModal } from "shared/NftModal/NftModal";
+import { CollectionModal } from "shared/CollectionModal/CollectionModal";
 
 import { INft } from "interfaces";
+import { TradesModal } from "../enums";
 
 import { TradesLayout } from "../components/TradesLayout/TradesLayout";
 import { TradeList } from "../components/TradeList/TradeList";
 
 import { useGetTrades } from "./useGetTrades";
-import { TradesModal } from "../enums";
 
 const AllTrades: React.FC = () => {
   const { trades, getTrades } = useGetTrades();
@@ -20,6 +21,9 @@ const AllTrades: React.FC = () => {
     useModalsState<TradesModal>();
 
   const [selectedNft, setSelectedNft] = useState<INft | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<INft[] | null>(
+    null
+  );
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 100);
 
@@ -28,8 +32,14 @@ const AllTrades: React.FC = () => {
     openModal(TradesModal.NftInfo);
   };
 
+  const handleClickCollection = (collection: INft[]) => {
+    setSelectedCollection(collection);
+    openModal(TradesModal.CollectionInfo);
+  };
+
   const handleClose = () => {
     setSelectedNft(null);
+    setSelectedCollection(null);
     closeModals();
   };
 
@@ -41,11 +51,20 @@ const AllTrades: React.FC = () => {
     <>
       <TradesLayout onSearchChange={setSearch}>
         <FlexiTitle>All trades</FlexiTitle>
-        <TradeList list={trades} onClick={handleClickItem} />
+        <TradeList
+          list={trades}
+          onClick={handleClickItem}
+          onClickCollection={handleClickCollection}
+        />
       </TradesLayout>
       <NftModal
         item={selectedNft}
         open={isModalOpened(TradesModal.NftInfo)}
+        onClose={handleClose}
+      />
+      <CollectionModal
+        collection={selectedCollection}
+        open={isModalOpened(TradesModal.CollectionInfo)}
         onClose={handleClose}
       />
     </>
