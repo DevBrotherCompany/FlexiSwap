@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import { useDebounce, useModalsState } from "hooks";
-import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 
+import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 import { NftModal } from "shared/NftModal/NftModal";
+import { CollectionModal } from "shared/CollectionModal/CollectionModal";
 
 import { INft } from "interfaces";
 import { TradesModal } from "../enums";
@@ -12,7 +13,6 @@ import { TradesLayout } from "../components/TradesLayout/TradesLayout";
 import { TradeList } from "../components/TradeList/TradeList";
 
 import { useGetTrades } from "./useGetTrades";
-import { CollectionModal } from "../../../shared/CollectionModal/CollectionModal";
 
 const AllTrades: React.FC = () => {
   const { trades, getTrades } = useGetTrades();
