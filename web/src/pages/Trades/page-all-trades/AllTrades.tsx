@@ -12,6 +12,8 @@ import { TradesLayout } from "../components/TradesLayout/TradesLayout";
 import { TradeList } from "../components/TradeList/TradeList";
 
 import { useGetTrades } from "./useGetTrades";
+import { CollectionModal } from "../../../shared/CollectionModal/CollectionModal";
+import { allNfts } from "../../../MOCK";
 
 const AllTrades: React.FC = () => {
   const { trades, getTrades } = useGetTrades();
@@ -48,6 +50,7 @@ const AllTrades: React.FC = () => {
         open={isModalOpened(TradesModal.NftInfo)}
         onClose={handleClose}
       />
+      <CollectionModal collection={allNfts} open={true} />
     </>
   );
 };
