@@ -1,11 +1,8 @@
 import React from "react";
 import { useYourSelectionStyles } from "./YourSelection.style";
 
-import { useNavigate } from "react-router-dom";
-
 import { INft } from "interfaces";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
-import { RouteName } from "shared/routes";
 
 import { SectionTitle } from "../Text/SectionTitle";
 import { YourSelectionList } from "../YourSelectionList/YourSelectionList";
@@ -13,27 +10,32 @@ import { Limit } from "../Text/Limit";
 
 interface YourSelectionProps {
   selected: INft[];
+  onBtnClick?: () => void;
+  onClickNft?: (item: INft) => void;
+  labelBtn?: string;
 }
 
-export const YourSelection: React.FC<YourSelectionProps> = ({ selected }) => {
+export const YourSelection: React.FC<YourSelectionProps> = ({
+  selected,
+  onClickNft,
+  onBtnClick,
+  labelBtn = "Create offers",
+}) => {
   const classes = useYourSelectionStyles();
-  const navigate = useNavigate();
-
-  const handleCreateOffers = () => {
-    navigate(RouteName.CreateOffers);
-  };
-
   const areNftsSelected = selected.length > 0;
+
   return (
-    <main>
+    <>
       <section className={classes.container}>
         <SectionTitle>Your selection</SectionTitle>
-        <YourSelectionList selected={selected} />
+        <YourSelectionList onClickNft={onClickNft} selected={selected} />
       </section>
-      {areNftsSelected && <Limit>{selected.length} of 10 NFTs selected</Limit>}
+      <Limit>{selected.length} of 10 NFTs selected</Limit>
       <div className={classes.btnContainer}>
-        <FlexiButton onClick={handleCreateOffers}>Create offers</FlexiButton>
+        <FlexiButton onClick={onBtnClick} disabled={!areNftsSelected}>
+          {labelBtn}
+        </FlexiButton>
       </div>
-    </main>
+    </>
   );
 };

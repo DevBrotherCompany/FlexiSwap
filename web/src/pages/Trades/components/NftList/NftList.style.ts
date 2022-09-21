@@ -8,7 +8,7 @@ export const useNftListStyles = makeStyles(() => ({
   },
   listItem: {
     listStyle: "none",
-    marginRight: "40px",
+    marginRight: "15px",
   },
   imgWrapper: {
     width: "100px",

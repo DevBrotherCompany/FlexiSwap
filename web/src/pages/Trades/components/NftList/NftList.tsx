@@ -4,6 +4,7 @@ import { INft } from "interfaces";
 
 import { NftMoreBlock } from "../NftMoreBlock/NftMoreBlock";
 import { useListInfo } from "./useListInfo";
+import { FlexiNft } from "../../../../components/FlexiNft/FlexiNft";
 
 interface NftListProps {
   list: INft[];
@@ -14,9 +15,9 @@ export const NftList: React.FC<NftListProps> = ({ list, onClick }) => {
   const classes = useNftListStyles();
   const { displayItems, isMany, additionalCount } = useListInfo(list);
 
-  const handleClckItem = (item: INft) => {
-    onClick && onClick(item);
-  };
+  // const handleClckItem = (item: INft) => {
+  //   onClick && onClick(item);
+  // };
 
   return (
     <ul className={classes.list}>
@@ -24,11 +25,17 @@ export const NftList: React.FC<NftListProps> = ({ list, onClick }) => {
         <li
           key={nft.id}
           className={classes.listItem}
-          onClick={() => handleClckItem(nft)}
+          // onClick={() => handleClckItem(nft)}
         >
-          <p className={classes.imgWrapper}>
-            <img src={nft.img} alt={nft.name} className={classes.img} />
-          </p>
+          <FlexiNft
+            item={nft}
+            hoverEffect={"info"}
+            onClickNft={onClick}
+            clickable
+          />
+          {/*<p className={classes.imgWrapper}>*/}
+          {/*  <img src={nft.img} alt={nft.name} className={classes.img} />*/}
+          {/*</p>*/}
         </li>
       ))}
       {isMany && (

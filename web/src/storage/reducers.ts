@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
-// import { userReducer } from "storage/slices/userSlice";
-// import { snackbarReducer } from "storage/slices/snackbarSlice";
+import { createTradeReducer } from "pages/Creating/page-create-trade/createTrade.slice";
 
-const reducer = combineReducers({});
+const reducer = combineReducers({
+  createTrade: createTradeReducer,
+});
 
 export default reducer;

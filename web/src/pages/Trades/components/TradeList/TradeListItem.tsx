@@ -8,6 +8,8 @@ import { FlexiButton } from "components/FlexiButton/FlexiButton";
 import { TradeHeader } from "../TradeHeader/TradeHeader";
 import { NftList } from "../NftList/NftList";
 
+import { ArrowSvg } from "./arrowSvg";
+
 interface TradeListItemProps {
   item: ITrade;
   onClick?: (item: INft) => void;
@@ -31,8 +33,19 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
         <Grid item>
           <NftList list={offer} onClick={onClick} />
         </Grid>
+
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          width={"fit-content"}
+          paddingBottom={"5%"}
+        >
+          {ArrowSvg}
+        </Grid>
+
         <Grid item>
-          <NftList list={counterOffer} />
+          <NftList list={counterOffer} onClick={onClick} />
           {/* TODO move to separate component */}
           {counterOffersCount > 0 && (
             <p>

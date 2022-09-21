@@ -6,12 +6,12 @@ import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 import { NftModal } from "shared/NftModal/NftModal";
 
 import { INft } from "interfaces";
+import { TradesModal } from "../enums";
 
 import { TradesLayout } from "../components/TradesLayout/TradesLayout";
 import { TradeList } from "../components/TradeList/TradeList";
 
 import { useGetTrades } from "./useGetTrades";
-import { TradesModal } from "../enums";
 
 const AllTrades: React.FC = () => {
   const { trades, getTrades } = useGetTrades();

@@ -7,10 +7,10 @@ export const useYourSelectionListStyles = makeStyles(() => ({
   },
   listItem: {
     width: "fit-content !important",
-    padding: "0 40px 40px 0 !important",
+    padding: "0 20px 20px 0 !important",
   },
   lastItem: {
-    padding: "0 40px 0 0 !important",
+    padding: "0 20px 0 0 !important",
   },
   img: {
     width: "100px",
