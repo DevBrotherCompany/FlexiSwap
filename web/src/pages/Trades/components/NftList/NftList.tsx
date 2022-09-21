@@ -1,10 +1,12 @@
 import React from "react";
 import { useNftListStyles } from "./NftList.style";
+
 import { INft } from "interfaces";
+import { FlexiNft } from "components/FlexiNft/FlexiNft";
 
 import { NftMoreBlock } from "../NftMoreBlock/NftMoreBlock";
+
 import { useListInfo } from "./useListInfo";
-import { FlexiNft } from "../../../../components/FlexiNft/FlexiNft";
 
 interface NftListProps {
   list: INft[];

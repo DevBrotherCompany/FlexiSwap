@@ -10,7 +10,7 @@ import { ColName } from "./Text/ColName";
 import { NftList } from "./NftList/NftList";
 
 interface CollectionModalProps extends FlexiModalProps {
-  collection: INft[];
+  collection: INft[] | null;
 }
 
 export const CollectionModal: React.FC<CollectionModalProps> = ({
@@ -18,6 +18,11 @@ export const CollectionModal: React.FC<CollectionModalProps> = ({
   ...props
 }) => {
   const classes = useCollectionModalStyles();
+
+  if (!collection) {
+    return null;
+  }
+
   return (
     <FlexiModal {...props} cardClassName={classes.card}>
       <Title className={classes.title}>Collection name</Title>

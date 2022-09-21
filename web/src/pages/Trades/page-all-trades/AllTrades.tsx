@@ -13,7 +13,6 @@ import { TradeList } from "../components/TradeList/TradeList";
 
 import { useGetTrades } from "./useGetTrades";
 import { CollectionModal } from "../../../shared/CollectionModal/CollectionModal";
-import { allNfts } from "../../../MOCK";
 
 const AllTrades: React.FC = () => {
   const { trades, getTrades } = useGetTrades();
@@ -22,6 +21,9 @@ const AllTrades: React.FC = () => {
     useModalsState<TradesModal>();
 
   const [selectedNft, setSelectedNft] = useState<INft | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<INft[] | null>(
+    null
+  );
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 100);
 
@@ -30,8 +32,14 @@ const AllTrades: React.FC = () => {
     openModal(TradesModal.NftInfo);
   };
 
+  const handleClickCollection = (collection: INft[]) => {
+    setSelectedCollection(collection);
+    openModal(TradesModal.CollectionInfo);
+  };
+
   const handleClose = () => {
     setSelectedNft(null);
+    setSelectedCollection(null);
     closeModals();
   };
 
@@ -43,14 +51,22 @@ const AllTrades: React.FC = () => {
     <>
       <TradesLayout onSearchChange={setSearch}>
         <FlexiTitle>All trades</FlexiTitle>
-        <TradeList list={trades} onClick={handleClickItem} />
+        <TradeList
+          list={trades}
+          onClick={handleClickItem}
+          onClickCollection={handleClickCollection}
+        />
       </TradesLayout>
       <NftModal
         item={selectedNft}
         open={isModalOpened(TradesModal.NftInfo)}
         onClose={handleClose}
       />
-      <CollectionModal collection={allNfts} open={true} />
+      <CollectionModal
+        collection={selectedCollection}
+        open={isModalOpened(TradesModal.CollectionInfo)}
+        onClose={handleClose}
+      />
     </>
   );
 };
