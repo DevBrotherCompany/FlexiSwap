@@ -1,0 +1,21 @@
+{
+  "name": "@flexiswap/subgraph-federation",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/federation": "^0.20.6",
+    "@graphql-tools/load": "^7.7.7",
+    "@graphql-tools/url-loader": "^7.16.2",
+    "apollo-graphql": "^0.9.7",
+    "apollo-server": "^3.10.2",
+    "dotenv": "^16.0.2",
+    "graphql-transform-federation": "^2.2.0"
+  }
+}
