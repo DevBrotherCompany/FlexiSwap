@@ -18,12 +18,12 @@ contract FlexiSwap is FlexiSwapValidator {
         super.createTrade(_givings, _receivings);
     }
 
-    function acceptOffer(uint256 _tradeId, uint256 _itemsId)
+    function acceptOffer(uint256 _tradeId, uint256 _itemsId, Item[] memory _additionalAssets)
         public
         virtual
         override
     {
-        super.acceptOffer(_tradeId, _itemsId);
+        super.acceptOffer(_tradeId, _itemsId, _additionalAssets);
     }
 
     function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)

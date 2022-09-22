@@ -3,6 +3,7 @@ pragma solidity ^0.8.15;
 
 import "./IFlexiSwap.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 contract FlexiSwapCore is IFlexiSwap {
     using Counters for Counters.Counter;
@@ -33,6 +34,58 @@ contract FlexiSwapCore is IFlexiSwap {
             _items[itemsId].push(_itemsToRegister[i]);
         }
         return itemsId;
+    }
+
+    function verifyApproved(Item[] memory _itemsToVerify) private {
+        for (uint256 i = 0; i < _itemsToVerify.length; ++i) {
+            if (
+                IERC721(_itemsToVerify[i].nftAddress).getApproved(
+                    _itemsToVerify[i].tokenId
+                ) != address(this)
+            ) {
+                revert TokenNotApproved(
+                    _itemsToVerify[i].nftAddress,
+                    _itemsToVerify[i].tokenId
+                );
+            }
+        }
+    }
+
+    function verifyAdditionalAssets(
+        Item[] memory _orderItems,
+        Item[] memory _additionalAssets
+    ) private returns (bool) {
+        for (uint256 i = 0; i < _additionalAssets.length; ++i) {
+            for (uint256 j = 0; j < _orderItems.length; ++j) {
+                if (
+                    !_orderItems[j].isEmptyToken &&
+                    _orderItems[j].nftAddress == _additionalAssets[i].nftAddress
+                ) {
+                    // TODO
+                    // _additionalAssets[i] = _additionalAssets[_additionalAssets.length - 1];
+                    // delete _additionalAssets[_additionalAssets.length - 1];
+                    // _additionalAssets.length--;
+                }
+            }
+        }
+
+        return _additionalAssets.length == 0;
+    }
+
+    function batchTransfer(
+        Item[] memory _itemsToTransfer,
+        address _from,
+        address _to
+    ) private {
+        verifyApproved(_itemsToTransfer);
+
+        for (uint256 i = 0; i < _itemsToTransfer.length; ++i) {
+            IERC721(_itemsToTransfer[i].nftAddress).safeTransferFrom(
+                _from,
+                _to,
+                _itemsToTransfer[i].tokenId
+            );
+        }
     }
 
     function trade(uint256 _tradeId) external view returns (Trade memory) {
@@ -74,12 +127,37 @@ contract FlexiSwapCore is IFlexiSwap {
         emit TradeCreated(tradeId, trade);
     }
 
-    function acceptOffer(uint256 _tradeId, uint256 _itemsId)
-        public
-        virtual
-        override
-    {
-        revert("Not implemented");
+    // additionalAssets is a list of additional assets that the initiator wants to receive in addition to the items in the trade
+    // for exmple, if trade initiator stated that he wants 2 nfts from collection A in addition, then additionalAssets
+    // should contain strictly 2 nfts from collection A
+    function acceptOffer(
+        uint256 _tradeId,
+        uint256 _itemsId,
+        Item[] memory _additionalAssets
+    ) public virtual override {
+        Trade memory trade = _trades[_tradeId];
+        Item[] memory items = _items[_itemsId];
+
+        bool validAdditionalAssets = verifyAdditionalAssets(
+            items,
+            _additionalAssets
+        );
+
+        if (!validAdditionalAssets) {
+            revert InvalidAdditionalAssets();
+        }
+
+        // TODO
+        // for (uint256 i = 0; i < _additionalAssets.length; ++i) {
+        //     items.push(_additionalAssets[i]);
+        // }
+
+        Item[] memory givings = _items[trade.givingsId];
+
+        batchTransfer(givings, trade.initiator, msg.sender);
+        batchTransfer(items, msg.sender, trade.initiator);
+
+        emit TradeAccepted(msg.sender, _tradeId, _itemsId);
     }
 
     function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)
@@ -93,11 +171,7 @@ contract FlexiSwapCore is IFlexiSwap {
 
         _counterOfferInitiators[counterOfferItemsId] = msg.sender;
 
-        emit CounterOfferCreated(
-            msg.sender,
-            _tradeId,
-            counterOfferItemsId
-        );
+        emit CounterOfferCreated(msg.sender, _tradeId, counterOfferItemsId);
     }
 
     function acceptCounterOffer(uint256 _tradeId, uint256 _itemsId)
