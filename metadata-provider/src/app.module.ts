@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -16,6 +16,7 @@ import { metadataServiceProvider } from './services/metadata/metadata.service.pr
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register({ isGlobal: true, ttl: 10 * 60 }), // TTL: 10 minutes
     HttpModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
