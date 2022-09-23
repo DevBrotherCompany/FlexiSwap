@@ -5,8 +5,6 @@ import "./IFlexiSwap.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/interfaces/IERC721.sol";
 
-import "hardhat/console.sol";
-
 contract FlexiSwapCore is IFlexiSwap {
     using Counters for Counters.Counter;
 
