@@ -4,7 +4,6 @@ pragma solidity ^0.8.15;
 import "./IFlexiSwap.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/interfaces/IERC721.sol";
-import "@openzeppelin/contracts/interfaces/IERC721Receiver.sol";
 
 import "hardhat/console.sol";
 
@@ -25,15 +24,6 @@ contract FlexiSwapCore is IFlexiSwap {
 
     constructor() {
         // constructor
-    }
-
-    function onERC721Received(
-        address,
-        address,
-        uint256,
-        bytes calldata
-    ) external pure returns (bytes4) {
-        return IERC721Receiver.onERC721Received.selector;
     }
 
     function registerItemsToStorage(Item[] memory _itemsToRegister)
@@ -135,6 +125,8 @@ contract FlexiSwapCore is IFlexiSwap {
         );
 
         uint256 givingItemsId = registerItemsToStorage(_givings);
+        Item[] memory givingItems = _items[givingItemsId];
+        verifyApproved(givingItems);
 
         for (uint256 i = 0; i < _receivings.length; ++i) {
             uint256 receivingsItemsId = registerItemsToStorage(_receivings[i]);
@@ -180,8 +172,6 @@ contract FlexiSwapCore is IFlexiSwap {
         Item[] memory givings = _items[trade.givingsId];
 
         verifyApproved(givings);
-        verifyApproved(items);
-        verifyApproved(_additionalAssets);
 
         batchTransfer(givings, trade.initiator, msg.sender);
         batchTransfer(items, msg.sender, trade.initiator);
@@ -198,6 +188,8 @@ contract FlexiSwapCore is IFlexiSwap {
         uint256 counterOfferItemsId = registerItemsToStorage(_offerItems);
         _trades[_tradeId].counterOfferItemsIds.push(counterOfferItemsId);
         _counterOfferInitiators[counterOfferItemsId] = msg.sender;
+        Item[] memory counterOfferItems = _items[counterOfferItemsId];
+        verifyApproved(counterOfferItems);
 
         emit CounterOfferCreated(msg.sender, _tradeId, counterOfferItemsId);
     }
@@ -212,9 +204,6 @@ contract FlexiSwapCore is IFlexiSwap {
         Item[] memory givings = _items[trade.givingsId];
 
         address counterOfferInitiator = _counterOfferInitiators[_itemsId];
-
-        verifyApproved(givings);
-        verifyApproved(items);
 
         batchTransfer(givings, trade.initiator, counterOfferInitiator);
         batchTransfer(items, counterOfferInitiator, trade.initiator);

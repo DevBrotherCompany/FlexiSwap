@@ -91,7 +91,9 @@ contract FlexiSwapValidator is FlexiSwapCore {
         Trade memory trade = _trades[tradeId];
         for (uint256 i = 0; i < trade.counterOfferItemsIds.length; i++) {
             uint counterOfferItemsId = trade.counterOfferItemsIds[i];
-            if (counterOfferer == _counterOfferInitiators[counterOfferItemsId]) {
+            if (
+                counterOfferer == _counterOfferInitiators[counterOfferItemsId]
+            ) {
                 revert CounterOfferAlreadyExists(tradeId, counterOfferItemsId);
             }
         }
@@ -109,7 +111,11 @@ contract FlexiSwapValidator is FlexiSwapCore {
         super.createTrade(_givings, _receivings);
     }
 
-    function acceptOffer(uint256 _tradeId, uint256 _itemsId, Item[] memory _additionalAssets)
+    function acceptOffer(
+        uint256 _tradeId,
+        uint256 _itemsId,
+        Item[] memory _additionalAssets
+    )
         public
         virtual
         override

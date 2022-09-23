@@ -47,8 +47,6 @@ describe("#acceptCounterOffer", function () {
       counterOfferItems,
     } = await mintItems(hardhatTestToken, addr1, addr2, addr3);
 
-    await hardhatFlexiSwap.connect(addr1).createTrade(givings, [receivings]);
-
     await approve(
       hardhatTestToken,
       hardhatFlexiSwap.address,
@@ -70,16 +68,22 @@ describe("#acceptCounterOffer", function () {
       addr3
     );
 
+    await hardhatFlexiSwap.connect(addr1).createTrade(givings, [receivings]);
+
     await hardhatFlexiSwap
       .connect(addr3)
       .createCounterOffer(1, counterOfferItems);
 
-    const counterOfferAccepted = hardhatFlexiSwap.connect(addr1).acceptCounterOffer(1, 2);
+    const counterOfferAccepted = hardhatFlexiSwap
+      .connect(addr1)
+      .acceptCounterOffer(1, 2);
 
-    expect(await counterOfferAccepted).to.emit(hardhatFlexiSwap, "CounterOfferAccepted");
-
+    expect(await counterOfferAccepted).to.emit(
+      hardhatFlexiSwap,
+      "CounterOfferAccepted"
+    );
   });
-  
+
   // for some reason, all other tests i have tried to write are getting timed out because of loadFixture
   // we dont really have time to fix it for now, so lets suppose that it works :)
 });

@@ -35,10 +35,6 @@ describe("#acceptOffer", function () {
     const { givings, mintedGivings, receivings, mintedReceivings } =
       await mintItems(hardhatTestToken, addr1, addr2, addr3);
 
-    
-
-    await hardhatFlexiSwap.connect(addr1).createTrade(givings, [receivings]);
-
     await approve(
       hardhatTestToken,
       hardhatFlexiSwap.address,
@@ -52,6 +48,8 @@ describe("#acceptOffer", function () {
       mintedReceivings.map((token: any) => token[1]),
       addr2
     );
+
+    await hardhatFlexiSwap.connect(addr1).createTrade(givings, [receivings]);
 
     const tradeAccepted = hardhatFlexiSwap.connect(addr2).acceptOffer(1, 1, []);
 
