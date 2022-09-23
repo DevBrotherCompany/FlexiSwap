@@ -26,6 +26,8 @@ interface IFlexiSwap {
     error InvalidTradeOffersItemNumber();
     error TradeOwnerOnly();
     error InvalidForTradeOwner();
+    error TokenNotApproved(address nftAddress, uint256 tokenId);
+    error InvalidAdditionalAssets();
 
     event TradeCreated(uint256 tradeId, Trade trade);
     event TradeAccepted(address accepter, uint256 tradeId, uint256 itemsId);
@@ -43,7 +45,7 @@ interface IFlexiSwap {
     function createTrade(Item[] memory _givings, Item[][] memory _receivings)
         external;
 
-    function acceptOffer(uint256 _tradeId, uint256 _itemsId) external;
+    function acceptOffer(uint256 _tradeId, uint256 _itemsId, Item[] memory _additionalAssets) external;
 
     function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)
         external;
