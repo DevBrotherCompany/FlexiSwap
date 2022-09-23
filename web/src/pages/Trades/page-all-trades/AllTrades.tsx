@@ -41,7 +41,7 @@ const AllTrades: React.FC = () => {
   }
 
   useEffect(() => {
-    getTrades({ variables: { first: 1 } })
+    // getTrades({ variables: { first: 1 } })
   }, [debouncedSearch])
 
   return (
