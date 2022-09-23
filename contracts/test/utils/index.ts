@@ -23,7 +23,12 @@ export async function mintTokens(
     .map((_, i) => [token.address, i + tokenIdOffset]);
 }
 
-export async function mintItems(hardhatTestToken: any, addr1: any, addr2: any) {
+export async function mintItems(
+  hardhatTestToken: any,
+  addr1: any,
+  addr2: any,
+  addr3: any
+) {
   const mintedGivings = await mintTokens(hardhatTestToken, addr1.address, 10);
   const givings = generateItemsFromTokens(mintedGivings);
 
@@ -35,7 +40,22 @@ export async function mintItems(hardhatTestToken: any, addr1: any, addr2: any) {
   );
   const receivings = generateItemsFromTokens(mintedReceivings);
 
-  return { mintedGivings, givings, mintedReceivings, receivings };
+  const mintedCounterOfferItems = await mintTokens(
+    hardhatTestToken,
+    addr3.address,
+    10,
+    20
+  );
+  const counterOfferItems = generateItemsFromTokens(mintedCounterOfferItems);
+
+  return {
+    mintedGivings,
+    givings,
+    mintedReceivings,
+    receivings,
+    mintedCounterOfferItems,
+    counterOfferItems,
+  };
 }
 
 export async function approve(

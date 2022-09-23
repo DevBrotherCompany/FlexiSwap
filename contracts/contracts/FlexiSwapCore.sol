@@ -67,21 +67,36 @@ contract FlexiSwapCore is IFlexiSwap {
         Item[] memory _orderItems,
         Item[] memory _additionalAssets
     ) private returns (bool) {
+        uint256 _orderAdditionalAssetsCount = 0;
         for (uint256 i = 0; i < _additionalAssets.length; ++i) {
             for (uint256 j = 0; j < _orderItems.length; ++j) {
-                if (
-                    !_orderItems[j].isEmptyToken &&
-                    _orderItems[j].nftAddress == _additionalAssets[i].nftAddress
-                ) {
-                    // TODO
-                    // _additionalAssets[i] = _additionalAssets[_additionalAssets.length - 1];
-                    // delete _additionalAssets[_additionalAssets.length - 1];
-                    // _additionalAssets.length--;
+                if (_orderItems[j].isEmptyToken) {
+                    _orderAdditionalAssetsCount++;
                 }
             }
         }
 
-        return _additionalAssets.length == 0;
+        if (_orderAdditionalAssetsCount != _additionalAssets.length) {
+            revert InvalidAdditionalAssets();
+        }
+
+        for (uint256 i = 0; i < _additionalAssets.length; ++i) {
+            bool isFound = false;
+            for (uint256 j = 0; j < _orderItems.length; ++j) {
+                if (
+                    _orderItems[j].isEmptyToken &&
+                    _additionalAssets[j].nftAddress == _orderItems[i].nftAddress
+                ) {
+                    isFound = true;
+                    break;
+                }
+            }
+            if (!isFound) {
+                revert InvalidAdditionalAssets();
+            }
+        }
+
+        return true;
     }
 
     function batchTransfer(
@@ -89,8 +104,6 @@ contract FlexiSwapCore is IFlexiSwap {
         address _from,
         address _to
     ) private {
-        verifyApproved(_itemsToTransfer);
-
         for (uint256 i = 0; i < _itemsToTransfer.length; ++i) {
             Item memory itemToTransfer = _itemsToTransfer[i];
             IERC721(itemToTransfer.nftAddress).safeTransferFrom(
@@ -160,15 +173,19 @@ contract FlexiSwapCore is IFlexiSwap {
             revert InvalidAdditionalAssets();
         }
 
-        // TODO
         // for (uint256 i = 0; i < _additionalAssets.length; ++i) {
         //     items.push(_additionalAssets[i]);
         // }
 
         Item[] memory givings = _items[trade.givingsId];
 
+        verifyApproved(givings);
+        verifyApproved(items);
+        verifyApproved(_additionalAssets);
+
         batchTransfer(givings, trade.initiator, msg.sender);
         batchTransfer(items, msg.sender, trade.initiator);
+        batchTransfer(_additionalAssets, msg.sender, trade.initiator);
 
         emit TradeAccepted(msg.sender, _tradeId, _itemsId);
     }
@@ -179,9 +196,7 @@ contract FlexiSwapCore is IFlexiSwap {
         override
     {
         uint256 counterOfferItemsId = registerItemsToStorage(_offerItems);
-
         _trades[_tradeId].counterOfferItemsIds.push(counterOfferItemsId);
-
         _counterOfferInitiators[counterOfferItemsId] = msg.sender;
 
         emit CounterOfferCreated(msg.sender, _tradeId, counterOfferItemsId);
@@ -192,6 +207,18 @@ contract FlexiSwapCore is IFlexiSwap {
         virtual
         override
     {
-        revert("Not implemented");
+        Trade memory trade = _trades[_tradeId];
+        Item[] memory items = _items[_itemsId];
+        Item[] memory givings = _items[trade.givingsId];
+
+        address counterOfferInitiator = _counterOfferInitiators[_itemsId];
+
+        verifyApproved(givings);
+        verifyApproved(items);
+
+        batchTransfer(givings, trade.initiator, counterOfferInitiator);
+        batchTransfer(items, counterOfferInitiator, trade.initiator);
+
+        emit CounterOfferAccepted(_tradeId, _itemsId);
     }
 }

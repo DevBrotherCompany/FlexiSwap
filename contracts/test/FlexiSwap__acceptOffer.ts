@@ -1,10 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import {
-    FlexiSwap__factory,
-    TestToken__factory,
-  } from "../typechain-types";
+import { FlexiSwap__factory, TestToken__factory } from "../typechain-types";
 import { mintItems, approve } from "./utils";
 
 describe("#acceptOffer", function () {
@@ -19,25 +16,26 @@ describe("#acceptOffer", function () {
   }
 
   async function deployTestTokenFixture() {
-    const [owner, addr1, addr2] = await ethers.getSigners();
+    const [owner, addr1, addr2, addr3] = await ethers.getSigners();
     const TestToken = (await ethers.getContractFactory(
       "TestToken"
     )) as TestToken__factory;
     const hardhatTestToken = await TestToken.deploy();
     await hardhatTestToken.deployed();
-
-    return { owner, addr1, addr2, hardhatTestToken };
+    return { owner, addr1, addr2, addr3, hardhatTestToken };
   }
 
-  it("Should accept offer", async function () {
-    const { addr1, addr2, hardhatTestToken } = await loadFixture(
+  it("should emit event when offer is accepted", async function () {
+    const { addr1, addr2, addr3, hardhatTestToken } = await loadFixture(
       deployTestTokenFixture
     );
 
     const { hardhatFlexiSwap } = await loadFixture(deployFlexiSwapFixture);
 
     const { givings, mintedGivings, receivings, mintedReceivings } =
-      await mintItems(hardhatTestToken, addr1, addr2);
+      await mintItems(hardhatTestToken, addr1, addr2, addr3);
+
+    
 
     await hardhatFlexiSwap.connect(addr1).createTrade(givings, [receivings]);
 
