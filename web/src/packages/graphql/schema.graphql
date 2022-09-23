@@ -1,0 +1,912 @@
+type _Block_ {
+  # The hash of the block
+  hash: Bytes
+
+  # The block number
+  number: Int!
+
+  # Integer representation of the timestamp stored in blocks for the chain
+  timestamp: Int
+}
+
+# The type for the top-level _meta field
+type _Meta_ {
+  # Information about a specific subgraph block. The hash of the block
+  # will be null if the _meta field has a block constraint that asks for
+  # a block number. It will be filled if the _meta field has no block constraint
+  # and therefore asks for the latest  block
+  block: _Block_!
+
+  # The deployment ID
+  deployment: String!
+
+  # If `true`, the subgraph encountered indexing errors at some past block
+  hasIndexingErrors: Boolean!
+}
+
+enum _SubgraphErrorPolicy_ {
+  # Data will be returned even if the subgraph has indexing errors
+  allow
+
+  # If the subgraph has indexing errors, data will be omitted. The default.
+  deny
+}
+
+scalar BigDecimal
+
+scalar BigInt
+
+input Block_height {
+  hash: Bytes
+  number: Int
+  number_gte: Int
+}
+
+input BlockChangedFilter {
+  number_gte: Int!
+}
+
+scalar Bytes
+
+type Collection {
+  tokenAddress: Bytes!
+  name: String
+  symbol: String
+  logo: String
+  previewItems: [CollectionItem!]!
+}
+
+type CollectionItem {
+  tokenAddress: Bytes!
+  tokenId: BigInt!
+  name: String
+  description: String
+  file: String
+  collection: Collection
+}
+
+type CollectionItemsPagination {
+  items: [CollectionItem!]!
+  nextPage: Int
+}
+
+type CounterOffer {
+  id: ID!
+  createdAt: Int!
+  offererAddress: Bytes!
+  items(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CounterOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: CounterOfferItem_filter
+  ): [CounterOfferItem!]!
+  trade: Trade!
+}
+
+input CounterOffer_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  createdAt: Int
+  createdAt_not: Int
+  createdAt_gt: Int
+  createdAt_lt: Int
+  createdAt_gte: Int
+  createdAt_lte: Int
+  createdAt_in: [Int!]
+  createdAt_not_in: [Int!]
+  offererAddress: Bytes
+  offererAddress_not: Bytes
+  offererAddress_in: [Bytes!]
+  offererAddress_not_in: [Bytes!]
+  offererAddress_contains: Bytes
+  offererAddress_not_contains: Bytes
+  items_: CounterOfferItem_filter
+  trade: String
+  trade_not: String
+  trade_gt: String
+  trade_lt: String
+  trade_gte: String
+  trade_lte: String
+  trade_in: [String!]
+  trade_not_in: [String!]
+  trade_contains: String
+  trade_contains_nocase: String
+  trade_not_contains: String
+  trade_not_contains_nocase: String
+  trade_starts_with: String
+  trade_starts_with_nocase: String
+  trade_not_starts_with: String
+  trade_not_starts_with_nocase: String
+  trade_ends_with: String
+  trade_ends_with_nocase: String
+  trade_not_ends_with: String
+  trade_not_ends_with_nocase: String
+  trade_: Trade_filter
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum CounterOffer_orderBy {
+  id
+  createdAt
+  offererAddress
+  items
+  trade
+}
+
+type CounterOfferItem {
+  tokenAddress: Bytes!
+  tokenId: BigInt!
+  item: CollectionItem!
+  collection: Collection!
+  id: ID!
+  offer: CounterOffer!
+}
+
+input CounterOfferItem_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenId: BigInt
+  tokenId_not: BigInt
+  tokenId_gt: BigInt
+  tokenId_lt: BigInt
+  tokenId_gte: BigInt
+  tokenId_lte: BigInt
+  tokenId_in: [BigInt!]
+  tokenId_not_in: [BigInt!]
+  offer: String
+  offer_not: String
+  offer_gt: String
+  offer_lt: String
+  offer_gte: String
+  offer_lte: String
+  offer_in: [String!]
+  offer_not_in: [String!]
+  offer_contains: String
+  offer_contains_nocase: String
+  offer_not_contains: String
+  offer_not_contains_nocase: String
+  offer_starts_with: String
+  offer_starts_with_nocase: String
+  offer_not_starts_with: String
+  offer_not_starts_with_nocase: String
+  offer_ends_with: String
+  offer_ends_with_nocase: String
+  offer_not_ends_with: String
+  offer_not_ends_with_nocase: String
+  offer_: CounterOffer_filter
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum CounterOfferItem_orderBy {
+  id
+  tokenAddress
+  tokenId
+  offer
+}
+
+type GivingsOffer {
+  id: ID!
+  items(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: GivingsOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: GivingsOfferItem_filter
+  ): [GivingsOfferItem!]!
+  trade: Trade!
+}
+
+input GivingsOffer_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  items_: GivingsOfferItem_filter
+  trade: String
+  trade_not: String
+  trade_gt: String
+  trade_lt: String
+  trade_gte: String
+  trade_lte: String
+  trade_in: [String!]
+  trade_not_in: [String!]
+  trade_contains: String
+  trade_contains_nocase: String
+  trade_not_contains: String
+  trade_not_contains_nocase: String
+  trade_starts_with: String
+  trade_starts_with_nocase: String
+  trade_not_starts_with: String
+  trade_not_starts_with_nocase: String
+  trade_ends_with: String
+  trade_ends_with_nocase: String
+  trade_not_ends_with: String
+  trade_not_ends_with_nocase: String
+  trade_: Trade_filter
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum GivingsOffer_orderBy {
+  id
+  items
+  trade
+}
+
+type GivingsOfferItem {
+  tokenAddress: Bytes!
+  tokenId: BigInt!
+  item: CollectionItem!
+  collection: Collection!
+  id: ID!
+  offer: GivingsOffer!
+}
+
+input GivingsOfferItem_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenId: BigInt
+  tokenId_not: BigInt
+  tokenId_gt: BigInt
+  tokenId_lt: BigInt
+  tokenId_gte: BigInt
+  tokenId_lte: BigInt
+  tokenId_in: [BigInt!]
+  tokenId_not_in: [BigInt!]
+  offer: String
+  offer_not: String
+  offer_gt: String
+  offer_lt: String
+  offer_gte: String
+  offer_lte: String
+  offer_in: [String!]
+  offer_not_in: [String!]
+  offer_contains: String
+  offer_contains_nocase: String
+  offer_not_contains: String
+  offer_not_contains_nocase: String
+  offer_starts_with: String
+  offer_starts_with_nocase: String
+  offer_not_starts_with: String
+  offer_not_starts_with_nocase: String
+  offer_ends_with: String
+  offer_ends_with_nocase: String
+  offer_not_ends_with: String
+  offer_not_ends_with_nocase: String
+  offer_: GivingsOffer_filter
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum GivingsOfferItem_orderBy {
+  id
+  tokenAddress
+  tokenId
+  offer
+}
+
+input ItemsByOwnerAddressInput {
+  ownerAddress: Bytes!
+  tokenAddress: Bytes
+  nextPage: Int
+}
+
+# Defines the order direction, either ascending or descending
+enum OrderDirection {
+  asc
+  desc
+}
+
+type Query {
+  itemsByOwnerAddress(
+    input: ItemsByOwnerAddressInput!
+  ): CollectionItemsPagination!
+  searchItems(input: SearchItemsInput!): CollectionItemsPagination!
+  givingsOfferItem(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): GivingsOfferItem
+  givingsOfferItems(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: GivingsOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: GivingsOfferItem_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [GivingsOfferItem!]!
+  givingsOffer(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): GivingsOffer
+  givingsOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: GivingsOffer_orderBy
+    orderDirection: OrderDirection
+    where: GivingsOffer_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [GivingsOffer!]!
+  receivingsOfferItem(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ReceivingsOfferItem
+  receivingsOfferItems(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ReceivingsOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: ReceivingsOfferItem_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ReceivingsOfferItem!]!
+  receivingsOffer(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ReceivingsOffer
+  receivingsOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ReceivingsOffer_orderBy
+    orderDirection: OrderDirection
+    where: ReceivingsOffer_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ReceivingsOffer!]!
+  counterOfferItem(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): CounterOfferItem
+  counterOfferItems(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CounterOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: CounterOfferItem_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [CounterOfferItem!]!
+  counterOffer(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): CounterOffer
+  counterOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CounterOffer_orderBy
+    orderDirection: OrderDirection
+    where: CounterOffer_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [CounterOffer!]!
+  trade(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Trade
+  trades(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Trade_orderBy
+    orderDirection: OrderDirection
+    where: Trade_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Trade!]!
+
+  # Access to subgraph metadata
+  _meta(block: Block_height): _Meta_
+}
+
+type ReceivingsOffer {
+  id: ID!
+  items(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ReceivingsOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: ReceivingsOfferItem_filter
+  ): [ReceivingsOfferItem!]!
+  trade: Trade!
+}
+
+input ReceivingsOffer_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  items_: ReceivingsOfferItem_filter
+  trade: String
+  trade_not: String
+  trade_gt: String
+  trade_lt: String
+  trade_gte: String
+  trade_lte: String
+  trade_in: [String!]
+  trade_not_in: [String!]
+  trade_contains: String
+  trade_contains_nocase: String
+  trade_not_contains: String
+  trade_not_contains_nocase: String
+  trade_starts_with: String
+  trade_starts_with_nocase: String
+  trade_not_starts_with: String
+  trade_not_starts_with_nocase: String
+  trade_ends_with: String
+  trade_ends_with_nocase: String
+  trade_not_ends_with: String
+  trade_not_ends_with_nocase: String
+  trade_: Trade_filter
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum ReceivingsOffer_orderBy {
+  id
+  items
+  trade
+}
+
+type ReceivingsOfferItem {
+  tokenAddress: Bytes!
+  tokenId: BigInt
+  item: CollectionItem
+  collection: Collection!
+  id: ID!
+  offer: ReceivingsOffer!
+}
+
+input ReceivingsOfferItem_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenId: BigInt
+  tokenId_not: BigInt
+  tokenId_gt: BigInt
+  tokenId_lt: BigInt
+  tokenId_gte: BigInt
+  tokenId_lte: BigInt
+  tokenId_in: [BigInt!]
+  tokenId_not_in: [BigInt!]
+  offer: String
+  offer_not: String
+  offer_gt: String
+  offer_lt: String
+  offer_gte: String
+  offer_lte: String
+  offer_in: [String!]
+  offer_not_in: [String!]
+  offer_contains: String
+  offer_contains_nocase: String
+  offer_not_contains: String
+  offer_not_contains_nocase: String
+  offer_starts_with: String
+  offer_starts_with_nocase: String
+  offer_not_starts_with: String
+  offer_not_starts_with_nocase: String
+  offer_ends_with: String
+  offer_ends_with_nocase: String
+  offer_not_ends_with: String
+  offer_not_ends_with_nocase: String
+  offer_: ReceivingsOffer_filter
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum ReceivingsOfferItem_orderBy {
+  id
+  tokenAddress
+  tokenId
+  offer
+}
+
+input SearchItemsInput {
+  search: String!
+  nextPage: Int
+}
+
+type Subscription {
+  givingsOfferItem(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): GivingsOfferItem
+  givingsOfferItems(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: GivingsOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: GivingsOfferItem_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [GivingsOfferItem!]!
+  givingsOffer(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): GivingsOffer
+  givingsOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: GivingsOffer_orderBy
+    orderDirection: OrderDirection
+    where: GivingsOffer_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [GivingsOffer!]!
+  receivingsOfferItem(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ReceivingsOfferItem
+  receivingsOfferItems(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ReceivingsOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: ReceivingsOfferItem_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ReceivingsOfferItem!]!
+  receivingsOffer(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ReceivingsOffer
+  receivingsOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ReceivingsOffer_orderBy
+    orderDirection: OrderDirection
+    where: ReceivingsOffer_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ReceivingsOffer!]!
+  counterOfferItem(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): CounterOfferItem
+  counterOfferItems(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CounterOfferItem_orderBy
+    orderDirection: OrderDirection
+    where: CounterOfferItem_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [CounterOfferItem!]!
+  counterOffer(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): CounterOffer
+  counterOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CounterOffer_orderBy
+    orderDirection: OrderDirection
+    where: CounterOffer_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [CounterOffer!]!
+  trade(
+    id: ID!
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Trade
+  trades(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Trade_orderBy
+    orderDirection: OrderDirection
+    where: Trade_filter
+
+    # The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    block: Block_height
+
+    # Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Trade!]!
+
+  # Access to subgraph metadata
+  _meta(block: Block_height): _Meta_
+}
+
+type Trade {
+  id: ID!
+  createdAt: Int!
+  finishedAt: Int
+  initiatorAddress: Bytes!
+  givings: GivingsOffer!
+  receivings(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ReceivingsOffer_orderBy
+    orderDirection: OrderDirection
+    where: ReceivingsOffer_filter
+  ): [ReceivingsOffer!]!
+  counterOffers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CounterOffer_orderBy
+    orderDirection: OrderDirection
+    where: CounterOffer_filter
+  ): [CounterOffer!]!
+  acceptedReceivingsOffer: ReceivingsOffer
+  acceptedCounterOffer: CounterOffer
+  counterAgentAddress: Bytes
+}
+
+input Trade_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  createdAt: Int
+  createdAt_not: Int
+  createdAt_gt: Int
+  createdAt_lt: Int
+  createdAt_gte: Int
+  createdAt_lte: Int
+  createdAt_in: [Int!]
+  createdAt_not_in: [Int!]
+  finishedAt: Int
+  finishedAt_not: Int
+  finishedAt_gt: Int
+  finishedAt_lt: Int
+  finishedAt_gte: Int
+  finishedAt_lte: Int
+  finishedAt_in: [Int!]
+  finishedAt_not_in: [Int!]
+  initiatorAddress: Bytes
+  initiatorAddress_not: Bytes
+  initiatorAddress_in: [Bytes!]
+  initiatorAddress_not_in: [Bytes!]
+  initiatorAddress_contains: Bytes
+  initiatorAddress_not_contains: Bytes
+  givings_: GivingsOffer_filter
+  receivings_: ReceivingsOffer_filter
+  counterOffers_: CounterOffer_filter
+  acceptedReceivingsOffer: String
+  acceptedReceivingsOffer_not: String
+  acceptedReceivingsOffer_gt: String
+  acceptedReceivingsOffer_lt: String
+  acceptedReceivingsOffer_gte: String
+  acceptedReceivingsOffer_lte: String
+  acceptedReceivingsOffer_in: [String!]
+  acceptedReceivingsOffer_not_in: [String!]
+  acceptedReceivingsOffer_contains: String
+  acceptedReceivingsOffer_contains_nocase: String
+  acceptedReceivingsOffer_not_contains: String
+  acceptedReceivingsOffer_not_contains_nocase: String
+  acceptedReceivingsOffer_starts_with: String
+  acceptedReceivingsOffer_starts_with_nocase: String
+  acceptedReceivingsOffer_not_starts_with: String
+  acceptedReceivingsOffer_not_starts_with_nocase: String
+  acceptedReceivingsOffer_ends_with: String
+  acceptedReceivingsOffer_ends_with_nocase: String
+  acceptedReceivingsOffer_not_ends_with: String
+  acceptedReceivingsOffer_not_ends_with_nocase: String
+  acceptedReceivingsOffer_: ReceivingsOffer_filter
+  acceptedCounterOffer: String
+  acceptedCounterOffer_not: String
+  acceptedCounterOffer_gt: String
+  acceptedCounterOffer_lt: String
+  acceptedCounterOffer_gte: String
+  acceptedCounterOffer_lte: String
+  acceptedCounterOffer_in: [String!]
+  acceptedCounterOffer_not_in: [String!]
+  acceptedCounterOffer_contains: String
+  acceptedCounterOffer_contains_nocase: String
+  acceptedCounterOffer_not_contains: String
+  acceptedCounterOffer_not_contains_nocase: String
+  acceptedCounterOffer_starts_with: String
+  acceptedCounterOffer_starts_with_nocase: String
+  acceptedCounterOffer_not_starts_with: String
+  acceptedCounterOffer_not_starts_with_nocase: String
+  acceptedCounterOffer_ends_with: String
+  acceptedCounterOffer_ends_with_nocase: String
+  acceptedCounterOffer_not_ends_with: String
+  acceptedCounterOffer_not_ends_with_nocase: String
+  acceptedCounterOffer_: CounterOffer_filter
+  counterAgentAddress: Bytes
+  counterAgentAddress_not: Bytes
+  counterAgentAddress_in: [Bytes!]
+  counterAgentAddress_not_in: [Bytes!]
+  counterAgentAddress_contains: Bytes
+  counterAgentAddress_not_contains: Bytes
+
+  # Filter for the block changed event.
+  _change_block: BlockChangedFilter
+}
+
+enum Trade_orderBy {
+  id
+  createdAt
+  finishedAt
+  initiatorAddress
+  givings
+  receivings
+  counterOffers
+  acceptedReceivingsOffer
+  acceptedCounterOffer
+  counterAgentAddress
+}
