@@ -19,7 +19,6 @@ export const useTradesSidebarStyles = makeStyles((theme: Theme) => ({
     height: `${headerHeight}px !important`,
     backgroundImage: "none !important",
     borderBottom: `1px solid ${Style.additionalBackground}`,
-    opacity: ".6",
   },
   input: { width: "100% !important" },
   subtitle: { marginTop: "30px !important" },
