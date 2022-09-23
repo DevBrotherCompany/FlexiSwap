@@ -4,6 +4,9 @@ pragma solidity ^0.8.15;
 import "./IFlexiSwap.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/interfaces/IERC721.sol";
+import "@openzeppelin/contracts/interfaces/IERC721Receiver.sol";
+
+import "hardhat/console.sol";
 
 contract FlexiSwapCore is IFlexiSwap {
     using Counters for Counters.Counter;
@@ -22,6 +25,15 @@ contract FlexiSwapCore is IFlexiSwap {
 
     constructor() {
         // constructor
+    }
+
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external pure returns (bytes4) {
+        return IERC721Receiver.onERC721Received.selector;
     }
 
     function registerItemsToStorage(Item[] memory _itemsToRegister)
@@ -80,10 +92,11 @@ contract FlexiSwapCore is IFlexiSwap {
         verifyApproved(_itemsToTransfer);
 
         for (uint256 i = 0; i < _itemsToTransfer.length; ++i) {
-            IERC721(_itemsToTransfer[i].nftAddress).safeTransferFrom(
+            Item memory itemToTransfer = _itemsToTransfer[i];
+            IERC721(itemToTransfer.nftAddress).safeTransferFrom(
                 _from,
                 _to,
-                _itemsToTransfer[i].tokenId
+                itemToTransfer.tokenId
             );
         }
     }
