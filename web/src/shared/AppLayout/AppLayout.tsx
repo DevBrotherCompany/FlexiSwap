@@ -1,15 +1,27 @@
-import React, { Suspense } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { RouteName } from 'shared/routes'
+import { RouteName } from "shared/routes";
 
-import { Landing } from 'pages/Landing/Landing'
-const AllTrades = React.lazy(() => import('pages/Trades/page-all-trades/AllTrades'))
-const MyTrades = React.lazy(() => import('pages/Trades/page-my-trades/MyTrades'))
-const MyCounteroffers = React.lazy(() => import('pages/Trades/page-my-counteroffers/MyCounteroffers'))
+import { Landing } from "pages/Landing/Landing";
+import { CreateOffersParant } from "../../pages/Creating/page-create-offers/CreateOffersParant";
 
-const CreateTrade = React.lazy(() => import('pages/Creating/page-create-trade/CreateTrade'))
-const CreateOffers = React.lazy(() => import('pages/Creating/page-create-offers/CreateOffers'))
+const AllTrades = React.lazy(
+  () => import("pages/Trades/page-all-trades/AllTrades")
+);
+const MyTrades = React.lazy(
+  () => import("pages/Trades/page-my-trades/MyTrades")
+);
+const MyCounteroffers = React.lazy(
+  () => import("pages/Trades/page-my-counteroffers/MyCounteroffers")
+);
+
+const CreateTrade = React.lazy(
+  () => import("pages/Creating/page-create-trade/CreateTrade")
+);
+const CreateOffers = React.lazy(
+  () => import("pages/Creating/page-create-offers/CreateOffers")
+);
 
 export const AppLayout: React.FC = () => {
   return (
@@ -19,11 +31,16 @@ export const AppLayout: React.FC = () => {
           <Route path={RouteName.Landing} element={<Landing />} />
           <Route path={RouteName.AllTrades} element={<AllTrades />} />
           <Route path={RouteName.MyTrades} element={<MyTrades />} />
-          <Route path={RouteName.MyCounterOffers} element={<MyCounteroffers />} />
+          <Route
+            path={RouteName.MyCounterOffers}
+            element={<MyCounteroffers />}
+          />
           <Route path={RouteName.CreateTrade} element={<CreateTrade />} />
-          <Route path={RouteName.CreateOffers} element={<CreateOffers />} />
+          <Route path={RouteName.CreateOffers} element={<CreateOffersParant />}>
+            <Route path={":number"} element={<CreateOffers />} />
+          </Route>
         </Routes>
       </Router>
     </Suspense>
-  )
-}
+  );
+};
