@@ -1,7 +1,7 @@
 import React from "react";
 
 import { makeStyles } from "@mui/styles";
-import { Style } from "styles/variables";
+import { Style } from "shared/variables";
 import cn from "classnames";
 
 export const useTitleStyles = makeStyles(() => ({
