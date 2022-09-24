@@ -22,7 +22,7 @@ interface TradesLayoutProps {
 
 export const TradesLayout: React.FC<TradesLayoutProps> = ({ onSearchChange, children }) => {
   const classes = useTradesSidebarStyles()
-  const { isAuthenticated } = useAuth()
+  const { account } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ export const TradesLayout: React.FC<TradesLayoutProps> = ({ onSearchChange, chil
         <FlexiButton onClick={handleCreateTrade}>Create trade</FlexiButton>
         <FlexiSubtitle className={classes.subtitle}>Marketplace</FlexiSubtitle>
         <SidebarList />
-        {!isAuthenticated && <ConnectWallet />}
+        {!account && <ConnectWallet />}
       </Sidebar>
       {children}
     </main>
