@@ -1,0 +1,44 @@
+query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
+    trades(first: $first, skip: $skip, where: { initiatorAddress: $owner }) {
+        id
+        initiatorAddress
+        givings {
+            items {
+                item {
+                    tokenId
+                    tokenAddress
+                    name
+                    description
+                    file
+                    collection {
+                        name
+                    }
+                }
+            }
+        }
+        receivings {
+            id
+            items {
+                item {
+                    tokenId
+                    tokenAddress
+                    name
+                    description
+                    file
+                    collection {
+                        name
+                    }
+                }
+                collection {
+                    tokenAddress
+                    name
+                    symbol
+                    logo
+                    previewItems {
+                        file
+                    }
+                }
+            }
+        }
+    }
+}

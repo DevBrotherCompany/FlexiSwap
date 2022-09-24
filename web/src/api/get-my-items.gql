@@ -1,0 +1,21 @@
+query GetMyItems($owner: Bytes!, $tokenAddress: Bytes, $nextPage: Int) {
+    itemsByOwnerAddress(input: { ownerAddress: $owner, tokenAddress: $tokenAddress, nextPage: $nextPage }) {
+        items {
+            tokenAddress
+            tokenId
+            name
+            description
+            file
+            collection {
+                tokenAddress
+                name
+                symbol
+                logo
+                previewItems {
+                    file
+                }
+            }
+        }
+        nextPage
+    }
+}

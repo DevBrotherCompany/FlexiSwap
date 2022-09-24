@@ -934,19 +934,79 @@ export enum _SubgraphErrorPolicy_ {
 
 export type GetAllTradesQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type GetAllTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', file?: string | null } }> } }> };
+export type GetAllTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, initiatorAddress: any, givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } }> }, receivings: Array<{ __typename?: 'ReceivingsOffer', id: string, items: Array<{ __typename?: 'ReceivingsOfferItem', item?: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } | null, collection: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } }> }> }> };
+
+export type GetMyItemsQueryVariables = Exact<{
+  owner: Scalars['Bytes'];
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  nextPage?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetMyItemsQuery = { __typename?: 'Query', itemsByOwnerAddress: { __typename?: 'CollectionItemsPagination', nextPage?: number | null, items: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } | null }> } };
+
+export type GetMyTradesQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  owner: Scalars['Bytes'];
+}>;
+
+
+export type GetMyTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, initiatorAddress: any, givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } }> }, receivings: Array<{ __typename?: 'ReceivingsOffer', id: string, items: Array<{ __typename?: 'ReceivingsOfferItem', item?: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } | null, collection: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } }> }> }> };
+
+export type SearchItemsQueryVariables = Exact<{
+  search: Scalars['String'];
+  nextPage?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type SearchItemsQuery = { __typename?: 'Query', searchItems: { __typename?: 'CollectionItemsPagination', nextPage?: number | null, items: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } | null }> } };
 
 
 export const GetAllTradesDocument = gql`
-    query GetAllTrades($first: Int) {
-  trades(first: $first) {
+    query GetAllTrades($first: Int, $skip: Int) {
+  trades(first: $first, skip: $skip) {
+    id
+    initiatorAddress
     givings {
       items {
         item {
+          tokenId
+          tokenAddress
+          name
+          description
           file
+          collection {
+            name
+          }
+        }
+      }
+    }
+    receivings {
+      id
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
+          collection {
+            name
+          }
+        }
+        collection {
+          tokenAddress
+          name
+          symbol
+          logo
+          previewItems {
+            file
+          }
         }
       }
     }
@@ -967,6 +1027,7 @@ export const GetAllTradesDocument = gql`
  * const { data, loading, error } = useGetAllTradesQuery({
  *   variables: {
  *      first: // value for 'first'
+ *      skip: // value for 'skip'
  *   },
  * });
  */
@@ -981,3 +1042,186 @@ export function useGetAllTradesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllTradesQueryHookResult = ReturnType<typeof useGetAllTradesQuery>;
 export type GetAllTradesLazyQueryHookResult = ReturnType<typeof useGetAllTradesLazyQuery>;
 export type GetAllTradesQueryResult = Apollo.QueryResult<GetAllTradesQuery, GetAllTradesQueryVariables>;
+export const GetMyItemsDocument = gql`
+    query GetMyItems($owner: Bytes!, $tokenAddress: Bytes, $nextPage: Int) {
+  itemsByOwnerAddress(
+    input: {ownerAddress: $owner, tokenAddress: $tokenAddress, nextPage: $nextPage}
+  ) {
+    items {
+      tokenAddress
+      tokenId
+      name
+      description
+      file
+      collection {
+        tokenAddress
+        name
+        symbol
+        logo
+        previewItems {
+          file
+        }
+      }
+    }
+    nextPage
+  }
+}
+    `;
+
+/**
+ * __useGetMyItemsQuery__
+ *
+ * To run a query within a React component, call `useGetMyItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyItemsQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *      tokenAddress: // value for 'tokenAddress'
+ *      nextPage: // value for 'nextPage'
+ *   },
+ * });
+ */
+export function useGetMyItemsQuery(baseOptions: Apollo.QueryHookOptions<GetMyItemsQuery, GetMyItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(GetMyItemsDocument, options);
+      }
+export function useGetMyItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyItemsQuery, GetMyItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(GetMyItemsDocument, options);
+        }
+export type GetMyItemsQueryHookResult = ReturnType<typeof useGetMyItemsQuery>;
+export type GetMyItemsLazyQueryHookResult = ReturnType<typeof useGetMyItemsLazyQuery>;
+export type GetMyItemsQueryResult = Apollo.QueryResult<GetMyItemsQuery, GetMyItemsQueryVariables>;
+export const GetMyTradesDocument = gql`
+    query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
+  trades(first: $first, skip: $skip, where: {initiatorAddress: $owner}) {
+    id
+    initiatorAddress
+    givings {
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
+          collection {
+            name
+          }
+        }
+      }
+    }
+    receivings {
+      id
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
+          collection {
+            name
+          }
+        }
+        collection {
+          tokenAddress
+          name
+          symbol
+          logo
+          previewItems {
+            file
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMyTradesQuery__
+ *
+ * To run a query within a React component, call `useGetMyTradesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyTradesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyTradesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      skip: // value for 'skip'
+ *      owner: // value for 'owner'
+ *   },
+ * });
+ */
+export function useGetMyTradesQuery(baseOptions: Apollo.QueryHookOptions<GetMyTradesQuery, GetMyTradesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyTradesQuery, GetMyTradesQueryVariables>(GetMyTradesDocument, options);
+      }
+export function useGetMyTradesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyTradesQuery, GetMyTradesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyTradesQuery, GetMyTradesQueryVariables>(GetMyTradesDocument, options);
+        }
+export type GetMyTradesQueryHookResult = ReturnType<typeof useGetMyTradesQuery>;
+export type GetMyTradesLazyQueryHookResult = ReturnType<typeof useGetMyTradesLazyQuery>;
+export type GetMyTradesQueryResult = Apollo.QueryResult<GetMyTradesQuery, GetMyTradesQueryVariables>;
+export const SearchItemsDocument = gql`
+    query SearchItems($search: String!, $nextPage: Int) {
+  searchItems(input: {search: $search, nextPage: $nextPage}) {
+    items {
+      tokenAddress
+      tokenId
+      name
+      description
+      file
+      collection {
+        tokenAddress
+        name
+        symbol
+        logo
+        previewItems {
+          file
+        }
+      }
+    }
+    nextPage
+  }
+}
+    `;
+
+/**
+ * __useSearchItemsQuery__
+ *
+ * To run a query within a React component, call `useSearchItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchItemsQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      nextPage: // value for 'nextPage'
+ *   },
+ * });
+ */
+export function useSearchItemsQuery(baseOptions: Apollo.QueryHookOptions<SearchItemsQuery, SearchItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchItemsQuery, SearchItemsQueryVariables>(SearchItemsDocument, options);
+      }
+export function useSearchItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchItemsQuery, SearchItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchItemsQuery, SearchItemsQueryVariables>(SearchItemsDocument, options);
+        }
+export type SearchItemsQueryHookResult = ReturnType<typeof useSearchItemsQuery>;
+export type SearchItemsLazyQueryHookResult = ReturnType<typeof useSearchItemsLazyQuery>;
+export type SearchItemsQueryResult = Apollo.QueryResult<SearchItemsQuery, SearchItemsQueryVariables>;
