@@ -15,6 +15,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.3.1",
+    "ethers": "^5.7.1",
     "graphql": "^16.6.0",
     "moralis": "^2.3.1",
     "moralis-v1": "^1.11.0",

@@ -1,0 +1,17 @@
+{
+  "name": "@flexiswap/gateway",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/gateway": "^2.1.2",
+    "apollo-server": "^3.10.2",
+    "dotenv": "^16.0.2"
+  }
+}

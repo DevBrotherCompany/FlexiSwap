@@ -33,6 +33,11 @@
   },
   {
     "inputs": [],
+    "name": "InvalidAdditionalAssets",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidForTradeOwner",
     "type": "error"
   },
@@ -60,6 +65,22 @@
       }
     ],
     "name": "OfferDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokenNotApproved",
     "type": "error"
   },
   {
@@ -217,6 +238,28 @@
         "internalType": "uint256",
         "name": "_itemsId",
         "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nftAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isEmptyToken",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct IFlexiSwap.Item[]",
+        "name": "_additionalAssets",
+        "type": "tuple[]"
       }
     ],
     "name": "acceptOffer",

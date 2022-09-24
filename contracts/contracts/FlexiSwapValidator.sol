@@ -1,6 +1,7 @@
 pragma solidity ^0.8.15;
 
 import "./FlexiSwapCore.sol";
+import "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 contract FlexiSwapValidator is FlexiSwapCore {
     uint256 private MAX_OFFER_ITEMS = 10;
@@ -90,7 +91,9 @@ contract FlexiSwapValidator is FlexiSwapCore {
         Trade memory trade = _trades[tradeId];
         for (uint256 i = 0; i < trade.counterOfferItemsIds.length; i++) {
             uint counterOfferItemsId = trade.counterOfferItemsIds[i];
-            if (counterOfferer == _counterOfferInitiators[counterOfferItemsId]) {
+            if (
+                counterOfferer == _counterOfferInitiators[counterOfferItemsId]
+            ) {
                 revert CounterOfferAlreadyExists(tradeId, counterOfferItemsId);
             }
         }
@@ -108,12 +111,19 @@ contract FlexiSwapValidator is FlexiSwapCore {
         super.createTrade(_givings, _receivings);
     }
 
-    function acceptOffer(uint256 _tradeId, uint256 _itemsId)
+    function acceptOffer(
+        uint256 _tradeId,
+        uint256 _itemsId,
+        Item[] memory _additionalAssets
+    )
         public
         virtual
         override
+        tradeExists(_tradeId)
+        notTradeOwner(_tradeId)
+        offerExists(_tradeId, _itemsId)
     {
-        super.acceptOffer(_tradeId, _itemsId);
+        super.acceptOffer(_tradeId, _itemsId, _additionalAssets);
     }
 
     function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)
@@ -132,6 +142,9 @@ contract FlexiSwapValidator is FlexiSwapCore {
         public
         virtual
         override
+        tradeExists(_tradeId)
+        isTradeOwner(_tradeId)
+        counterOfferExists(_tradeId, _itemsId)
     {
         super.acceptCounterOffer(_tradeId, _itemsId);
     }
