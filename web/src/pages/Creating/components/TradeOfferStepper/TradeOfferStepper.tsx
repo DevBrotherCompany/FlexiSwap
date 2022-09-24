@@ -31,7 +31,7 @@ export const TradeOfferStepper: React.FC = () => {
   const isActive = (link: string) => pathname === link;
 
   const isDisabled = (index: number, links: ILink[]) => {
-    const currentStep = links.findIndex((l) => l.to === pathname);
+    const currentStep = links.findIndex((l) => pathname.includes(l.to));
     return index > currentStep;
   };
 
@@ -41,6 +41,7 @@ export const TradeOfferStepper: React.FC = () => {
         const disabled = isDisabled(index, links);
         return (
           <FlexiLink
+            key={title}
             to={disabled ? "#" : to}
             className={classes.link}
             withButtonBase={false}

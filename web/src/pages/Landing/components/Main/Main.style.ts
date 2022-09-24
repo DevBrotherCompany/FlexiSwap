@@ -5,7 +5,8 @@ export const useMainStyles = makeStyles(() => ({
   container: {
     width: "90vw",
     height: "70vh",
-    backgroundImage: `url(${MainLanding})`,
+    background: `no-repeat url(${MainLanding})`,
+    backgroundSize: "cover",
     margin: "40px auto",
     position: "relative",
   },

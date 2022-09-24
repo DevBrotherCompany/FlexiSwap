@@ -7,3 +7,8 @@ export interface INft {
   img?: string;
   address?: string;
 }
+
+export interface IOffer {
+  number: number;
+  selected: INft[];
+}

@@ -11,11 +11,13 @@ interface ChooseNftsProps {
   nfts: INft[];
   onClickNft?: (item: INft) => void;
   filterFrom?: INft[];
+  title?: string;
 }
 
 export const ChooseNfts: React.FC<ChooseNftsProps> = ({
   nfts,
   filterFrom,
+  title = "Your NFTs",
   ...props
 }) => {
   const classes = useChooseNftsStyles();
@@ -23,7 +25,7 @@ export const ChooseNfts: React.FC<ChooseNftsProps> = ({
 
   return (
     <section className={classes.container}>
-      <SectionTitle>Your NFTs</SectionTitle>
+      <SectionTitle>{title}</SectionTitle>
       <ChooseNftList {...props} nfts={displayArr} />
     </section>
   );

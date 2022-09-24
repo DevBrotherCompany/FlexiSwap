@@ -44,7 +44,7 @@ const CreateTrade: React.FC = () => {
   }, []);
 
   const handleCreateOffers = () => {
-    navigate(RouteName.CreateOffers);
+    navigate(RouteName.CreateOffers + `/${1}`);
   };
 
   return (
