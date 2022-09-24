@@ -4,6 +4,7 @@ import { useConnectWalletStyles } from "./ConnectWallet.style";
 import { Grid } from "@mui/material";
 
 import { useAuth } from "hooks";
+import { Message } from "shared/variables";
 import { MetamaskButton } from "components/MetamaskButton/MetamaskButton";
 
 export const ConnectWallet: React.FC = () => {
@@ -12,9 +13,9 @@ export const ConnectWallet: React.FC = () => {
 
   return (
     <Grid container className={classes.connectWrapper}>
-      <Grid item xs={1.9}>
+      <Grid item xs={1.7}>
         <MetamaskButton
-          onClick={() => login({ signingMessage: "Hello from FlexiSwap!" })}
+          onClick={() => login({ signingMessage: Message.HelloFromFlexiSwap })}
           className={classes.connect}
         >
           Connect wallet

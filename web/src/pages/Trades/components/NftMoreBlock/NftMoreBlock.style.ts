@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
-import { Style } from "styles/variables";
+import { Style } from "shared/variables";
 
 export const useNftMoreBlockStyles = makeStyles((theme: Theme) => ({
   block: {

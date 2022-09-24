@@ -1,7 +1,7 @@
 import React from "react";
 import { useOfferLayoutStyles } from "./OffersLayout.style";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { RouteName } from "shared/routes";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
@@ -34,9 +34,14 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
           height={"100%"}
         >
           <List sx={{ minHeight: "200px" }}>
-            {offers.map((o, i) => (
-              <ListItem key={o.number}>
-                <span>Offer #{i + 1}</span>
+            {offers.map(({ number }) => (
+              <ListItem key={number}>
+                <Link
+                  className={classes.link}
+                  to={`${RouteName.CreateOffers}/${number}`}
+                >
+                  Offer #{number}
+                </Link>
               </ListItem>
             ))}
           </List>

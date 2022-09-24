@@ -1,5 +1,5 @@
 import { makeStyles } from "@mui/styles";
-import { Style } from "styles/variables";
+import { Style } from "shared/variables";
 
 export const useCreateTradeStyles = makeStyles(() => ({
   yourSelection: {
