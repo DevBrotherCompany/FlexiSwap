@@ -44,7 +44,7 @@ const AllTrades: React.FC = () => {
   };
 
   useEffect(() => {
-    getTrades(debouncedSearch);
+    // getTrades({ variables: { firstс: 1 } })
   }, [debouncedSearch]);
 
   return (
@@ -52,7 +52,7 @@ const AllTrades: React.FC = () => {
       <TradesLayout onSearchChange={setSearch}>
         <FlexiTitle>All trades</FlexiTitle>
         <TradeList
-          list={trades}
+          /*list={trades}*/ list={[]}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />

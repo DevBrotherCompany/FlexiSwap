@@ -1,11 +1,15 @@
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from '@mui/styles'
 
 export const useFlexiButtonStyles = makeStyles(() => ({
   btn: {
-    width: "100%",
+    width: '100%',
   },
   slim: {
-    paddingTop: "0 !important",
-    paddingBottom: "0 !important",
+    paddingTop: '0 !important',
+    paddingBottom: '0 !important',
   },
-}));
+  white: {
+    color: '#FFF !important',
+    borderColor: '#FFF !important',
+  },
+}))

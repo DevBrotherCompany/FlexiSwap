@@ -1,0 +1,11 @@
+query GetAllTrades($first: Int) {
+  trades(first: $first) {
+    givings {
+      items {
+        item {
+          file
+        }
+      }
+    }
+  }
+}
