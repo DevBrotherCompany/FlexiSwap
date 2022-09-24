@@ -1,8 +1,7 @@
-import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material/styles'
+import { makeStyles } from "@mui/styles";
 
-export const useLandingStyles = makeStyles((theme: Theme) => ({
+export const useLandingStyles = makeStyles(() => ({
   main: {
-    padding: '40px 20px',
+    padding: "20px",
   },
-}))
+}));
