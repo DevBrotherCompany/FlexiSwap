@@ -3,12 +3,12 @@ import { useNftCollectionBlockStyles } from "./NftCollectionBlock.style";
 
 import CollectionImage from "assets/images/nft-collection.png";
 
-import { INft } from "interfaces";
 import { Image } from "shared/Image/Image";
+import { INftCollection } from "interfaces";
 
 interface NftCollectionBlockProps {
-  collection: INft[];
-  onClick?: (col: INft[]) => void;
+  collection: INftCollection;
+  onClick?: (col: INftCollection) => void;
 }
 
 export const NftCollectionBlock: React.FC<NftCollectionBlockProps> = ({
@@ -24,7 +24,7 @@ export const NftCollectionBlock: React.FC<NftCollectionBlockProps> = ({
   return (
     <div className={classes.block}>
       <Image
-        src={CollectionImage}
+        src={collection.logo ?? CollectionImage}
         alt={"nft collection"}
         onClick={handleClick}
       />

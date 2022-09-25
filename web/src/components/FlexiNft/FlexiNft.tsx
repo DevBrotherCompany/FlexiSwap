@@ -2,18 +2,19 @@ import React, { FC } from "react";
 import cn from "classnames";
 import { useFlexiNftStyles } from "./FlexiNft.style";
 
-import { INft } from "interfaces";
+import { INftItem } from "interfaces";
+// import { INft } from "interfaces/old";
 import { Image } from "shared/Image/Image";
 
 import { SvgIcon } from "./svgs";
 
 interface FlexiNftProps {
-  item: INft;
+  item: INftItem;
   width?: number | string;
   height?: number | string;
   className?: string;
   clickable?: boolean;
-  onClickNft?: (item: INft) => void;
+  onClickNft?: (item: INftItem) => void;
   hoverEffect?: "tick" | "cross" | "info";
 }
 
@@ -29,7 +30,7 @@ export const FlexiNft: FC<FlexiNftProps> = ({
 }) => {
   const classes = useFlexiNftStyles(props);
 
-  const handleClickNft = (item: INft) => {
+  const handleClickNft = (item: INftItem) => {
     clickable && onClickNft && onClickNft(item);
   };
 
@@ -50,7 +51,7 @@ export const FlexiNft: FC<FlexiNftProps> = ({
         {SvgIcon[hoverEffect]}
       </div>
       <Image
-        src={item.img}
+        src={item.file}
         alt={item.name}
         className={cn(classes.img, className, {
           [classes.clickable]: clickable,
@@ -60,7 +61,7 @@ export const FlexiNft: FC<FlexiNftProps> = ({
     </div>
   ) : (
     <Image
-      src={item.img}
+      src={item.file}
       alt={item.name}
       className={cn(classes.img, className, {
         [classes.clickable]: clickable,

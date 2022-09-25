@@ -1,7 +1,7 @@
-import { INft } from "../interfaces";
-import Cat from "./assets/img.png";
+import { INft } from "../../interfaces/old";
+import Cat from "../../assets/images/img.png";
 
-export const selectedNft: INft[] = [
+export const allNfts: INft[] = [
   {
     id: "1",
     name: "NFT 1",
@@ -67,6 +67,55 @@ export const selectedNft: INft[] = [
   },
   {
     id: "10",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "11",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "12",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "13",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "14",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "15",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "16",
+    name: "NFT 1",
+    address: "NFT address",
+    collection: "NFT collection",
+    img: Cat,
+  },
+  {
+    id: "17",
     name: "NFT 1",
     address: "NFT address",
     collection: "NFT collection",

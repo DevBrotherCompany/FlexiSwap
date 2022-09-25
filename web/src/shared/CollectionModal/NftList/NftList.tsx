@@ -1,21 +1,23 @@
 import React from "react";
-import { INft } from "interfaces";
 import { useNftListStyles } from "./NftList.style";
 
 import { List, ListItem } from "@mui/material";
-import { FlexiNft } from "components/FlexiNft/FlexiNft";
+import { Image } from "shared/Image/Image";
+
+import { IPreviewItem } from "interfaces";
 
 interface NftListProps {
-  items: INft[];
+  items: IPreviewItem[];
 }
 
 export const NftList: React.FC<NftListProps> = ({ items }) => {
   const classes = useNftListStyles();
   return (
     <List className={classes.list}>
-      {items.map((item) => (
-        <ListItem key={item.id} className={classes.listItem}>
-          <FlexiNft item={item} />
+      {items.map(({ file }) => (
+        <ListItem key={file} className={classes.listItem}>
+          {/*<FlexiNft item={item} />*/}
+          <Image src={file} alt={"nft image"} className={classes.img} />
         </ListItem>
       ))}
     </List>

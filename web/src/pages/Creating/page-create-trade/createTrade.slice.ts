@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "storage/store";
-import { INft } from "interfaces";
+// import { INft } from "interfaces/old";
+import { INftItem } from "interfaces";
 
 interface CreateTradeSliceState {
-  selectedNFTs: INft[];
+  selectedNFTs: INftItem[];
 }
 
 const initialState: CreateTradeSliceState = {
@@ -15,12 +16,12 @@ const createTradeSlice = createSlice({
   name: "createTrade",
   initialState,
   reducers: {
-    selectNft(state, action: PayloadAction<INft>) {
+    selectNft(state, action: PayloadAction<INftItem>) {
       state.selectedNFTs.push(action.payload);
     },
-    removeNftFromSelected(state, action: PayloadAction<INft>) {
+    removeNftFromSelected(state, action: PayloadAction<INftItem>) {
       state.selectedNFTs = state.selectedNFTs.filter(
-        (nft) => nft.id !== action.payload.id
+        (nft) => nft.tokenId !== action.payload.tokenId
       );
     },
   },

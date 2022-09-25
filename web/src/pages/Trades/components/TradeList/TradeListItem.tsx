@@ -8,7 +8,8 @@ import {
   Grid,
 } from "@mui/material";
 
-import { INft, ITrade } from "interfaces";
+// import { INft, ITrade } from "interfaces";
+import { INftCollection, INftItem, ITrade } from "interfaces";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
 
 import { TradeHeader } from "../TradeHeader/TradeHeader";
@@ -16,11 +17,12 @@ import { NftList } from "../NftList/NftList";
 import { NftCollectionBlock } from "../NftCollectionBlock/NftCollectionBlock";
 
 import { ArrowSvg } from "./arrowSvg";
+import { useHiddenDetailsTrades } from "./useHiddenDetailsTrades";
 
 interface TradeListItemProps {
   item: ITrade;
-  onClick?: (item: INft) => void;
-  onClickCollection?: (item: INft[]) => void;
+  onClick?: (item: INftItem) => void;
+  onClickCollection?: (item: INftCollection) => void;
 }
 
 export const TradeListItem: React.FC<TradeListItemProps> = ({
@@ -29,13 +31,17 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
   onClickCollection,
 }) => {
   const classes = useTradeListStyles();
+  const { givings, createdAt, initiatorAddress, receivings } = item;
 
   const [expanded, setExpanded] = useState(false);
 
-  const { user, date, offer, counterOffer } = item;
-  const counterOffersCount = counterOffer.length - 1;
-
-  const mocked_isCollection = Math.random() > 0.5;
+  const {
+    isPreviewCollection,
+    previewReceivingCollection,
+    previewReceivingItems,
+    receivingCount,
+    isManyReceivings,
+  } = useHiddenDetailsTrades(receivings);
 
   const toggleExpand = () => {
     setExpanded((prevState) => !prevState);
@@ -44,15 +50,14 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
   return (
     <Accordion className={classes.accordion} expanded={expanded}>
       <AccordionSummary className={classes.accordion}>
-        {/*TODO: make right calc of date of the start of trade*/}
         <TradeHeader
-          userName={`${user.name} ${user.lastName}`}
-          address={user.address}
-          tradeDate={`${date.getDate()} days ago`}
+          userName={""}
+          address={initiatorAddress}
+          tradeDate={`${createdAt} days ago`}
         />
         <Grid className={classes.listItem}>
           <Grid item>
-            <NftList list={offer} onClick={onClick} />
+            <NftList list={givings.items ?? []} onClick={onClick} />
           </Grid>
 
           <Grid
@@ -65,19 +70,18 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
           </Grid>
 
           <Grid item>
-            {mocked_isCollection ? (
-              <NftList list={counterOffer} onClick={onClick} />
+            {!isPreviewCollection ? (
+              <NftList list={previewReceivingItems} onClick={onClick} />
             ) : (
               <NftCollectionBlock
-                collection={counterOffer}
+                collection={previewReceivingCollection}
                 onClick={onClickCollection}
               />
             )}
-            {/* TODO move to separate component */}
-            {counterOffersCount > 0 && (
+            {isManyReceivings && (
               <p>
-                {counterOffersCount} more offer
-                {counterOffersCount > 1 ? "s" : ""}
+                {receivingCount} more offer
+                {receivingCount > 2 ? "s" : ""}
                 ...
               </p>
             )}

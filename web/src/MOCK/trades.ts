@@ -1,85 +1,131 @@
-import { INft, ITrade, IUser } from "../interfaces";
-import img from "./assets/img.png";
+import { INftCollection, INftItem, ITrade } from "../interfaces";
 
-export const user: IUser = {
-  name: "Caroline",
-  lastName: "Boundles",
-  address: "0x3758327597175138957053",
+export const mocked_allTrades: ITrade[] = [
+  {
+    id: "1",
+    initiatorAddress: "0xy33785683715221512521521",
+    givings: {
+      items: [
+        {
+          tokenId: "token 1",
+          tokenAddress: "token adress 1",
+          name: "NFT name 1",
+          file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+          collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
+          description: "descr 1",
+        },
+      ],
+    },
+    createdAt: 1124,
+    receivings: [
+      {
+        id: "1",
+        items: [
+          {
+            collection: {
+              previewItems: [],
+              tokenAddress: "0x2174214",
+              name: "awewr",
+              logo: "https://thumb.tildacdn.com/tild3639-6230-4362-b964-666231373539/-/resize/824x/-/format/webp/image1.png",
+              symbol: null,
+            },
+            item: {
+              tokenId: "124",
+              name: "Item 1",
+              tokenAddress: "0x21789175892175982152",
+              file: "https://gagadget.com/media/cache/80/20/80206948c99d63a185fd522dc1c669b0.jpg",
+              collection: {
+                name: "Coll name",
+                tokenAddress: "0x12521516112612",
+              },
+              description: "2154218wiohfioqew",
+            },
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const mocked_NFT: INftItem = {
+  tokenId: "112",
+  collection: { name: "col name", tokenAddress: "token address 1" },
+  name: "NFT name",
+  file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+  tokenAddress: "token address",
+  description: "descruption",
 };
 
-export const offer: INft[] = [
-  {
-    id: 1,
-    name: "Nft 1",
-    collection: "Ape NFT",
-    img,
-    address: "0x0000000000000002",
-  },
-  {
-    id: 2,
-    name: "Nft 2",
-    collection: "collection",
-    img,
-  },
-  {
-    id: 3,
-    name: "Nft 3",
-    collection: "collection",
-    img,
-  },
-  {
-    id: 4,
-    name: "Nft 4",
-    collection: "collection",
-    img,
-  },
-  {
-    id: 5,
-    name: "Nft 5",
-    collection: "collection",
-    img,
-  },
-];
+const mocked_NFT_collection: INftCollection = {
+  name: "NFT collection",
+  tokenAddress: "token address",
+  logo: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+  previewItems: [
+    {
+      file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+    },
+    {
+      file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+    },
+  ],
+  symbol: "symbol ?",
+};
 
-export const counterOffer: INft[] = [
+export const mocked_allNfts: INftItem[] = [
   {
-    id: 11,
-    name: "Nft 6",
-    collection: "collection",
-    img,
+    tokenId: "1",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
   },
   {
-    id: 12,
-    name: "Nft 7",
-    collection: "collection",
-    img,
+    tokenId: "2",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
   },
   {
-    id: 13,
-    name: "Nft 7",
-    collection: "collection",
-    img,
+    tokenId: "3",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
   },
   {
-    id: 14,
-    name: "Nft 7",
-    collection: "collection",
-    img,
+    tokenId: "4",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
   },
   {
-    id: 15,
-    name: "Nft 7",
-    collection: "collection",
-    img,
+    tokenId: "5",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
   },
-];
-
-export const trades: ITrade[] = [
   {
-    id: 1,
-    offer,
-    counterOffer,
-    date: new Date(),
-    user,
+    tokenId: "6",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
+  },
+  {
+    tokenId: "7",
+    tokenAddress: "0x2142151521",
+    name: "Name 1",
+    file: "https://www.iphones.ru/wp-content/uploads/2022/08/178b9b81c4.jpg",
+    collection: null,
+    description: null,
   },
 ];

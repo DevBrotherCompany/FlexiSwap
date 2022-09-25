@@ -2,6 +2,7 @@ query GetAllTrades($first: Int, $skip: Int) {
   trades(first: $first, skip: $skip) {
     id
     initiatorAddress
+    createdAt
     givings {
       items {
         item {
@@ -12,6 +13,7 @@ query GetAllTrades($first: Int, $skip: Int) {
           file
           collection {
             name
+            tokenAddress
           }
         }
       }
@@ -27,6 +29,7 @@ query GetAllTrades($first: Int, $skip: Int) {
           file
           collection {
             name
+            tokenAddress
           }
         }
         collection {
