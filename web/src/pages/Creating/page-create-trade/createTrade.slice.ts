@@ -24,9 +24,13 @@ const createTradeSlice = createSlice({
         (nft) => nft.tokenId !== action.payload.tokenId
       );
     },
+    clearSelected(state) {
+      state.selectedNFTs = [];
+    },
   },
 });
 
-export const { selectNft, removeNftFromSelected } = createTradeSlice.actions;
+export const { selectNft, removeNftFromSelected, clearSelected } =
+  createTradeSlice.actions;
 export const createTradeReducer = createTradeSlice.reducer;
 export const selectCreateTrade = (state: RootState) => state.createTrade;

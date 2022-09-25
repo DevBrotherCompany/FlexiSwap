@@ -63,10 +63,18 @@ const createOfferSlice = createSlice({
         );
       }
     },
+    clearOffers(state) {
+      state.offers = [];
+    },
   },
 });
 
-export const { addOffer, removeOffer, addNftForOffer, removeNftFromOffer } =
-  createOfferSlice.actions;
+export const {
+  addOffer,
+  removeOffer,
+  addNftForOffer,
+  removeNftFromOffer,
+  clearOffers,
+} = createOfferSlice.actions;
 export const createOfferReducer = createOfferSlice.reducer;
 export const selectCreateOffer = (state: RootState) => state.createOffer;

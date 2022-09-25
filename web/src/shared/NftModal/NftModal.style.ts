@@ -7,4 +7,8 @@ export const useNftModalStyles = makeStyles(() => ({
   item: {
     marginTop: "30px !important",
   },
+  img: {
+    maxWidth: "470px",
+    maxHeight: "470px",
+  },
 }));
