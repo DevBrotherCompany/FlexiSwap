@@ -16,7 +16,8 @@ import {
   useGetAllTradesQuery,
   useSearchItemsLazyQuery,
 } from "packages/graphql/generated";
-import { mocked_allTrades } from "../../../MOCK";
+
+import { mocked_allTrades } from "MOCK";
 
 const AllTrades: React.FC = () => {
   const { data } = useGetAllTradesQuery();
