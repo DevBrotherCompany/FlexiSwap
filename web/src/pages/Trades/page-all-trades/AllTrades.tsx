@@ -57,7 +57,8 @@ const AllTrades: React.FC = () => {
       <TradesLayout onSearchChange={setSearch}>
         <FlexiTitle>All trades</FlexiTitle>
         <TradeList
-          list={mocked_allTrades ?? data?.trades ?? []}
+          //@ts-ignore
+          list={data?.trades ?? mocked_allTrades}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />

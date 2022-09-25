@@ -72,7 +72,7 @@ const CreateTrade: React.FC = () => {
       <main className={classes.chooseNft}>
         <FlexiInput placeholder={"Search by NFTs, collection name..."} />
         <ChooseNfts
-          nfts={mocked_Nfts ?? data?.itemsByOwnerAddress.items ?? mocked_Nfts}
+          nfts={data?.itemsByOwnerAddress.items ?? mocked_Nfts}
           onClickNft={handleSelectNft}
           filterFrom={selectedNFTs}
         />
