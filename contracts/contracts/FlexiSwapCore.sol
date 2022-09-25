@@ -36,7 +36,7 @@ contract FlexiSwapCore is IFlexiSwap {
         return itemsId;
     }
 
-    function verifyApproved(Item[] memory _itemsToVerify) private {
+    function verifyApproved(Item[] memory _itemsToVerify) private view {
         for (uint256 i = 0; i < _itemsToVerify.length; ++i) {
             if (
                 IERC721(_itemsToVerify[i].nftAddress).getApproved(
@@ -54,7 +54,7 @@ contract FlexiSwapCore is IFlexiSwap {
     function verifyAdditionalAssets(
         Item[] memory _orderItems,
         Item[] memory _additionalAssets
-    ) private returns (bool) {
+    ) private pure returns (bool) {
         uint256 _orderAdditionalAssetsCount = 0;
         for (uint256 i = 0; i < _additionalAssets.length; ++i) {
             for (uint256 j = 0; j < _orderItems.length; ++j) {
@@ -131,31 +131,28 @@ contract FlexiSwapCore is IFlexiSwap {
             receivingItemsIdsList[i] = receivingsItemsId;
         }
 
-        Trade memory trade = Trade({
+        Trade memory _trade = Trade({
             initiator: msg.sender,
             givingsId: givingItemsId,
             receivingsIds: receivingItemsIdsList,
             counterOfferItemsIds: new uint256[](0)
         });
 
-        _trades[tradeId] = trade;
+        _trades[tradeId] = _trade;
 
-        emit TradeCreated(tradeId, trade);
+        emit TradeCreated(tradeId, _trade);
     }
 
-    // additionalAssets is a list of additional assets that the initiator wants to receive in addition to the items in the trade
-    // for exmple, if trade initiator stated that he wants 2 nfts from collection A in addition, then additionalAssets
-    // should contain strictly 2 nfts from collection A
     function acceptOffer(
         uint256 _tradeId,
         uint256 _itemsId,
         Item[] memory _additionalAssets
     ) public virtual override {
-        Trade memory trade = _trades[_tradeId];
-        Item[] memory items = _items[_itemsId];
+        Trade memory _trade = _trades[_tradeId];
+        Item[] memory items_ = _items[_itemsId];
 
         bool validAdditionalAssets = verifyAdditionalAssets(
-            items,
+            items_,
             _additionalAssets
         );
 
@@ -163,17 +160,13 @@ contract FlexiSwapCore is IFlexiSwap {
             revert InvalidAdditionalAssets();
         }
 
-        // for (uint256 i = 0; i < _additionalAssets.length; ++i) {
-        //     items.push(_additionalAssets[i]);
-        // }
-
-        Item[] memory givings = _items[trade.givingsId];
+        Item[] memory givings = _items[_trade.givingsId];
 
         verifyApproved(givings);
 
-        batchTransfer(givings, trade.initiator, msg.sender);
-        batchTransfer(items, msg.sender, trade.initiator);
-        batchTransfer(_additionalAssets, msg.sender, trade.initiator);
+        batchTransfer(givings, _trade.initiator, msg.sender);
+        batchTransfer(items_, msg.sender, _trade.initiator);
+        batchTransfer(_additionalAssets, msg.sender, _trade.initiator);
 
         emit TradeAccepted(msg.sender, _tradeId, _itemsId);
     }
@@ -197,14 +190,14 @@ contract FlexiSwapCore is IFlexiSwap {
         virtual
         override
     {
-        Trade memory trade = _trades[_tradeId];
-        Item[] memory items = _items[_itemsId];
-        Item[] memory givings = _items[trade.givingsId];
+        Trade memory _trade = _trades[_tradeId];
+        Item[] memory items_ = _items[_itemsId];
+        Item[] memory givings = _items[_trade.givingsId];
 
         address counterOfferInitiator = _counterOfferInitiators[_itemsId];
 
-        batchTransfer(givings, trade.initiator, counterOfferInitiator);
-        batchTransfer(items, counterOfferInitiator, trade.initiator);
+        batchTransfer(givings, _trade.initiator, counterOfferInitiator);
+        batchTransfer(items_, counterOfferInitiator, _trade.initiator);
 
         emit CounterOfferAccepted(_tradeId, _itemsId);
     }

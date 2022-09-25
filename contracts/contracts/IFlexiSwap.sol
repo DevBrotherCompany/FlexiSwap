@@ -45,6 +45,9 @@ interface IFlexiSwap {
     function createTrade(Item[] memory _givings, Item[][] memory _receivings)
         external;
 
+    // additionalAssets is a list of additional assets that the initiator wants to receive in addition to the items in the trade
+    // for exmple, if trade initiator stated that he wants 2 nfts from collection A in addition, then additionalAssets
+    // should contain strictly 2 nfts from collection A
     function acceptOffer(uint256 _tradeId, uint256 _itemsId, Item[] memory _additionalAssets) external;
 
     function createCounterOffer(uint256 _tradeId, Item[] memory _offerItems)
