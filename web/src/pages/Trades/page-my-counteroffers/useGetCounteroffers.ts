@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { trades } from "../../../MOCK";
+import { trades } from "../../../MOCK/old";
 // export const useGetTrades = () => {
 //   const { data, loading, error } =
 //     useQuery<GetAllTradesResponse>(GET_ALL_TRADES);

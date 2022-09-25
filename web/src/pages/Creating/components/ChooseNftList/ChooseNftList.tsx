@@ -3,14 +3,14 @@ import { useChooseNftListStyles } from "./ChooseNftList.style";
 
 import { List, ListItem } from "@mui/material";
 
-import { INft } from "interfaces";
+import { INftItem } from "interfaces";
 
 import { FlexiNft } from "components/FlexiNft/FlexiNft";
 import { AnyOfCollectionNft } from "../AnyOfCollectionNft/AnyOfCollectionNft";
 
 interface ChooseNftListProps {
-  nfts: INft[];
-  onClickNft?: (item: INft) => void;
+  nfts: INftItem[];
+  onClickNft?: (item: INftItem) => void;
 }
 
 export const ChooseNftList: React.FC<ChooseNftListProps> = ({
@@ -24,7 +24,7 @@ export const ChooseNftList: React.FC<ChooseNftListProps> = ({
         <AnyOfCollectionNft />
       </ListItem>
       {nfts.map((nft) => (
-        <ListItem key={nft.id} className={classes.listItem}>
+        <ListItem key={nft.tokenId} className={classes.listItem}>
           <FlexiNft
             item={nft}
             clickable

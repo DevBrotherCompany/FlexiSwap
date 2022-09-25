@@ -6,33 +6,37 @@ import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 import { NftModal } from "shared/NftModal/NftModal";
 import { CollectionModal } from "shared/CollectionModal/CollectionModal";
 
-import { INft } from "interfaces";
+import { INftCollection, INftItem } from "interfaces";
 import { TradesModal } from "../enums";
 
 import { TradesLayout } from "../components/TradesLayout/TradesLayout";
 import { TradeList } from "../components/TradeList/TradeList";
 
-import { useGetTrades } from "./useGetTrades";
+import {
+  useGetAllTradesQuery,
+  useSearchItemsLazyQuery,
+} from "packages/graphql/generated";
+import { mocked_allTrades } from "../../../MOCK";
 
 const AllTrades: React.FC = () => {
-  const { trades, getTrades } = useGetTrades();
+  const { data } = useGetAllTradesQuery();
+  const [searchItems] = useSearchItemsLazyQuery();
 
   const { openModal, isModalOpened, closeModals } =
     useModalsState<TradesModal>();
 
-  const [selectedNft, setSelectedNft] = useState<INft | null>(null);
-  const [selectedCollection, setSelectedCollection] = useState<INft[] | null>(
-    null
-  );
+  const [selectedNft, setSelectedNft] = useState<INftItem | null>(null);
+  const [selectedCollection, setSelectedCollection] =
+    useState<INftCollection | null>(null);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 100);
 
-  const handleClickItem = (item: INft) => {
+  const handleClickItem = (item: INftItem) => {
     setSelectedNft(item);
     openModal(TradesModal.NftInfo);
   };
 
-  const handleClickCollection = (collection: INft[]) => {
+  const handleClickCollection = (collection: INftCollection) => {
     setSelectedCollection(collection);
     openModal(TradesModal.CollectionInfo);
   };
@@ -44,7 +48,7 @@ const AllTrades: React.FC = () => {
   };
 
   useEffect(() => {
-    // getTrades({ variables: { firstс: 1 } })
+    searchItems({ variables: { search: debouncedSearch } });
   }, [debouncedSearch]);
 
   return (
@@ -52,7 +56,7 @@ const AllTrades: React.FC = () => {
       <TradesLayout onSearchChange={setSearch}>
         <FlexiTitle>All trades</FlexiTitle>
         <TradeList
-          /*list={trades}*/ list={[]}
+          list={mocked_allTrades ?? data?.trades ?? []}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />

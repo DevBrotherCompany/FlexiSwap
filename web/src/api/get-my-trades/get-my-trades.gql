@@ -2,6 +2,7 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
     trades(first: $first, skip: $skip, where: { initiatorAddress: $owner }) {
         id
         initiatorAddress
+        createdAt
         givings {
             items {
                 item {
@@ -12,6 +13,7 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
                     file
                     collection {
                         name
+                        tokenAddress
                     }
                 }
             }
@@ -27,6 +29,7 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
                     file
                     collection {
                         name
+                        tokenAddress
                     }
                 }
                 collection {

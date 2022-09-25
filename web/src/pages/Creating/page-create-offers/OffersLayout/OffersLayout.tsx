@@ -7,7 +7,11 @@ import { RouteName } from "shared/routes";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
 
 import { TradeOfferSidebar } from "pages/Creating/components/TradeOfferSidebar/TradeOfferSidebar";
+import { selectCreateTrade } from "pages/Creating/page-create-trade/createTrade.slice";
+
 import { useAppSelector } from "storage/hooks";
+import { FlexiSwap } from "sdk/flexi-swap";
+import { useAuth } from "hooks";
 
 import { selectCreateOffer } from "../createOffer.slice";
 import { Grid, List, ListItem } from "@mui/material";
@@ -18,10 +22,21 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
   const classes = useOfferLayoutStyles();
 
   const { offers } = useAppSelector(selectCreateOffer);
+  const { selectedNFTs } = useAppSelector(selectCreateTrade);
+  const { signer } = useAuth();
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(RouteName.CreateTrade);
+    navigate(-1);
+  };
+
+  const handleCreateOffer = async () => {
+    if (signer) {
+      const flexiSwap = new FlexiSwap(signer);
+      const receivings = offers.map((o) => o.selected);
+      console.log("handleCreateOffer");
+      await flexiSwap.createTrade(selectedNFTs, receivings);
+    }
   };
 
   return (
@@ -34,13 +49,13 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
           height={"100%"}
         >
           <List sx={{ minHeight: "200px" }}>
-            {offers.map(({ number }) => (
-              <ListItem key={number}>
+            {offers.map(({ id }) => (
+              <ListItem key={id}>
                 <Link
                   className={classes.link}
-                  to={`${RouteName.CreateOffers}/${number}`}
+                  to={`${RouteName.CreateOffers}/${id}`}
                 >
-                  Offer #{number}
+                  Offer #{id}
                 </Link>
               </ListItem>
             ))}
@@ -52,7 +67,7 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
             height={100}
             justifyContent={"space-between"}
           >
-            <FlexiButton>Create Trade</FlexiButton>
+            <FlexiButton onClick={handleCreateOffer}>Create Trade</FlexiButton>
             <FlexiButton variant={"outlined"} onClick={handleBack}>
               Back
             </FlexiButton>

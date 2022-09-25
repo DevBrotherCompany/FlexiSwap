@@ -1,11 +1,12 @@
 import React from "react";
 import { useImageStyles } from "./Image.style";
-
 import cn from "classnames";
 
+import DefaultImage from "assets/images/img.png";
+
 interface ImageProps {
-  src?: string;
-  alt?: string;
+  src?: string | null;
+  alt?: string | null;
   className?: string;
   onClick?: (item: any) => void;
 }
@@ -19,7 +20,11 @@ export const Image: React.FC<ImageProps> = ({
   const classes = useImageStyles();
   return (
     <p className={cn(classes.imgWrapper, className)} onClick={onClick}>
-      <img src={src} alt={alt} className={classes.img} />
+      <img
+        src={src ?? DefaultImage}
+        alt={alt ?? "--"}
+        className={classes.img}
+      />
     </p>
   );
 };

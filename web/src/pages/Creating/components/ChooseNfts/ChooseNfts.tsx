@@ -1,16 +1,17 @@
 import React from "react";
 import { useChooseNftsStyles } from "./ChooseNfts.style";
 
-import { INft } from "interfaces";
+// import { INft } from "interfaces/old";
+import { INftItem } from "interfaces";
 import { arrDifference } from "utils";
 
 import { SectionTitle } from "../Text/SectionTitle";
 import { ChooseNftList } from "../ChooseNftList/ChooseNftList";
 
 interface ChooseNftsProps {
-  nfts: INft[];
-  onClickNft?: (item: INft) => void;
-  filterFrom?: INft[];
+  nfts: INftItem[];
+  onClickNft?: (item: INftItem) => void;
+  filterFrom?: INftItem[];
   title?: string;
 }
 
@@ -21,7 +22,9 @@ export const ChooseNfts: React.FC<ChooseNftsProps> = ({
   ...props
 }) => {
   const classes = useChooseNftsStyles();
-  const displayArr = filterFrom ? arrDifference(nfts, filterFrom, "id") : nfts;
+  const displayArr = filterFrom
+    ? arrDifference(nfts, filterFrom, "tokenId")
+    : nfts;
 
   return (
     <section className={classes.container}>

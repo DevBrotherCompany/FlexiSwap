@@ -1,16 +1,17 @@
 import React from "react";
 import { useNftListStyles } from "./NftList.style";
-
-import { INft } from "interfaces";
 import { FlexiNft } from "components/FlexiNft/FlexiNft";
 
 import { NftMoreBlock } from "../NftMoreBlock/NftMoreBlock";
+import { INftItem } from "interfaces";
 
 import { useListInfo } from "./useListInfo";
 
+// import { CollectionItem } from "packages/graphql/generated";
+
 interface NftListProps {
-  list: INft[];
-  onClick?: (item: INft) => void;
+  list: INftItem[];
+  onClick?: (item: INftItem) => void;
 }
 
 export const NftList: React.FC<NftListProps> = ({ list, onClick }) => {
@@ -20,7 +21,7 @@ export const NftList: React.FC<NftListProps> = ({ list, onClick }) => {
   return (
     <ul className={classes.list}>
       {displayItems.map((nft) => (
-        <li key={nft.id} className={classes.listItem}>
+        <li key={nft.tokenId} className={classes.listItem}>
           <FlexiNft
             item={nft}
             hoverEffect={"info"}

@@ -1,10 +1,17 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import * as Apollo from "@apollo/client";
+import { gql } from "@apollo/client";
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -933,12 +940,69 @@ export enum _SubgraphErrorPolicy_ {
 }
 
 export type GetAllTradesQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars["Int"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
 }>;
 
-
-export type GetAllTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, initiatorAddress: any, givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } }> }, receivings: Array<{ __typename?: 'ReceivingsOffer', id: string, items: Array<{ __typename?: 'ReceivingsOfferItem', item?: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } | null, collection: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } }> }> }> };
+export type GetAllTradesQuery = {
+  __typename?: "Query";
+  trades: Array<{
+    __typename?: "Trade";
+    id: string;
+    initiatorAddress: any;
+    createdAt: number;
+    givings: {
+      __typename?: "GivingsOffer";
+      items: Array<{
+        __typename?: "GivingsOfferItem";
+        item: {
+          __typename?: "CollectionItem";
+          tokenId: any;
+          tokenAddress: any;
+          name?: string | null;
+          description?: string | null;
+          file?: string | null;
+          collection?: {
+            __typename?: "Collection";
+            name?: string | null;
+            tokenAddress: any;
+          } | null;
+        };
+      }>;
+    };
+    receivings: Array<{
+      __typename?: "ReceivingsOffer";
+      id: string;
+      items: Array<{
+        __typename?: "ReceivingsOfferItem";
+        item?: {
+          __typename?: "CollectionItem";
+          tokenId: any;
+          tokenAddress: any;
+          name?: string | null;
+          description?: string | null;
+          file?: string | null;
+          collection?: {
+            __typename?: "Collection";
+            name?: string | null;
+            tokenAddress: any;
+          } | null;
+        } | null;
+        collection: {
+          __typename?: "Collection";
+          tokenAddress: any;
+          name?: string | null;
+          symbol?: string | null;
+          logo?: string | null;
+          previewItems: Array<{
+            __typename?: "CollectionItem";
+            file?: string | null;
+          }>;
+        };
+      }>;
+    }>;
+  }>;
+};
 
 export type GetMyItemsQueryVariables = Exact<{
   owner: Scalars['Bytes'];
@@ -947,72 +1011,180 @@ export type GetMyItemsQueryVariables = Exact<{
 }>;
 
 
-export type GetMyItemsQuery = { __typename?: 'Query', itemsByOwnerAddress: { __typename?: 'CollectionItemsPagination', nextPage?: number | null, items: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } | null }> } };
+export type GetMyItemsQuery = {
+  __typename?: "Query";
+  itemsByOwnerAddress: {
+    __typename?: "CollectionItemsPagination";
+    nextPage?: number | null;
+    items: Array<{
+      __typename?: "CollectionItem";
+      tokenAddress: any;
+      tokenId: any;
+      name?: string | null;
+      description?: string | null;
+      file?: string | null;
+      collection?: {
+        __typename?: "Collection";
+        tokenAddress: any;
+        name?: string | null;
+        symbol?: string | null;
+        logo?: string | null;
+        previewItems: Array<{
+          __typename?: "CollectionItem";
+          file?: string | null;
+        }>;
+      } | null;
+    }>;
+  };
+};
 
 export type GetMyTradesQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  owner: Scalars['Bytes'];
+  first?: InputMaybe<Scalars["Int"]>;
+  skip?: InputMaybe<Scalars["Int"]>;
+  owner: Scalars["Bytes"];
 }>;
 
-
-export type GetMyTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, initiatorAddress: any, givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } }> }, receivings: Array<{ __typename?: 'ReceivingsOffer', id: string, items: Array<{ __typename?: 'ReceivingsOfferItem', item?: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', name?: string | null } | null } | null, collection: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } }> }> }> };
+export type GetMyTradesQuery = {
+  __typename?: "Query";
+  trades: Array<{
+    __typename?: "Trade";
+    id: string;
+    initiatorAddress: any;
+    createdAt: number;
+    givings: {
+      __typename?: "GivingsOffer";
+      items: Array<{
+        __typename?: "GivingsOfferItem";
+        item: {
+          __typename?: "CollectionItem";
+          tokenId: any;
+          tokenAddress: any;
+          name?: string | null;
+          description?: string | null;
+          file?: string | null;
+          collection?: {
+            __typename?: "Collection";
+            name?: string | null;
+            tokenAddress: any;
+          } | null;
+        };
+      }>;
+    };
+    receivings: Array<{
+      __typename?: "ReceivingsOffer";
+      id: string;
+      items: Array<{
+        __typename?: "ReceivingsOfferItem";
+        item?: {
+          __typename?: "CollectionItem";
+          tokenId: any;
+          tokenAddress: any;
+          name?: string | null;
+          description?: string | null;
+          file?: string | null;
+          collection?: {
+            __typename?: "Collection";
+            name?: string | null;
+            tokenAddress: any;
+          } | null;
+        } | null;
+        collection: {
+          __typename?: "Collection";
+          tokenAddress: any;
+          name?: string | null;
+          symbol?: string | null;
+          logo?: string | null;
+          previewItems: Array<{
+            __typename?: "CollectionItem";
+            file?: string | null;
+          }>;
+        };
+      }>;
+    }>;
+  }>;
+};
 
 export type SearchItemsQueryVariables = Exact<{
-  search: Scalars['String'];
-  nextPage?: InputMaybe<Scalars['Int']>;
+  search: Scalars["String"];
+  nextPage?: InputMaybe<Scalars["Int"]>;
 }>;
 
-
-export type SearchItemsQuery = { __typename?: 'Query', searchItems: { __typename?: 'CollectionItemsPagination', nextPage?: number | null, items: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null, collection?: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems: Array<{ __typename?: 'CollectionItem', file?: string | null }> } | null }> } };
-
+export type SearchItemsQuery = {
+  __typename?: "Query";
+  searchItems: {
+    __typename?: "CollectionItemsPagination";
+    nextPage?: number | null;
+    items: Array<{
+      __typename?: "CollectionItem";
+      tokenAddress: any;
+      tokenId: any;
+      name?: string | null;
+      description?: string | null;
+      file?: string | null;
+      collection?: {
+        __typename?: "Collection";
+        tokenAddress: any;
+        name?: string | null;
+        symbol?: string | null;
+        logo?: string | null;
+        previewItems: Array<{
+          __typename?: "CollectionItem";
+          file?: string | null;
+        }>;
+      } | null;
+    }>;
+  };
+};
 
 export const GetAllTradesDocument = gql`
-    query GetAllTrades($first: Int, $skip: Int) {
-  trades(first: $first, skip: $skip) {
-    id
-    initiatorAddress
-    givings {
-      items {
-        item {
-          tokenId
-          tokenAddress
-          name
-          description
-          file
-          collection {
+  query GetAllTrades($first: Int, $skip: Int) {
+    trades(first: $first, skip: $skip) {
+      id
+      initiatorAddress
+      createdAt
+      givings {
+        items {
+          item {
+            tokenId
+            tokenAddress
             name
+            description
+            file
+            collection {
+              name
+              tokenAddress
+            }
           }
         }
       }
-    }
-    receivings {
-      id
-      items {
-        item {
-          tokenId
-          tokenAddress
-          name
-          description
-          file
-          collection {
+      receivings {
+        id
+        items {
+          item {
+            tokenId
+            tokenAddress
             name
-          }
-        }
-        collection {
-          tokenAddress
-          name
-          symbol
-          logo
-          previewItems {
+            description
             file
+            collection {
+              name
+              tokenAddress
+            }
+          }
+          collection {
+            tokenAddress
+            name
+            symbol
+            logo
+            previewItems {
+              file
+            }
           }
         }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetAllTradesQuery__
@@ -1086,63 +1258,87 @@ export const GetMyItemsDocument = gql`
  *   },
  * });
  */
-export function useGetMyItemsQuery(baseOptions: Apollo.QueryHookOptions<GetMyItemsQuery, GetMyItemsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(GetMyItemsDocument, options);
-      }
-export function useGetMyItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyItemsQuery, GetMyItemsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(GetMyItemsDocument, options);
-        }
+export function useGetMyItemsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetMyItemsQuery,
+    GetMyItemsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(
+    GetMyItemsDocument,
+    options
+  );
+}
+export function useGetMyItemsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetMyItemsQuery,
+    GetMyItemsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(
+    GetMyItemsDocument,
+    options
+  );
+}
 export type GetMyItemsQueryHookResult = ReturnType<typeof useGetMyItemsQuery>;
-export type GetMyItemsLazyQueryHookResult = ReturnType<typeof useGetMyItemsLazyQuery>;
-export type GetMyItemsQueryResult = Apollo.QueryResult<GetMyItemsQuery, GetMyItemsQueryVariables>;
+export type GetMyItemsLazyQueryHookResult = ReturnType<
+  typeof useGetMyItemsLazyQuery
+>;
+export type GetMyItemsQueryResult = Apollo.QueryResult<
+  GetMyItemsQuery,
+  GetMyItemsQueryVariables
+>;
 export const GetMyTradesDocument = gql`
-    query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
-  trades(first: $first, skip: $skip, where: {initiatorAddress: $owner}) {
-    id
-    initiatorAddress
-    givings {
-      items {
-        item {
-          tokenId
-          tokenAddress
-          name
-          description
-          file
-          collection {
+  query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
+    trades(first: $first, skip: $skip, where: { initiatorAddress: $owner }) {
+      id
+      initiatorAddress
+      createdAt
+      givings {
+        items {
+          item {
+            tokenId
+            tokenAddress
             name
+            description
+            file
+            collection {
+              name
+              tokenAddress
+            }
           }
         }
       }
-    }
-    receivings {
-      id
-      items {
-        item {
-          tokenId
-          tokenAddress
-          name
-          description
-          file
-          collection {
+      receivings {
+        id
+        items {
+          item {
+            tokenId
+            tokenAddress
             name
-          }
-        }
-        collection {
-          tokenAddress
-          name
-          symbol
-          logo
-          previewItems {
+            description
             file
+            collection {
+              name
+              tokenAddress
+            }
+          }
+          collection {
+            tokenAddress
+            name
+            symbol
+            logo
+            previewItems {
+              file
+            }
           }
         }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetMyTradesQuery__

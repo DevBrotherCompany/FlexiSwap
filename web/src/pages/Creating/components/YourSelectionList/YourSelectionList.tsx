@@ -4,12 +4,12 @@ import { useYourSelectionListStyles } from "./YourSelectionList.style";
 import cn from "classnames";
 import { List, ListItem } from "@mui/material";
 
-import { INft } from "interfaces";
+import { INftItem } from "interfaces";
 import { FlexiNft } from "components/FlexiNft/FlexiNft";
 
 interface YourSelectionListProps {
-  selected: INft[];
-  onClickNft?: (item: INft) => void;
+  selected: INftItem[];
+  onClickNft?: (item: INftItem) => void;
 }
 
 export const YourSelectionList: React.FC<YourSelectionListProps> = ({
@@ -21,7 +21,7 @@ export const YourSelectionList: React.FC<YourSelectionListProps> = ({
     <List className={classes.list}>
       {selected.map((item, index) => (
         <ListItem
-          key={item.id}
+          key={item.tokenId}
           className={cn(classes.listItem, { [classes.lastItem]: index > 7 })}
         >
           <FlexiNft

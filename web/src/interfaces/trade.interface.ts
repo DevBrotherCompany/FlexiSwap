@@ -1,25 +1,81 @@
-import { IUser } from "./user.interface";
-import { INft } from "./nft.interface";
-
-export type ID = number | string;
+import { Maybe } from "./maybe.type";
+import { INftCollection, INftItem } from "./nft.interface";
 
 export interface ITrade {
-  id: ID;
-  user: IUser;
-  date: Date;
-  offer: INft[];
-  counterOffer: INft[];
+  id: string;
+  initiatorAddress: string;
+  createdAt: number;
+  givings: IGiving;
+  receivings: IReceiving[];
 }
 
-// export interface ITrade1 {
-//   id: ID
-//   createdAt: Int!
-//   finishedAt: Int
-//   initiatorAddress: Bytes!
-//   givings: GivingsOffer! @derivedFrom(field: "trade")
-//   receivings: [ReceivingsOffer!]! @derivedFrom(field: "trade")
-//   counterOffers: [CounterOffer!]! @derivedFrom(field: "trade")
-//   acceptedReceivingsOffer: ReceivingsOffer
-//   acceptedCounterOffer: CounterOffer
-//   counterAgentAddress: Bytes
-// }
+interface IGiving {
+  items: INftItem[];
+}
+
+interface IReceivingsItem {
+  item: Maybe<INftItem>;
+  collection: INftCollection;
+}
+
+export interface IReceiving {
+  id: string;
+  items: IReceivingsItem[];
+}
+
+interface Test {
+  __typename?: "Trade";
+  id: string;
+  initiatorAddress: any;
+  createdAt: number;
+  givings: {
+    __typename?: "GivingsOffer";
+    items: Array<{
+      __typename?: "GivingsOfferItem";
+      item: {
+        __typename?: "CollectionItem";
+        tokenId: any;
+        tokenAddress: any;
+        name?: string | null;
+        description?: string | null;
+        file?: string | null;
+        collection?: {
+          __typename?: "Collection";
+          name?: string | null;
+          tokenAddress: any;
+        } | null;
+      };
+    }>;
+  };
+  receivings: Array<{
+    __typename?: "ReceivingsOffer";
+    id: string;
+    items: Array<{
+      __typename?: "ReceivingsOfferItem";
+      item?: {
+        __typename?: "CollectionItem";
+        tokenId: any;
+        tokenAddress: any;
+        name?: string | null;
+        description?: string | null;
+        file?: string | null;
+        collection?: {
+          __typename?: "Collection";
+          name?: string | null;
+          tokenAddress: any;
+        } | null;
+      } | null;
+      collection: {
+        __typename?: "Collection";
+        tokenAddress: any;
+        name?: string | null;
+        symbol?: string | null;
+        logo?: string | null;
+        previewItems: Array<{
+          __typename?: "CollectionItem";
+          file?: string | null;
+        }>;
+      };
+    }>;
+  }>;
+}

@@ -11,4 +11,8 @@ export const useNftListStyles = makeStyles(() => ({
     paddingLeft: "0 !important",
     paddingRight: "30px !important",
   },
+  img: {
+    width: "100px",
+    height: "100px",
+  },
 }));

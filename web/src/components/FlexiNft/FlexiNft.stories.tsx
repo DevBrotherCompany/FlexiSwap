@@ -8,11 +8,11 @@ export default {
 export const Default = () => (
   <FlexiNft
     item={{
-      id: 1,
+      tokenId: "1",
       name: "",
-      img: "",
-      collection: "",
-      address: "",
+      file: "",
+      collection: null,
+      tokenAddress: "",
     }}
   />
 );

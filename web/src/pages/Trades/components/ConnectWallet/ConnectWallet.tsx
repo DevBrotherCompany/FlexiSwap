@@ -13,7 +13,7 @@ export const ConnectWallet: React.FC = () => {
 
   return (
     <Grid container className={classes.connectWrapper}>
-      <Grid item xs={1.7}>
+      <Grid item xs={1.5}>
         <MetamaskButton
           onClick={() => login({ signingMessage: Message.HelloFromFlexiSwap })}
           className={classes.connect}
