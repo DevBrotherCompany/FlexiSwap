@@ -15,6 +15,7 @@ import { useAuth } from "hooks";
 
 import { selectCreateOffer } from "../createOffer.slice";
 import { Grid, List, ListItem } from "@mui/material";
+import { useClearStorage } from "../useClearStorage";
 
 interface OfferLayoutProps {}
 
@@ -26,6 +27,8 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
   const { signer } = useAuth();
   const navigate = useNavigate();
 
+  const { clearStrage } = useClearStorage();
+
   const handleBack = () => {
     navigate(-1);
   };
@@ -34,8 +37,16 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
     if (signer) {
       const flexiSwap = new FlexiSwap(signer);
       const receivings = offers.map((o) => o.selected);
-      console.log("handleCreateOffer");
-      await flexiSwap.createTrade(selectedNFTs, receivings);
+      try {
+        await flexiSwap.createTrade(selectedNFTs, receivings);
+      } catch (e) {
+        console.error("ERROR: ", e);
+      } finally {
+        clearStrage();
+        navigate(RouteName.AllTrades);
+      }
+    } else {
+      // TODO make a way to login user (moralis issue)
     }
   };
 

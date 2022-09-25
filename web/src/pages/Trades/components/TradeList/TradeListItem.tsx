@@ -93,9 +93,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
           </Grid>
         </Grid>
       </AccordionSummary>
-      <AccordionDetails>
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-      </AccordionDetails>
+      <AccordionDetails>Details are coming soon...</AccordionDetails>
     </Accordion>
   );
 };

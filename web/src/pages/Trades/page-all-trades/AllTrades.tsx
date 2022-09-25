@@ -20,7 +20,7 @@ import { mocked_allTrades } from "../../../MOCK";
 
 const AllTrades: React.FC = () => {
   const { data } = useGetAllTradesQuery();
-  const [searchItems] = useSearchItemsLazyQuery();
+  const [searchItems, { data: searchData }] = useSearchItemsLazyQuery();
 
   const { openModal, isModalOpened, closeModals } =
     useModalsState<TradesModal>();
