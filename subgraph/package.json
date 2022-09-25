@@ -3,6 +3,7 @@
   "license": "MIT",
   "scripts": {
     "prepare:goerli": "node ./scripts/make-flexi-swap-abi.js && npx mustache config/goerli.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:polygon": "node ./scripts/make-flexi-swap-abi.js && npx mustache config/polygon.json subgraph.yaml.mustache > subgraph.yaml",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ flexiswap",

@@ -1,5 +1,5 @@
 // TODO: Import abis from @flexiswap/contracts
-export const FLEXISWAP_ADDRESS = '0x27a46a554054924Fdb21e60d08F067352411D7E1';
+export const FLEXISWAP_ADDRESS = '0x55aCA390960D09aEc5dB11fB5d5b3453F813d05D';
 
 export const FLEXISWAP_ABI = [
   {
