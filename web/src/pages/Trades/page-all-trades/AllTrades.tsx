@@ -17,6 +17,8 @@ import {
   useSearchItemsLazyQuery,
 } from "packages/graphql/generated";
 
+import { mocked_allTrades } from "MOCK";
+
 const AllTrades: React.FC = () => {
   const { data } = useGetAllTradesQuery();
   const [searchItems, { data: searchData }] = useSearchItemsLazyQuery();
@@ -56,7 +58,7 @@ const AllTrades: React.FC = () => {
         <FlexiTitle>All trades</FlexiTitle>
         <TradeList
           //@ts-ignore
-          list={data?.trades ?? []}
+          list={data?.trades ?? mocked_allTrades}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />

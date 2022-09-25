@@ -46,7 +46,8 @@ const MyTrades: React.FC = () => {
       <TradesLayout>
         <FlexiTitle>My trades</FlexiTitle>
         <TradeList
-          list={mocked_allTrades ?? data?.itemsByOwnerAddress ?? []}
+          //@ts-ignore
+          list={data?.itemsByOwnerAddress ?? mocked_allTrades}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />
