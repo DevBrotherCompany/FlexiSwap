@@ -1,4 +1,5 @@
 import { INftCollection, INftItem, ITrade } from "../interfaces";
+import { mocked_PreviewItems } from "./previewItems";
 
 export const mocked_allTrades: ITrade[] = [
   {
@@ -14,6 +15,46 @@ export const mocked_allTrades: ITrade[] = [
           collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
           description: "descr 1",
         },
+        {
+          tokenId: "token 2",
+          tokenAddress: "token adress 1",
+          name: "NFT name 1",
+          file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+          collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
+          description: "descr 1",
+        },
+        {
+          tokenId: "token 3",
+          tokenAddress: "token adress 1",
+          name: "NFT name 1",
+          file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+          collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
+          description: "descr 1",
+        },
+        {
+          tokenId: "token 4",
+          tokenAddress: "token adress 1",
+          name: "NFT name 1",
+          file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+          collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
+          description: "descr 1",
+        },
+        {
+          tokenId: "token 5",
+          tokenAddress: "token adress 1",
+          name: "NFT name 1",
+          file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+          collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
+          description: "descr 1",
+        },
+        {
+          tokenId: "token 6",
+          tokenAddress: "token adress 1",
+          name: "NFT name 1",
+          file: "https://img.kapital.kz/2wyYn-W4r_M/czM6Ly9rYXBpdGFsLXN0YXRpYy9pbWcvNy9kLzcvMC8zL2I2YjdkNTUzOTkwOGQ3ZDU4ZDg5OWM1YmVhMy5qcGc",
+          collection: { tokenAddress: "0x388517389791511251", name: "coll 1" },
+          description: "descr 1",
+        },
       ],
     },
     createdAt: 1124,
@@ -23,23 +64,24 @@ export const mocked_allTrades: ITrade[] = [
         items: [
           {
             collection: {
-              previewItems: [],
+              previewItems: mocked_PreviewItems,
               tokenAddress: "0x2174214",
-              name: "awewr",
+              name: "Steam punks",
               logo: "https://thumb.tildacdn.com/tild3639-6230-4362-b964-666231373539/-/resize/824x/-/format/webp/image1.png",
               symbol: null,
             },
-            item: {
-              tokenId: "124",
-              name: "Item 1",
-              tokenAddress: "0x21789175892175982152",
-              file: "https://gagadget.com/media/cache/80/20/80206948c99d63a185fd522dc1c669b0.jpg",
-              collection: {
-                name: "Coll name",
-                tokenAddress: "0x12521516112612",
-              },
-              description: "2154218wiohfioqew",
-            },
+            item: null,
+            // item: {
+            //   tokenId: "124",
+            //   name: "Item 1",
+            //   tokenAddress: "0x21789175892175982152",
+            //   file: "https://gagadget.com/media/cache/80/20/80206948c99d63a185fd522dc1c669b0.jpg",
+            //   collection: {
+            //     name: "Coll name",
+            //     tokenAddress: "0x12521516112612",
+            //   },
+            //   description: "2154218wiohfioqew",
+            // },
           },
         ],
       },
