@@ -6,7 +6,6 @@ import { List, ListItem } from "@mui/material";
 import { INftItem } from "interfaces";
 
 import { FlexiNft } from "components/FlexiNft/FlexiNft";
-import { AnyOfCollectionNft } from "../AnyOfCollectionNft/AnyOfCollectionNft";
 
 interface ChooseNftListProps {
   nfts: INftItem[];
@@ -20,9 +19,9 @@ export const ChooseNftList: React.FC<ChooseNftListProps> = ({
   const classes = useChooseNftListStyles();
   return (
     <List className={classes.list}>
-      <ListItem className={classes.listItem}>
-        <AnyOfCollectionNft />
-      </ListItem>
+      {/*<ListItem className={classes.listItem}>*/}
+      {/*  <AnyOfCollectionNft />*/}
+      {/*</ListItem>*/}
       {nfts.map((nft) => (
         <ListItem key={nft.tokenId} className={classes.listItem}>
           <FlexiNft
