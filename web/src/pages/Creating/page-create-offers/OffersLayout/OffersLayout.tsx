@@ -35,7 +35,8 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
 
   const handleCreateOffer = async () => {
     if (signer) {
-      const flexiSwap = new FlexiSwap(signer);
+      // FIXME: Resolve types incompatibility
+      const flexiSwap = new FlexiSwap(signer as any);
       const receivings = offers.map((o) => o.selected);
       try {
         await flexiSwap.createTrade(selectedNFTs, receivings);
