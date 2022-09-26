@@ -6,7 +6,7 @@ export const useTradeListStyles = makeStyles((theme: Theme) => ({
   card: { paddingLeft: "55px !important" },
   listItem: {
     display: "grid",
-    gridTemplateColumns: "3fr 1fr 3fr",
+    gridTemplateColumns: "minmax(540px, 4fr) 1fr 4fr",
     marginBottom: "20px !important",
   },
   accordion: {
@@ -19,4 +19,6 @@ export const useTradeListStyles = makeStyles((theme: Theme) => ({
       display: "block !important",
     },
   },
+  // givings: { maxWidth: "520px" },
+  givings: {},
 }));
