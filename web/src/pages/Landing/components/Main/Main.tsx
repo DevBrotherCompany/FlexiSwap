@@ -19,9 +19,12 @@ export const Main: React.FC = () => {
   return (
     <section className={classes.container}>
       <div className={classes.text}>
-        <Title>Trading based NFT Marketplace.</Title>
+        <Title>
+          Unlocking outstanding NFT Swapping opportunities for Web3 market
+        </Title>
         <Subtitle>
-          Platform that allows you to trade your NFTs for other NFTs.
+          Implementation of the Swapping Tool with unique, flexible and demanded
+          features for swapping NFTs and NFT collections.
         </Subtitle>
       </div>
       <div className={classes.btnContainer}>

@@ -22,7 +22,6 @@ import {
   selectCreateTrade,
   selectNft,
 } from "./createTrade.slice";
-import { mocked_Nfts } from "../../../MOCK/creating";
 
 export const MAX_SELECTED_NFTS = 10;
 
@@ -72,7 +71,7 @@ const CreateTrade: React.FC = () => {
       <main className={classes.chooseNft}>
         <FlexiInput placeholder={"Search by NFTs, collection name..."} />
         <ChooseNfts
-          nfts={data?.itemsByOwnerAddress.items ?? mocked_Nfts}
+          nfts={data?.itemsByOwnerAddress.items ?? []}
           onClickNft={handleSelectNft}
           filterFrom={selectedNFTs}
         />

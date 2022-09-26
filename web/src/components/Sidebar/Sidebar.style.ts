@@ -8,7 +8,7 @@ export const useSidebarStyles = makeStyles((theme: Theme) => ({
     backgroundColor: `${theme.palette.background.default} !important`,
     minWidth: `${sidebarWidth}px`,
     padding: "30px 20px 50px 20px",
-    position: "relative",
+    // position: "relative",
   },
   logo: { marginBottom: "30px !important" },
 }));
