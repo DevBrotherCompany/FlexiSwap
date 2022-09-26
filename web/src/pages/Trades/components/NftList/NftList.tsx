@@ -12,11 +12,21 @@ import { useListInfo } from "./useListInfo";
 interface NftListProps {
   list: INftItem[];
   onClick?: (item: INftItem) => void;
+  isExpanded?: boolean;
 }
 
-export const NftList: React.FC<NftListProps> = ({ list, onClick }) => {
+export const NftList: React.FC<NftListProps> = ({
+  list,
+  onClick,
+  isExpanded = false,
+}) => {
   const classes = useNftListStyles();
-  const { displayItems, isMany, additionalCount } = useListInfo(list);
+  const itemsToShow = !isExpanded ? 3 : list.length;
+
+  const { displayItems, isMany, additionalCount } = useListInfo(
+    list,
+    itemsToShow
+  );
 
   return (
     <ul className={classes.list}>

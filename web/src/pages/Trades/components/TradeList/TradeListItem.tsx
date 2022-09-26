@@ -56,45 +56,109 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
           address={initiatorAddress}
           tradeDate={`${createdAt} days ago`}
         />
-        <Grid className={classes.listItem}>
-          <Grid item>
-            <NftList list={givings.items ?? []} onClick={onClick} />
-          </Grid>
+        {!expanded && (
+          <>
+            <Grid className={classes.listItem}>
+              <Grid item className={classes.givings}>
+                <NftList
+                  list={givings.items ?? []}
+                  onClick={onClick}
+                  isExpanded={expanded}
+                />
+              </Grid>
 
-          <Grid
-            container
-            justifyContent={"center"}
-            alignItems={"center"}
-            paddingBottom={"5%"}
-          >
-            {ArrowSvg}
-          </Grid>
+              <Grid
+                container
+                justifyContent={"center"}
+                alignItems={"center"}
+                paddingBottom={"5%"}
+              >
+                {ArrowSvg}
+              </Grid>
 
-          <Grid item>
-            {!isPreviewCollection ? (
-              <NftList list={previewReceivingItems} onClick={onClick} />
-            ) : (
-              <NftCollectionBlock
-                collection={previewReceivingCollection}
-                onClick={onClickCollection}
-              />
-            )}
-            {isManyReceivings && (
-              <p>
-                {receivingCount} more offer
-                {receivingCount > 2 ? "s" : ""}
-                ...
-              </p>
-            )}
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={2}>
-            <FlexiButton onClick={toggleExpand}>Details</FlexiButton>
-          </Grid>
-        </Grid>
+              <Grid item>
+                {!isPreviewCollection ? (
+                  <NftList list={previewReceivingItems} onClick={onClick} />
+                ) : (
+                  <NftCollectionBlock
+                    collection={previewReceivingCollection}
+                    onClick={onClickCollection}
+                  />
+                )}
+                {isManyReceivings && (
+                  <p>
+                    {receivingCount} more offer
+                    {receivingCount > 2 ? "s" : ""}
+                    ...
+                  </p>
+                )}
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={2}>
+                <FlexiButton
+                  onClick={toggleExpand}
+                  variant={!expanded ? "contained" : "outlined"}
+                >
+                  {!expanded ? "Details" : "Hide details"}
+                </FlexiButton>
+              </Grid>
+            </Grid>
+          </>
+        )}
       </AccordionSummary>
-      <AccordionDetails>Details are coming soon...</AccordionDetails>
+      <AccordionDetails>
+        {expanded && (
+          <>
+            <Grid className={classes.listItem}>
+              <Grid item className={classes.givings}>
+                <NftList
+                  list={givings.items ?? []}
+                  onClick={onClick}
+                  isExpanded={expanded}
+                />
+              </Grid>
+
+              <Grid
+                container
+                justifyContent={"center"}
+                alignItems={"center"}
+                paddingBottom={"5%"}
+              >
+                {ArrowSvg}
+              </Grid>
+
+              <Grid item>
+                {!isPreviewCollection ? (
+                  <NftList list={previewReceivingItems} onClick={onClick} />
+                ) : (
+                  <NftCollectionBlock
+                    collection={previewReceivingCollection}
+                    onClick={onClickCollection}
+                  />
+                )}
+                {isManyReceivings && (
+                  <p>
+                    {receivingCount} more offer
+                    {receivingCount > 2 ? "s" : ""}
+                    ...
+                  </p>
+                )}
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={2}>
+                <FlexiButton
+                  onClick={toggleExpand}
+                  variant={!expanded ? "contained" : "outlined"}
+                >
+                  {!expanded ? "Details" : "Hide details"}
+                </FlexiButton>
+              </Grid>
+            </Grid>
+          </>
+        )}
+      </AccordionDetails>
     </Accordion>
   );
 };

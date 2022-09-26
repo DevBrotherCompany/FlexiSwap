@@ -5,10 +5,12 @@ export const useNftListStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     paddingLeft: 0,
+    flexWrap: "wrap",
   },
   listItem: {
     listStyle: "none",
     marginRight: "15px",
+    paddingBottom: "15px",
   },
   imgWrapper: {
     width: "100px",
