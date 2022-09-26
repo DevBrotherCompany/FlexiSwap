@@ -14,6 +14,7 @@ export const useMainStyles = makeStyles(() => ({
     position: "absolute",
     top: "5%",
     left: "2%",
+    color: "#FFF !important",
   },
   btnContainer: {
     position: "absolute",

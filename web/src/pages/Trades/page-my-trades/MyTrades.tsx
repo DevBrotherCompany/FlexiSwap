@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
 import { NftModal } from "shared/NftModal/NftModal";
 import { CollectionModal } from "shared/CollectionModal/CollectionModal";
-import { mocked_allTrades } from "MOCK";
 
 import { useGetMyItemsQuery } from "packages/graphql/generated";
 import { INftCollection, INftItem } from "interfaces";
@@ -47,7 +46,7 @@ const MyTrades: React.FC = () => {
         <FlexiTitle>My trades</FlexiTitle>
         <TradeList
           //@ts-ignore
-          list={data?.itemsByOwnerAddress ?? mocked_allTrades}
+          list={data?.itemsByOwnerAddress.items ?? []}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />

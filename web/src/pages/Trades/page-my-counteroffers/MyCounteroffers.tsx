@@ -7,7 +7,9 @@ const MyCounteroffers: React.FC = () => {
   return (
     <TradesLayout>
       <FlexiTitle>My Counteroffers</FlexiTitle>
-      <FlexiTitle>Coming soon</FlexiTitle>
+      <br />
+      <br />
+      <FlexiTitle>Coming soon...</FlexiTitle>
     </TradesLayout>
   );
 };

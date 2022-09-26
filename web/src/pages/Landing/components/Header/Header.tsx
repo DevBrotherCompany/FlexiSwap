@@ -7,9 +7,11 @@ import { useAuth } from "hooks";
 import { MetamaskButton } from "components/MetamaskButton/MetamaskButton";
 import { Message } from "shared/variables";
 
+import { ReactComponent as Logo } from "assets/images/flexiSwapLogo.svg";
+
 export const Header: React.FC = () => {
   const classes = useHeaderStyles();
-  const { account, login } = useAuth();
+  const { moralisAccount, login } = useAuth();
 
   const handleClick = () => {
     login({ signingMessage: Message.HelloFromFlexiSwap });
@@ -17,12 +19,12 @@ export const Header: React.FC = () => {
 
   return (
     <header className={classes.container}>
-      FlexiSwap
-      {!account && (
+      <Logo width={112} height={71} />
+      {!moralisAccount && (
         <Grid item>
           <MetamaskButton onClick={handleClick} />
         </Grid>
       )}
     </header>
   );
-};
+};;

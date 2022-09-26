@@ -8,7 +8,6 @@ import {
   Grid,
 } from "@mui/material";
 
-// import { INft, ITrade } from "interfaces";
 import { INftCollection, INftItem, ITrade } from "interfaces";
 import { FlexiButton } from "components/FlexiButton/FlexiButton";
 
@@ -42,6 +41,8 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
     receivingCount,
     isManyReceivings,
   } = useHiddenDetailsTrades(receivings);
+
+  // const { item: testItem } = useExpandedDetails(item);
 
   const toggleExpand = () => {
     setExpanded((prevState) => !prevState);

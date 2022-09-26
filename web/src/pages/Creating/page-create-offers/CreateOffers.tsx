@@ -22,7 +22,6 @@ import {
   removeNftFromOffer,
   selectCreateOffer,
 } from "./createOffer.slice";
-import { mocked_allNfts } from "../../../MOCK";
 
 const CreateOffers: React.FC = () => {
   const classes = useCreateOffersStyles();
@@ -88,7 +87,7 @@ const CreateOffers: React.FC = () => {
           placeholder={"Search by NFTs, collection name..."}
         />
         <ChooseNfts
-          nfts={data?.searchItems.items ?? mocked_allNfts}
+          nfts={data?.searchItems.items ?? []}
           title={"All NFTs"}
           onClickNft={handleAddNftToOffer}
           filterFrom={currentOffer?.selected}
