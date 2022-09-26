@@ -47,6 +47,7 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
         id: `${index + 1}`,
         items: rec.map(rec2 => ({ item: rec2 })),
       })),
+      createdAt: 0,
       // receivings: [
       //   {
       //     id: "1",
