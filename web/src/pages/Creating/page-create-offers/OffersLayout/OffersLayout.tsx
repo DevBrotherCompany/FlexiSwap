@@ -37,6 +37,7 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
   }
 
   const saveInStorage = (receivings: INftItem[][]) => {
+    const fromLocalStorage = storage.get(StorageKey.NftTrades) ?? []
     const toSave: any = {
       id: `${new Date().toISOString()}`,
       initiatorAddress: account,
@@ -55,7 +56,7 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
       //   },
       // ],
     }
-    storage.save(StorageKey.NftTrades, [toSave])
+    storage.save(StorageKey.NftTrades, [...fromLocalStorage, toSave])
   }
 
   const handleCreateOffer = async () => {
