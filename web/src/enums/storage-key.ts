@@ -1,3 +1,4 @@
 export enum StorageKey {
-  AccountAddress = "flexiAccoundAddress",
+  AccountAddress = 'flexiAccountAddress',
+  NftTrades = 'flexiFlexiNftTrade',
 }
