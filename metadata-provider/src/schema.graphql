@@ -6,7 +6,7 @@ type Collection {
     name: String
     symbol: String
     logo: String
-    previewItems: [CollectionItem!]!
+    previewItems: [CollectionItem!]
 }
 
 type CollectionItem {
@@ -15,7 +15,6 @@ type CollectionItem {
     name: String
     description: String
     file: String
-    collection: Collection
 }
 
 type CollectionItemsPagination {

@@ -1,3 +1,4 @@
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -23,7 +24,7 @@ export class Collection {
     name?: Nullable<string>;
     symbol?: Nullable<string>;
     logo?: Nullable<string>;
-    previewItems: CollectionItem[];
+    previewItems?: Nullable<CollectionItem[]>;
 }
 
 export class CollectionItem {
@@ -32,7 +33,6 @@ export class CollectionItem {
     name?: Nullable<string>;
     description?: Nullable<string>;
     file?: Nullable<string>;
-    collection?: Nullable<Collection>;
 }
 
 export class CollectionItemsPagination {

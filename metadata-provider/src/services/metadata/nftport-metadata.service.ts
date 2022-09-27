@@ -1,4 +1,7 @@
 import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
+import axios from 'axios';
+
 import {
   Collection,
   CollectionItem,
@@ -11,6 +14,7 @@ import {
 } from './metadata.service.interface';
 import { IERC721Validator } from '../erc721-validator/erc721-validator.interface';
 import { isAddress } from '../../utils/is-address';
+import { getUniqueItemsByProperties } from 'src/utils/remove-duplicates';
 
 type GetOneItemResponse = {
   nft: {
@@ -60,6 +64,7 @@ export class NftportMetadataService implements IMetadataService {
   constructor(
     private readonly httpService: HttpService,
     private readonly erc721Validator: IERC721Validator,
+    private readonly configService: ConfigService,
   ) {}
 
   private mapRawItem(item: GetOneItemResponse['nft']): CollectionItem {
@@ -83,20 +88,34 @@ export class NftportMetadataService implements IMetadataService {
   }
 
   async getOneCollection(tokenAddress: string): Promise<Collection> {
-    const { data } =
-      await this.httpService.axiosRef.get<GetOneCollectionResponse>(
-        `/nfts/${tokenAddress}`,
+    try {
+      const { data } = await axios.get(
+        `https://deep-index.moralis.io/api/v2/nft/${tokenAddress}/metadata`,
         {
-          params: { page_size: 4 },
+          headers: {
+            accept: 'application/json',
+            'x-api-key': this.configService.get('MORALIS_API_KEY'),
+          },
+          params: {
+            chain: 'polygon',
+          },
         },
       );
-    return {
-      tokenAddress,
-      name: data.contract.name,
-      symbol: data.contract.symbol,
-      logo: data.contract.metadata?.cached_thumbnail_url,
-      previewItems: data.nfts.map((item) => this.mapRawItem(item)),
-    };
+
+      const collectionItems = await this.searchItems({
+        search: tokenAddress,
+        nextPage: 0,
+      });
+
+      return {
+        tokenAddress,
+        name: data.name,
+        symbol: data.symbol,
+        previewItems: collectionItems.items,
+      };
+    } catch (error) {
+      return { tokenAddress };
+    }
   }
 
   async getManyItemsByOwner(
@@ -107,7 +126,7 @@ export class NftportMetadataService implements IMetadataService {
         `/accounts/${input.ownerAddress}`,
         {
           params: {
-            contract_address: input.tokenAddress,
+            // contract_address: input.tokenAddress,
             page_number: input.nextPage,
             exclude: 'erc1155',
           },
@@ -128,50 +147,70 @@ export class NftportMetadataService implements IMetadataService {
   private async getByTokenAddress(
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
-    const { data } =
-      await this.httpService.axiosRef.get<GetOneCollectionResponse>(
+    const isCollectionERC721 = this.erc721Validator.isCollectionERC721(
+      input.search,
+    );
+
+    if (!isCollectionERC721) {
+      return { items: [], nextPage: null };
+    }
+
+    try {
+      // TODO: update typings
+      const { data } = await this.httpService.axiosRef.get<any>(
         `/nfts/${input.search}`,
         {
-          params: { page_number: input.nextPage },
+          params: { page_number: input.nextPage, include: 'all' },
         },
       );
-    if (data.contract.type !== 'ERC721') return { items: [], nextPage: null };
-    return {
-      items: data.nfts.map((item) => this.mapRawItem(item)),
-      nextPage: data.nfts.length !== 0 ? input.nextPage + 1 : null,
-    };
+
+      return {
+        items: data.nfts.map((item) => this.mapRawItem(item)),
+        nextPage: data.nfts.length !== 0 ? input.nextPage + 1 : null,
+      };
+    } catch (error) {
+      return { items: [], nextPage: null };
+    }
   }
 
   private async getBySearch(
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
-    const { data } = await this.httpService.axiosRef.get<GetBySearchResponse>(
-      '/search',
-      {
-        params: {
-          text: input.search,
-          page_size: input.nextPage,
+    try {
+      const { data } = await this.httpService.axiosRef.get<GetBySearchResponse>(
+        '/search',
+        {
+          params: {
+            text: input.search,
+            page_size: input.nextPage,
+          },
         },
-      },
-    );
-    const items = await Promise.all(
-      data.search_results.map((item) => {
-        return this.erc721Validator.isERC721({
-          tokenAddress: item.contract_address,
-          tokenId: item.token_id,
-          name: item.name,
-          description: item.description,
-          file: item.cached_file_url,
-        });
-      }),
-    );
-    const erc721Items = items
-      .filter(({ isERC721 }) => isERC721)
-      .map(({ isERC721, ...item }) => item);
-    return {
-      items: erc721Items,
-      nextPage: input.nextPage + 1,
-    };
+      );
+
+      const items = await Promise.all(
+        data.search_results.map((item) => {
+          return this.erc721Validator.isERC721({
+            tokenAddress: item.contract_address,
+            tokenId: item.token_id,
+            name: item.name,
+            description: item.description,
+            file: item.cached_file_url,
+          });
+        }),
+      );
+
+      const erc721Items = items
+        .filter(({ isERC721 }) => isERC721)
+        .map(({ isERC721, ...item }) => item);
+
+      return {
+        items: erc721Items,
+        nextPage: input.nextPage + 1,
+      };
+    } catch (error) {
+      console.log('error', error);
+      return { items: [], nextPage: null };
+    }
   }
 
   async searchItems(
@@ -179,19 +218,26 @@ export class NftportMetadataService implements IMetadataService {
   ): Promise<CollectionItemsPagination> {
     if (isAddress(input.search)) return this.getByTokenAddress(input);
 
-    const resultItems = [];
-    let counter = 0;
+    let resultItems = [];
     let nextPage = input.nextPage;
-    while (resultItems.length < 50 || counter < 10) {
+    let nftsAvailable = true;
+
+    while (nftsAvailable && resultItems.length < 50 && nextPage !== null) {
       const result = await this.getBySearch({ ...input, nextPage });
       if (result.items.length === 0) {
-        counter++;
+        nftsAvailable = false;
       } else {
-        resultItems.push(result.items);
-        counter = 0;
+        resultItems.push(...result.items);
+        resultItems = getUniqueItemsByProperties(resultItems, [
+          'tokenAddress',
+          'tokenId',
+        ]);
       }
-
       nextPage = result.nextPage;
     }
+
+    return {
+      items: resultItems.flat(),
+    };
   }
 }

@@ -19,4 +19,16 @@ export class CacheERC721Validator implements IERC721Validator {
     await this.cache.set(key, result.isERC721, { ttl: 0 });
     return result;
   }
+
+  async isCollectionERC721(collectionAddress: string): Promise<boolean> {
+    const key = 'CacheERC721Validator#isERC721' + collectionAddress;
+    const isERC721 = await this.cache.get<boolean>(key);
+    if (isERC721 !== undefined) return isERC721;
+
+    const result = await this.erc721Validator.isCollectionERC721(
+      collectionAddress,
+    );
+    await this.cache.set(key, result, { ttl: 0 });
+    return result;
+  }
 }

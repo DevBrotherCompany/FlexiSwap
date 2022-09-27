@@ -6,6 +6,7 @@ import { NftportMetadataService } from './nftport-metadata.service';
 import { CacheMetadataService } from './cache-metadata.service';
 import { ERC721_VALIDATOR_TOKEN } from '../erc721-validator/erc721-validator.provider';
 import { IERC721Validator } from '../erc721-validator/erc721-validator.interface';
+import { ConfigService } from '@nestjs/config';
 
 export const METADATA_SERVICE_TOKEN = Symbol('METADATA_SERVICE_TOKEN');
 
@@ -18,10 +19,12 @@ export const metadataServiceProvider: FactoryProvider<IMetadataService> = {
     httpService: HttpService,
     erc721Validator: IERC721Validator,
     cache: Cache,
+    configService: ConfigService,
   ) => {
     const metadataservice = new NftportMetadataService(
       httpService,
       erc721Validator,
+      configService,
     );
     return new CacheMetadataService(metadataservice, cache);
   },
