@@ -48,6 +48,9 @@ const AllTrades: React.FC = () => {
     searchItems({ variables: { search: debouncedSearch } })
   }, [debouncedSearch])
 
+  console.log('===SearchItems -> searchData===', searchData)
+  console.log('===Get all trades -> data===', data)
+
   const fromLocalStorage = storage.get(StorageKey.NftTrades) ?? []
 
   const mocked_displayItems = [...fromLocalStorage, ...mocked_allTrades]

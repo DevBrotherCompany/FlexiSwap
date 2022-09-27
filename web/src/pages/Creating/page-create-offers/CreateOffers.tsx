@@ -57,7 +57,7 @@ const CreateOffers: React.FC = () => {
     getNfts({ variables: { search: debouncedSearch } })
   }, [debouncedSearch])
 
-  console.log('===data===', data)
+  console.log('===SearchItems -> data===', data)
   useEffect(() => {
     // TODO validate current page
     // const id = Number(number);

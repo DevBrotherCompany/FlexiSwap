@@ -40,6 +40,8 @@ const MyTrades: React.FC = () => {
     closeModals()
   }
 
+  console.log('===My trades -> data===', data)
+
   const fromLocalStorage = storage.get(StorageKey.NftTrades) ?? []
 
   return (
