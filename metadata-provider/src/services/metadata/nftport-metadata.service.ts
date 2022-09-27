@@ -87,7 +87,7 @@ export class NftportMetadataService implements IMetadataService {
     return this.mapRawItem(data.nft);
   }
 
-  async getOneCollection(tokenAddress: string): Promise<Collection> {
+  async getOneCollection(tokenAddress: string): Promise<Collection | null> {
     try {
       const { data } = await axios.get(
         `https://deep-index.moralis.io/api/v2/nft/${tokenAddress}/metadata`,
@@ -104,8 +104,10 @@ export class NftportMetadataService implements IMetadataService {
 
       const collectionItems = await this.searchItems({
         search: tokenAddress,
-        nextPage: 0,
+        nextPage: 1,
       });
+
+      console.log('collectionItems', collectionItems);
 
       return {
         tokenAddress,
@@ -114,7 +116,7 @@ export class NftportMetadataService implements IMetadataService {
         previewItems: collectionItems.items,
       };
     } catch (error) {
-      return { tokenAddress };
+      return null;
     }
   }
 
@@ -147,9 +149,11 @@ export class NftportMetadataService implements IMetadataService {
   private async getByTokenAddress(
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
-    const isCollectionERC721 = this.erc721Validator.isCollectionERC721(
+    const isCollectionERC721 = await this.erc721Validator.isCollectionERC721(
       input.search,
     );
+
+    console.log('getByTokenAddress', input.search, isCollectionERC721);
 
     if (!isCollectionERC721) {
       return { items: [], nextPage: null };
@@ -158,17 +162,20 @@ export class NftportMetadataService implements IMetadataService {
     try {
       // TODO: update typings
       const { data } = await this.httpService.axiosRef.get<any>(
-        `/nfts/${input.search}`,
+        `/nfts/${input.search.toString()}`,
         {
           params: { page_number: input.nextPage, include: 'all' },
         },
       );
+
+      console.log('getByTokenAddress:;data', data);
 
       return {
         items: data.nfts.map((item) => this.mapRawItem(item)),
         nextPage: data.nfts.length !== 0 ? input.nextPage + 1 : null,
       };
     } catch (error) {
+      console.log('getByTokenAddress:error', error);
       return { items: [], nextPage: null };
     }
   }
@@ -216,6 +223,7 @@ export class NftportMetadataService implements IMetadataService {
   async searchItems(
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
+    if (isAddress(input.search)) console.log('isAddress', isAddress(input.search));
     if (isAddress(input.search)) return this.getByTokenAddress(input);
 
     let resultItems = [];

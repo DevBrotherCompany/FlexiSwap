@@ -33,4 +33,10 @@ export class CollectionItemsPaginationResolver {
       nextPage: input.nextPage ?? 1,
     });
   }
+  @Query()
+  getCollection(
+    @Args('tokenAddress') tokenAddress: string,
+  ): Promise<any> {
+    return this.metadataService.getOneCollection(tokenAddress);
+  }
 }

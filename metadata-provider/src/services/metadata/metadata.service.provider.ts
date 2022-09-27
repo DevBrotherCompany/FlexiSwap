@@ -14,12 +14,12 @@ export const InjectMetadataService = () => Inject(METADATA_SERVICE_TOKEN);
 
 export const metadataServiceProvider: FactoryProvider<IMetadataService> = {
   provide: METADATA_SERVICE_TOKEN,
-  inject: [HttpService, ERC721_VALIDATOR_TOKEN, CACHE_MANAGER],
+  inject: [HttpService, ERC721_VALIDATOR_TOKEN, ConfigService, CACHE_MANAGER],
   useFactory: (
     httpService: HttpService,
     erc721Validator: IERC721Validator,
-    cache: Cache,
     configService: ConfigService,
+    cache: Cache,
   ) => {
     const metadataservice = new NftportMetadataService(
       httpService,

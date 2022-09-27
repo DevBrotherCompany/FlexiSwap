@@ -21,10 +21,10 @@ export class CollectionItemsResolver {
     private readonly metadataService: IMetadataService,
   ) {}
 
-  @ResolveField()
-  collection(@Parent() item: CollectionItem): Promise<Collection> {
-    return this.metadataService.getOneCollection(item.tokenAddress);
-  }
+  // @ResolveField()
+  // collection(@Parent() item: CollectionItem): Promise<Collection> {
+  //   return this.metadataService.getOneCollection(item.tokenAddress);
+  // }
 
   @ResolveReference()
   resolveReference({

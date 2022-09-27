@@ -36,7 +36,10 @@ export class CacheMetadataService implements IMetadataService {
     if (result) return result;
 
     result = await this.metadataService.getOneCollection(tokenAddress);
-    await this.cache.set(key, result);
+    if (result) {
+      await this.cache.set(key, result, { ttl: 10 * 60 });
+    }
+
     return result;
   }
 

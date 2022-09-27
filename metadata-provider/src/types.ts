@@ -33,6 +33,7 @@ export class CollectionItem {
     name?: Nullable<string>;
     description?: Nullable<string>;
     file?: Nullable<string>;
+    collection?: Nullable<Collection>;
 }
 
 export class CollectionItemsPagination {
@@ -44,6 +45,8 @@ export abstract class IQuery {
     abstract itemsByOwnerAddress(input: ItemsByOwnerAddressInput): CollectionItemsPagination | Promise<CollectionItemsPagination>;
 
     abstract searchItems(input: SearchItemsInput): CollectionItemsPagination | Promise<CollectionItemsPagination>;
+
+    abstract getCollection(tokenAddress: string): Nullable<Collection> | Promise<Nullable<Collection>>;
 }
 
 export class GivingsOfferItem {

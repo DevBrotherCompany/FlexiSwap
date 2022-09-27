@@ -2,60 +2,64 @@ scalar Bytes
 scalar BigInt
 
 type Collection {
-    tokenAddress: Bytes!
-    name: String
-    symbol: String
-    logo: String
-    previewItems: [CollectionItem!]
+  tokenAddress: Bytes!
+  name: String
+  symbol: String
+  logo: String
+  previewItems: [CollectionItem!]
 }
 
 type CollectionItem {
-    tokenAddress: Bytes!
-    tokenId: BigInt!
-    name: String
-    description: String
-    file: String
+  tokenAddress: Bytes!
+  tokenId: BigInt!
+  name: String
+  description: String
+  file: String
+  collection: Collection
 }
 
 type CollectionItemsPagination {
-    items: [CollectionItem!]!
-    nextPage: Int
+  items: [CollectionItem!]!
+  nextPage: Int
 }
 
 extend type GivingsOfferItem @key(fields: "tokenAddress tokenId") {
-    tokenAddress: Bytes! @external
-    tokenId: BigInt! @external
-    item: CollectionItem!
-    collection: Collection!
+  tokenAddress: Bytes! @external
+  tokenId: BigInt! @external
+  item: CollectionItem!
+  collection: Collection!
 }
 
 extend type ReceivingsOfferItem @key(fields: "tokenAddress tokenId") {
-    tokenAddress: Bytes! @external
-    tokenId: BigInt @external
-    item: CollectionItem
-    collection: Collection!
+  tokenAddress: Bytes! @external
+  tokenId: BigInt @external
+  item: CollectionItem
+  collection: Collection!
 }
 
 extend type CounterOfferItem @key(fields: "tokenAddress tokenId") {
-    tokenAddress: Bytes! @external
-    tokenId: BigInt! @external
-    item: CollectionItem!
-    collection: Collection!
+  tokenAddress: Bytes! @external
+  tokenId: BigInt! @external
+  item: CollectionItem!
+  collection: Collection!
 }
 
 input ItemsByOwnerAddressInput {
-    ownerAddress: Bytes!
-    tokenAddress: Bytes
-    nextPage: Int
+  ownerAddress: Bytes!
+  tokenAddress: Bytes
+  nextPage: Int
 }
 
 input SearchItemsInput {
-    search: String!
-    nextPage: Int
+  search: String!
+  nextPage: Int
 }
 
 type Query {
-    itemsByOwnerAddress(input: ItemsByOwnerAddressInput!): CollectionItemsPagination!
+  itemsByOwnerAddress(
+    input: ItemsByOwnerAddressInput!
+  ): CollectionItemsPagination!
 
-    searchItems(input: SearchItemsInput!): CollectionItemsPagination!
+  searchItems(input: SearchItemsInput!): CollectionItemsPagination!
+  getCollection(tokenAddress: String!): Collection
 }
