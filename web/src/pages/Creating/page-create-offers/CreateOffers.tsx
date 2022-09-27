@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { KeyboardEvent, useEffect, useState } from 'react'
 import { useCreateOffersStyles } from './CreateOffers.style'
 
 import { useNavigate, useParams } from 'react-router-dom'
@@ -8,7 +8,6 @@ import { FlexiTitle } from 'components/FlexiTitle/FlexiTitle'
 import { FlexiInput } from 'components/FlexiInput/FlexiInput'
 
 import { useSearchItemsLazyQuery } from 'packages/graphql/generated'
-import { useDebounce } from 'hooks'
 import { useAppDispatch, useAppSelector } from 'storage/hooks'
 import { INftItem } from 'interfaces'
 
@@ -18,20 +17,20 @@ import { ChooseNfts } from '../components/ChooseNfts/ChooseNfts'
 import { OffersLayout } from './OffersLayout/OffersLayout'
 import { CreateOffersParams } from './CreateOffersParant'
 import { addNftForOffer, removeNftFromOffer, selectCreateOffer } from './createOffer.slice'
-import { mocked_items } from 'MOCK/items'
 
 const CreateOffers: React.FC = () => {
   const classes = useCreateOffersStyles()
 
   const [getNfts, { data }] = useSearchItemsLazyQuery()
+  console.log('===data===', data)
 
   const navigate = useNavigate()
   const { id } = useParams<CreateOffersParams>()
   const { offers } = useAppSelector(selectCreateOffer)
   const dispatch = useAppDispatch()
 
-  const [search, setSearch] = useState('')
-  const debouncedSearch = useDebounce(search)
+  // const [search, setSearch] = useState('')
+  // const debouncedSearch = useDebounce(search)
 
   const currentOffer = offers.find(o => o.id === Number(id))
 
@@ -52,12 +51,18 @@ const CreateOffers: React.FC = () => {
     navigate(RouteName.CreateOffers + '/' + (Number(id) + 1))
   }
 
-  useEffect(() => {
-    console.log('GET NFTs')
-    getNfts({ variables: { search: debouncedSearch } })
-  }, [debouncedSearch])
+  const handleSearchPressed = (e: any) => {
+    if (e.key === 'Enter') {
+      getNfts({ variables: { search: e.target.value, nextPage: 1 } })
+      // onSearchPress && onSearchPress(search)
+    }
+  }
 
-  console.log('===SearchItems -> data===', data)
+  useEffect(() => {
+    getNfts({ variables: { search: '', nextPage: 1 } })
+  }, [])
+
+  // console.log('===SearchItems -> data===', data)
   useEffect(() => {
     // TODO validate current page
     // const id = Number(number);
@@ -81,8 +86,8 @@ const CreateOffers: React.FC = () => {
         />
       </main>
       <main className={classes.chooseNft}>
-        <FlexiInput onChange={e => setSearch(e.target.value)} placeholder={'Search by NFTs, collection name...'} />
-        <ChooseNfts nfts={mocked_items ?? data?.searchItems.items ?? []} title={'All NFTs'} onClickNft={handleAddNftToOffer} filterFrom={currentOffer?.selected} />
+        <FlexiInput onKeyDown={handleSearchPressed} placeholder={'Search by NFTs, collection name (Press enter to search)...'} />
+        <ChooseNfts nfts={data?.searchItems.items ?? []} title={'All NFTs'} onClickNft={handleAddNftToOffer} filterFrom={currentOffer?.selected} />
       </main>
     </OffersLayout>
   )

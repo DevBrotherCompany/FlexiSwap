@@ -4,7 +4,7 @@ import { FlexiTitle } from 'components/FlexiTitle/FlexiTitle'
 import { NftModal } from 'shared/NftModal/NftModal'
 import { CollectionModal } from 'shared/CollectionModal/CollectionModal'
 
-import { useGetMyItemsQuery } from 'packages/graphql/generated'
+import { useGetMyItemsQuery, useSearchItemsCollectionLazyQuery } from 'packages/graphql/generated'
 import { INftCollection, INftItem } from 'interfaces'
 import { useAuth, useModalsState } from 'hooks'
 
@@ -18,6 +18,7 @@ import { StorageKey } from 'enums'
 const MyTrades: React.FC = () => {
   const { account } = useAuth()
   const { data } = useGetMyItemsQuery({ variables: { owner: account } })
+  const [searchCollection, { data: dataCollection }] = useSearchItemsCollectionLazyQuery()
 
   const [selectedNft, setSelectedNft] = useState<INftItem | null>(null)
   const [selectedCollection, setSelectedCollection] = useState<INftCollection | null>(null)
@@ -29,8 +30,10 @@ const MyTrades: React.FC = () => {
     openModal(TradesModal.NftInfo)
   }
 
-  const handleClickCollection = (collection: INftCollection) => {
-    setSelectedCollection(collection)
+  const handleClickCollection = async (collection: INftCollection) => {
+    await searchCollection({ variables: { search: collection.tokenAddress } })
+    // @ts-ignore
+    setSelectedCollection(dataCollection?.getCollection ?? null)
     openModal(TradesModal.CollectionInfo)
   }
 
@@ -40,9 +43,9 @@ const MyTrades: React.FC = () => {
     closeModals()
   }
 
-  console.log('===My trades -> data===', data)
+  // console.log('===My trades -> data===', data)
 
-  const fromLocalStorage = storage.get(StorageKey.NftTrades) ?? []
+  // const fromLocalStorage = storage.get(StorageKey.NftTrades) ?? []
 
   return (
     <>
@@ -50,7 +53,7 @@ const MyTrades: React.FC = () => {
         <FlexiTitle>My trades</FlexiTitle>
         <TradeList
           //@ts-ignore
-          list={fromLocalStorage ?? data?.itemsByOwnerAddress.items ?? []}
+          list={data?.itemsByOwnerAddress.items ?? []}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />
