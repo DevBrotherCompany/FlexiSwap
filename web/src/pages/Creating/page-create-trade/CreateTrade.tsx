@@ -26,7 +26,7 @@ export const MAX_SELECTED_NFTS = 10
 const CreateTrade: React.FC = () => {
   const classes = useCreateTradeStyles()
 
-  const { account } = useAuth()
+  const { account, moralisAccount } = useAuth()
   const [getMyItems, { data }] = useGetMyItemsLazyQuery()
 
   const { selectedNFTs } = useAppSelector(selectCreateTrade)
@@ -40,14 +40,19 @@ const CreateTrade: React.FC = () => {
     [selectedNFTs]
   )
 
-  console.log('===GetMyItems -> data===', data)
-
   const handleRemoveNft = useCallback((item: INftItem) => {
     dispatch(removeNftFromSelected(item))
   }, [])
 
   const handleCreateOffers = () => {
     navigate(RouteName.CreateOffers + `/${1}`)
+  }
+
+  const handleSearchPressed = (e: any) => {
+    if (e.key === 'Enter') {
+      getMyItems({ variables: { owner: account, nextPage: 1, tokenAddress: e.target.value } })
+      // onSearchPress && onSearchPress(search)
+    }
   }
 
   useEffect(() => {
@@ -65,8 +70,9 @@ const CreateTrade: React.FC = () => {
         <YourSelection selected={selectedNFTs} onClickNft={handleRemoveNft} onBtnClick={handleCreateOffers} />
       </main>
       <main className={classes.chooseNft}>
-        <FlexiInput placeholder={'Search by NFTs, collection name...'} />
-        <ChooseNfts nfts={mocked_items.slice(0, 3) ?? data?.itemsByOwnerAddress.items ?? []} onClickNft={handleSelectNft} filterFrom={selectedNFTs} isShowAnyOfCollection={false} />
+        <FlexiInput placeholder={'Search by NFTs, collection name...'} onKeyDown={handleSearchPressed} />
+        <ChooseNfts nfts={data?.itemsByOwnerAddress.items ?? []} onClickNft={handleSelectNft} filterFrom={selectedNFTs} isShowAnyOfCollection={false} />
+        {!account && <h1>Please connect wallet to choose your NFTs</h1>}
       </main>
     </TradeLayout>
   )

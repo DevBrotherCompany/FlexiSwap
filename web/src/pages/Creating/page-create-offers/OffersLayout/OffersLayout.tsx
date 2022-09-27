@@ -60,25 +60,25 @@ export const OffersLayout: React.FC<OfferLayoutProps> = ({ children }) => {
   }
 
   const handleCreateOffer = async () => {
-    const receivings = offers.map(o => o.selected)
-    saveInStorage(receivings)
-    clearStrage()
-    navigate(RouteName.AllTrades)
-    // if (signer) {
-    //   // FIXME: Resolve types incompatibility
-    //   const flexiSwap = new FlexiSwap(signer as any);
-    //   const receivings = offers.map((o) => o.selected);
-    //   try {
-    //     await flexiSwap.createTrade(selectedNFTs, receivings);
-    //   } catch (e) {
-    //     console.error("ERROR: ", e);
-    //   } finally {
-    //     clearStrage();
-    //     navigate(RouteName.AllTrades);
-    //   }
-    // } else {
-    //   // TODO make a way to login user (moralis issue)
-    // }
+    // const receivings = offers.map(o => o.selected)
+    // saveInStorage(receivings)
+    // clearStrage()
+    // navigate(RouteName.AllTrades)
+    if (signer) {
+      // FIXME: Resolve types incompatibility
+      const flexiSwap = new FlexiSwap(signer as any)
+      const receivings = offers.map(o => o.selected)
+      try {
+        await flexiSwap.createTrade(selectedNFTs, receivings)
+      } catch (e) {
+        console.error('ERROR: ', e)
+      } finally {
+        clearStrage()
+        navigate(RouteName.AllTrades)
+      }
+    } else {
+      // TODO make a way to login user (moralis issue)
+    }
   }
 
   return (
