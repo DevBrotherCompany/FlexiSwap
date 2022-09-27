@@ -26,36 +26,38 @@ const CreateOffers: React.FC = () => {
   const [getNfts, { data }] = useSearchItemsLazyQuery()
 
   const navigate = useNavigate()
-  const { number } = useParams<CreateOffersParams>()
+  const { id } = useParams<CreateOffersParams>()
   const { offers } = useAppSelector(selectCreateOffer)
   const dispatch = useAppDispatch()
 
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search)
 
-  const currentOffer = offers.find(o => o.id === Number(number))
+  const currentOffer = offers.find(o => o.id === Number(id))
 
   const handleAddNftToOffer = (item: INftItem) => {
     dispatch(
       addNftForOffer({
         item,
-        id: Number(number),
+        id: Number(id),
       })
     )
   }
 
   const handleRemoveNft = (item: INftItem) => {
-    dispatch(removeNftFromOffer({ id: Number(number), item }))
+    dispatch(removeNftFromOffer({ id: Number(id), item }))
   }
 
   const handleAddOffer = () => {
-    navigate(RouteName.CreateOffers + '/' + (Number(number) + 1))
+    navigate(RouteName.CreateOffers + '/' + (Number(id) + 1))
   }
 
   useEffect(() => {
+    console.log('GET NFTs')
     getNfts({ variables: { search: debouncedSearch } })
   }, [debouncedSearch])
 
+  console.log('===data===', data)
   useEffect(() => {
     // TODO validate current page
     // const id = Number(number);
@@ -64,7 +66,7 @@ const CreateOffers: React.FC = () => {
     // } else if (id > 1 && offers.length < id) {
     //   navigate(RouteName.CreateOffers + `/${1}`);
     // }
-  }, [number])
+  }, [id])
 
   return (
     <OffersLayout>

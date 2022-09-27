@@ -1,0 +1,15 @@
+query SearchItemsCollection($search: String!) {
+  getCollection(tokenAddress: $search) {
+    tokenAddress
+    name
+    symbol
+    logo
+    previewItems {
+      tokenAddress
+      tokenId
+      name
+      description
+      file
+    }
+  }
+}

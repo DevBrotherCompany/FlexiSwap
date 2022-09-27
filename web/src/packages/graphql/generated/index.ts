@@ -1,17 +1,10 @@
-import * as Apollo from "@apollo/client";
-import { gql } from "@apollo/client";
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -39,7 +32,7 @@ export type Collection = {
   __typename?: 'Collection';
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  previewItems: Array<CollectionItem>;
+  previewItems?: Maybe<Array<CollectionItem>>;
   symbol?: Maybe<Scalars['String']>;
   tokenAddress: Scalars['Bytes'];
 };
@@ -342,6 +335,7 @@ export type Query = {
   counterOfferItem?: Maybe<CounterOfferItem>;
   counterOfferItems: Array<CounterOfferItem>;
   counterOffers: Array<CounterOffer>;
+  getCollection?: Maybe<Collection>;
   givingsOffer?: Maybe<GivingsOffer>;
   givingsOfferItem?: Maybe<GivingsOfferItem>;
   givingsOfferItems: Array<GivingsOfferItem>;
@@ -395,6 +389,11 @@ export type QueryCounterOffersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<CounterOffer_Filter>;
+};
+
+
+export type QueryGetCollectionArgs = {
+  tokenAddress: Scalars['String'];
 };
 
 
@@ -940,69 +939,19 @@ export enum _SubgraphErrorPolicy_ {
 }
 
 export type GetAllTradesQueryVariables = Exact<{
-  first?: InputMaybe<Scalars["Int"]>;
-  skip?: InputMaybe<Scalars["Int"]>;
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type GetAllTradesQuery = {
-  __typename?: "Query";
-  trades: Array<{
-    __typename?: "Trade";
-    id: string;
-    initiatorAddress: any;
-    createdAt: number;
-    givings: {
-      __typename?: "GivingsOffer";
-      items: Array<{
-        __typename?: "GivingsOfferItem";
-        item: {
-          __typename?: "CollectionItem";
-          tokenId: any;
-          tokenAddress: any;
-          name?: string | null;
-          description?: string | null;
-          file?: string | null;
-          collection?: {
-            __typename?: "Collection";
-            name?: string | null;
-            tokenAddress: any;
-          } | null;
-        };
-      }>;
-    };
-    receivings: Array<{
-      __typename?: "ReceivingsOffer";
-      id: string;
-      items: Array<{
-        __typename?: "ReceivingsOfferItem";
-        item?: {
-          __typename?: "CollectionItem";
-          tokenId: any;
-          tokenAddress: any;
-          name?: string | null;
-          description?: string | null;
-          file?: string | null;
-          collection?: {
-            __typename?: "Collection";
-            name?: string | null;
-            tokenAddress: any;
-          } | null;
-        } | null;
-        collection: {
-          __typename?: "Collection";
-          tokenAddress: any;
-          name?: string | null;
-          symbol?: string | null;
-          logo?: string | null;
-          previewItems: Array<{
-            __typename?: "CollectionItem";
-            file?: string | null;
-          }>;
-        };
-      }>;
-    }>;
-  }>;
-};
+
+export type GetAllTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, initiatorAddress: any, createdAt: number, givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null } }> }, receivings: Array<{ __typename?: 'ReceivingsOffer', id: string, items: Array<{ __typename?: 'ReceivingsOfferItem', item?: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null } | null, collection: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems?: Array<{ __typename?: 'CollectionItem', file?: string | null }> | null } }> }> }> };
+
+export type SearchItemsCollectionQueryVariables = Exact<{
+  search: Scalars['String'];
+}>;
+
+
+export type SearchItemsCollectionQuery = { __typename?: 'Query', getCollection?: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems?: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null }> | null } | null };
 
 export type GetMyItemsQueryVariables = Exact<{
   owner: Scalars['Bytes'];
@@ -1011,180 +960,67 @@ export type GetMyItemsQueryVariables = Exact<{
 }>;
 
 
-export type GetMyItemsQuery = {
-  __typename?: "Query";
-  itemsByOwnerAddress: {
-    __typename?: "CollectionItemsPagination";
-    nextPage?: number | null;
-    items: Array<{
-      __typename?: "CollectionItem";
-      tokenAddress: any;
-      tokenId: any;
-      name?: string | null;
-      description?: string | null;
-      file?: string | null;
-      collection?: {
-        __typename?: "Collection";
-        tokenAddress: any;
-        name?: string | null;
-        symbol?: string | null;
-        logo?: string | null;
-        previewItems: Array<{
-          __typename?: "CollectionItem";
-          file?: string | null;
-        }>;
-      } | null;
-    }>;
-  };
-};
+export type GetMyItemsQuery = { __typename?: 'Query', itemsByOwnerAddress: { __typename?: 'CollectionItemsPagination', nextPage?: number | null, items: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null }> } };
 
 export type GetMyTradesQueryVariables = Exact<{
-  first?: InputMaybe<Scalars["Int"]>;
-  skip?: InputMaybe<Scalars["Int"]>;
-  owner: Scalars["Bytes"];
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  owner: Scalars['Bytes'];
 }>;
 
-export type GetMyTradesQuery = {
-  __typename?: "Query";
-  trades: Array<{
-    __typename?: "Trade";
-    id: string;
-    initiatorAddress: any;
-    createdAt: number;
-    givings: {
-      __typename?: "GivingsOffer";
-      items: Array<{
-        __typename?: "GivingsOfferItem";
-        item: {
-          __typename?: "CollectionItem";
-          tokenId: any;
-          tokenAddress: any;
-          name?: string | null;
-          description?: string | null;
-          file?: string | null;
-          collection?: {
-            __typename?: "Collection";
-            name?: string | null;
-            tokenAddress: any;
-          } | null;
-        };
-      }>;
-    };
-    receivings: Array<{
-      __typename?: "ReceivingsOffer";
-      id: string;
-      items: Array<{
-        __typename?: "ReceivingsOfferItem";
-        item?: {
-          __typename?: "CollectionItem";
-          tokenId: any;
-          tokenAddress: any;
-          name?: string | null;
-          description?: string | null;
-          file?: string | null;
-          collection?: {
-            __typename?: "Collection";
-            name?: string | null;
-            tokenAddress: any;
-          } | null;
-        } | null;
-        collection: {
-          __typename?: "Collection";
-          tokenAddress: any;
-          name?: string | null;
-          symbol?: string | null;
-          logo?: string | null;
-          previewItems: Array<{
-            __typename?: "CollectionItem";
-            file?: string | null;
-          }>;
-        };
-      }>;
-    }>;
-  }>;
-};
+
+export type GetMyTradesQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, initiatorAddress: any, createdAt: number, givings: { __typename?: 'GivingsOffer', items: Array<{ __typename?: 'GivingsOfferItem', item: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null } }> }, receivings: Array<{ __typename?: 'ReceivingsOffer', id: string, items: Array<{ __typename?: 'ReceivingsOfferItem', item?: { __typename?: 'CollectionItem', tokenId: any, tokenAddress: any, name?: string | null, description?: string | null, file?: string | null } | null, collection: { __typename?: 'Collection', tokenAddress: any, name?: string | null, symbol?: string | null, logo?: string | null, previewItems?: Array<{ __typename?: 'CollectionItem', file?: string | null }> | null } }> }> }> };
 
 export type SearchItemsQueryVariables = Exact<{
-  search: Scalars["String"];
-  nextPage?: InputMaybe<Scalars["Int"]>;
+  search: Scalars['String'];
+  nextPage?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type SearchItemsQuery = {
-  __typename?: "Query";
-  searchItems: {
-    __typename?: "CollectionItemsPagination";
-    nextPage?: number | null;
-    items: Array<{
-      __typename?: "CollectionItem";
-      tokenAddress: any;
-      tokenId: any;
-      name?: string | null;
-      description?: string | null;
-      file?: string | null;
-      collection?: {
-        __typename?: "Collection";
-        tokenAddress: any;
-        name?: string | null;
-        symbol?: string | null;
-        logo?: string | null;
-        previewItems: Array<{
-          __typename?: "CollectionItem";
-          file?: string | null;
-        }>;
-      } | null;
-    }>;
-  };
-};
+
+export type SearchItemsQuery = { __typename?: 'Query', searchItems: { __typename?: 'CollectionItemsPagination', nextPage?: number | null, items: Array<{ __typename?: 'CollectionItem', tokenAddress: any, tokenId: any, name?: string | null, description?: string | null, file?: string | null }> } };
+
 
 export const GetAllTradesDocument = gql`
-  query GetAllTrades($first: Int, $skip: Int) {
-    trades(first: $first, skip: $skip) {
-      id
-      initiatorAddress
-      createdAt
-      givings {
-        items {
-          item {
-            tokenId
-            tokenAddress
-            name
-            description
-            file
-            collection {
-              name
-              tokenAddress
-            }
-          }
+    query GetAllTrades($first: Int, $skip: Int) {
+  trades(first: $first, skip: $skip) {
+    id
+    initiatorAddress
+    createdAt
+    givings {
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
         }
       }
-      receivings {
-        id
-        items {
-          item {
-            tokenId
-            tokenAddress
-            name
-            description
+    }
+    receivings {
+      id
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
+        }
+        collection {
+          tokenAddress
+          name
+          symbol
+          logo
+          previewItems {
             file
-            collection {
-              name
-              tokenAddress
-            }
-          }
-          collection {
-            tokenAddress
-            name
-            symbol
-            logo
-            previewItems {
-              file
-            }
           }
         }
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetAllTradesQuery__
@@ -1214,6 +1050,51 @@ export function useGetAllTradesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllTradesQueryHookResult = ReturnType<typeof useGetAllTradesQuery>;
 export type GetAllTradesLazyQueryHookResult = ReturnType<typeof useGetAllTradesLazyQuery>;
 export type GetAllTradesQueryResult = Apollo.QueryResult<GetAllTradesQuery, GetAllTradesQueryVariables>;
+export const SearchItemsCollectionDocument = gql`
+    query SearchItemsCollection($search: String!) {
+  getCollection(tokenAddress: $search) {
+    tokenAddress
+    name
+    symbol
+    logo
+    previewItems {
+      tokenAddress
+      tokenId
+      name
+      description
+      file
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchItemsCollectionQuery__
+ *
+ * To run a query within a React component, call `useSearchItemsCollectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchItemsCollectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchItemsCollectionQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useSearchItemsCollectionQuery(baseOptions: Apollo.QueryHookOptions<SearchItemsCollectionQuery, SearchItemsCollectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchItemsCollectionQuery, SearchItemsCollectionQueryVariables>(SearchItemsCollectionDocument, options);
+      }
+export function useSearchItemsCollectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchItemsCollectionQuery, SearchItemsCollectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchItemsCollectionQuery, SearchItemsCollectionQueryVariables>(SearchItemsCollectionDocument, options);
+        }
+export type SearchItemsCollectionQueryHookResult = ReturnType<typeof useSearchItemsCollectionQuery>;
+export type SearchItemsCollectionLazyQueryHookResult = ReturnType<typeof useSearchItemsCollectionLazyQuery>;
+export type SearchItemsCollectionQueryResult = Apollo.QueryResult<SearchItemsCollectionQuery, SearchItemsCollectionQueryVariables>;
 export const GetMyItemsDocument = gql`
     query GetMyItems($owner: Bytes!, $tokenAddress: Bytes, $nextPage: Int) {
   itemsByOwnerAddress(
@@ -1225,15 +1106,6 @@ export const GetMyItemsDocument = gql`
       name
       description
       file
-      collection {
-        tokenAddress
-        name
-        symbol
-        logo
-        previewItems {
-          file
-        }
-      }
     }
     nextPage
   }
@@ -1258,87 +1130,58 @@ export const GetMyItemsDocument = gql`
  *   },
  * });
  */
-export function useGetMyItemsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetMyItemsQuery,
-    GetMyItemsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(
-    GetMyItemsDocument,
-    options
-  );
-}
-export function useGetMyItemsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetMyItemsQuery,
-    GetMyItemsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(
-    GetMyItemsDocument,
-    options
-  );
-}
+export function useGetMyItemsQuery(baseOptions: Apollo.QueryHookOptions<GetMyItemsQuery, GetMyItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(GetMyItemsDocument, options);
+      }
+export function useGetMyItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyItemsQuery, GetMyItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyItemsQuery, GetMyItemsQueryVariables>(GetMyItemsDocument, options);
+        }
 export type GetMyItemsQueryHookResult = ReturnType<typeof useGetMyItemsQuery>;
-export type GetMyItemsLazyQueryHookResult = ReturnType<
-  typeof useGetMyItemsLazyQuery
->;
-export type GetMyItemsQueryResult = Apollo.QueryResult<
-  GetMyItemsQuery,
-  GetMyItemsQueryVariables
->;
+export type GetMyItemsLazyQueryHookResult = ReturnType<typeof useGetMyItemsLazyQuery>;
+export type GetMyItemsQueryResult = Apollo.QueryResult<GetMyItemsQuery, GetMyItemsQueryVariables>;
 export const GetMyTradesDocument = gql`
-  query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
-    trades(first: $first, skip: $skip, where: { initiatorAddress: $owner }) {
-      id
-      initiatorAddress
-      createdAt
-      givings {
-        items {
-          item {
-            tokenId
-            tokenAddress
-            name
-            description
-            file
-            collection {
-              name
-              tokenAddress
-            }
-          }
+    query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
+  trades(first: $first, skip: $skip, where: {initiatorAddress: $owner}) {
+    id
+    initiatorAddress
+    createdAt
+    givings {
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
         }
       }
-      receivings {
-        id
-        items {
-          item {
-            tokenId
-            tokenAddress
-            name
-            description
+    }
+    receivings {
+      id
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file
+        }
+        collection {
+          tokenAddress
+          name
+          symbol
+          logo
+          previewItems {
             file
-            collection {
-              name
-              tokenAddress
-            }
-          }
-          collection {
-            tokenAddress
-            name
-            symbol
-            logo
-            previewItems {
-              file
-            }
           }
         }
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetMyTradesQuery__
@@ -1378,15 +1221,6 @@ export const SearchItemsDocument = gql`
       name
       description
       file
-      collection {
-        tokenAddress
-        name
-        symbol
-        logo
-        previewItems {
-          file
-        }
-      }
     }
     nextPage
   }
