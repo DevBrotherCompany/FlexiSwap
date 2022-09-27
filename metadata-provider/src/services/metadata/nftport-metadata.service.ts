@@ -107,8 +107,6 @@ export class NftportMetadataService implements IMetadataService {
         nextPage: 1,
       });
 
-      console.log('collectionItems', collectionItems);
-
       return {
         tokenAddress,
         name: data.name,
@@ -153,8 +151,6 @@ export class NftportMetadataService implements IMetadataService {
       input.search,
     );
 
-    console.log('getByTokenAddress', input.search, isCollectionERC721);
-
     if (!isCollectionERC721) {
       return { items: [], nextPage: null };
     }
@@ -168,14 +164,11 @@ export class NftportMetadataService implements IMetadataService {
         },
       );
 
-      console.log('getByTokenAddress:;data', data);
-
       return {
         items: data.nfts.map((item) => this.mapRawItem(item)),
         nextPage: data.nfts.length !== 0 ? input.nextPage + 1 : null,
       };
     } catch (error) {
-      console.log('getByTokenAddress:error', error);
       return { items: [], nextPage: null };
     }
   }
@@ -184,27 +177,47 @@ export class NftportMetadataService implements IMetadataService {
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
     try {
-      const { data } = await this.httpService.axiosRef.get<GetBySearchResponse>(
-        '/search',
-        {
-          params: {
-            text: input.search,
-            page_size: input.nextPage,
-          },
-        },
-      );
-
-      const items = await Promise.all(
-        data.search_results.map((item) => {
-          return this.erc721Validator.isERC721({
-            tokenAddress: item.contract_address,
-            tokenId: item.token_id,
-            name: item.name,
-            description: item.description,
-            file: item.cached_file_url,
+      let items;
+      if (input.search !== '') {
+        const { data } =
+          await this.httpService.axiosRef.get<GetBySearchResponse>('/search', {
+            params: {
+              text: input.search,
+              page_size: input.nextPage,
+            },
           });
-        }),
-      );
+
+        items = await Promise.all(
+          data.search_results.map((item) => {
+            return this.erc721Validator.isERC721({
+              tokenAddress: item.contract_address,
+              tokenId: item.token_id,
+              name: item.name,
+              description: item.description,
+              file: item.cached_file_url,
+            });
+          }),
+        );
+      } else {
+        const { data } = await this.httpService.axiosRef.get<any>('/nfts', {
+          params: {
+            chain: 'polygon',
+            include: 'all',
+          },
+        });
+
+        items = await Promise.all(
+          data.nfts.map((item) => {
+            return this.erc721Validator.isERC721({
+              tokenAddress: item.contract_address,
+              tokenId: item.token_id,
+              name: item.metadata?.name,
+              description: item.metadata?.description,
+              file: item.cached_file_url,
+            });
+          }),
+        );
+      }
 
       const erc721Items = items
         .filter(({ isERC721 }) => isERC721)
@@ -215,7 +228,6 @@ export class NftportMetadataService implements IMetadataService {
         nextPage: input.nextPage + 1,
       };
     } catch (error) {
-      console.log('error', error);
       return { items: [], nextPage: null };
     }
   }
@@ -223,7 +235,6 @@ export class NftportMetadataService implements IMetadataService {
   async searchItems(
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
-    if (isAddress(input.search)) console.log('isAddress', isAddress(input.search));
     if (isAddress(input.search)) return this.getByTokenAddress(input);
 
     let resultItems = [];

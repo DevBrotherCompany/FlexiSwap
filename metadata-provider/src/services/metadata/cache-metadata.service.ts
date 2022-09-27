@@ -59,6 +59,10 @@ export class CacheMetadataService implements IMetadataService {
   async searchItems(
     input: SearchItemsInput,
   ): Promise<CollectionItemsPagination> {
+    if (input.search === '') {
+      return await this.metadataService.searchItems(input);
+    }
+
     const key = 'CacheMetadataService#searchItems' + JSON.stringify(input);
     let result = await this.cache.get<CollectionItemsPagination>(key);
     if (result) return result;
