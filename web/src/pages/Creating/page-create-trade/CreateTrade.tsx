@@ -40,6 +40,8 @@ const CreateTrade: React.FC = () => {
     [selectedNFTs]
   )
 
+  console.log('===GetMyItems -> data===', data)
+
   const handleRemoveNft = useCallback((item: INftItem) => {
     dispatch(removeNftFromSelected(item))
   }, [])

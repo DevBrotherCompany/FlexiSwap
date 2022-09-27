@@ -1,21 +1,21 @@
 query SearchItems($search: String!, $nextPage: Int) {
-    searchItems(input: { search: $search, nextPage: $nextPage }) {
-        items {
-            tokenAddress
-            tokenId
-            name
-            description
-            file
-            collection {
-                tokenAddress
-                name
-                symbol
-                logo
-                previewItems {
-                    file
-                }
-            }
-        }
-        nextPage
+  searchItems(input: { search: $search, nextPage: $nextPage }) {
+    items {
+      tokenAddress
+      tokenId
+      name
+      description
+      file
+      # collection {
+      #     tokenAddress
+      #     name
+      #     symbol
+      #     logo
+      #     previewItems {
+      #         file
+      #     }
+      # }
     }
+    nextPage
+  }
 }
