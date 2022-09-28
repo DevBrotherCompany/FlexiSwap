@@ -9,7 +9,7 @@ type Collection {
   previewItems: [CollectionItem!]
 }
 
-type CollectionItem {
+type CollectionItem @key(fields: "tokenAddress, tokenId") {
   tokenAddress: Bytes!
   tokenId: BigInt!
   name: String
@@ -23,21 +23,21 @@ type CollectionItemsPagination {
   nextPage: Int
 }
 
-extend type GivingsOfferItem @key(fields: "tokenAddress tokenId") {
+extend type GivingsOfferItem @key(fields: "tokenAddress, tokenId") {
   tokenAddress: Bytes! @external
   tokenId: BigInt! @external
   item: CollectionItem!
   collection: Collection!
 }
 
-extend type ReceivingsOfferItem @key(fields: "tokenAddress tokenId") {
+extend type ReceivingsOfferItem @key(fields: "tokenAddress, tokenId") {
   tokenAddress: Bytes! @external
   tokenId: BigInt @external
   item: CollectionItem
   collection: Collection!
 }
 
-extend type CounterOfferItem @key(fields: "tokenAddress tokenId") {
+extend type CounterOfferItem @key(fields: "tokenAddress, tokenId") {
   tokenAddress: Bytes! @external
   tokenId: BigInt! @external
   item: CollectionItem!

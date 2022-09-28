@@ -15,6 +15,16 @@ async function bootstrap() {
     Query: {
       extend: true,
     },
+    GivingsOfferItem: {
+      keyFields: ['tokenAddress', 'tokenId'],
+
+    },
+    ReceivingsOfferItem: {
+      keyFields: ['tokenAddress', 'tokenId'],
+    },
+    CounterOfferItem: {
+      keyFields: ['tokenAddress', 'tokenId'],
+    },
   });
 
   await new ApolloServer({ schema }).listen(process.env.PORT);

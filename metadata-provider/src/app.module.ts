@@ -12,6 +12,11 @@ import { CollectionItemsPaginationResolver } from './resolvers/collection-items-
 import { CollectionsResolver } from './resolvers/collections.resolver';
 import { erc721ValidatorProvider } from './services/erc721-validator/erc721-validator.provider';
 import { metadataServiceProvider } from './services/metadata/metadata.service.provider';
+import {
+  CounterOfferItemResolver,
+  GivingsOfferItemResolver,
+  ReceivingsOfferItemResolver
+} from './resolvers/federation.resolver';
 
 @Module({
   imports: [
@@ -42,6 +47,9 @@ import { metadataServiceProvider } from './services/metadata/metadata.service.pr
     CollectionItemsResolver,
     CollectionItemsPaginationResolver,
     CollectionsResolver,
+    GivingsOfferItemResolver,
+    ReceivingsOfferItemResolver,
+    CounterOfferItemResolver,
     erc721ValidatorProvider,
     metadataServiceProvider,
   ],
