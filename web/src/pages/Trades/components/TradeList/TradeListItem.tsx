@@ -53,7 +53,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
 
   return (
     <Accordion className={classes.accordion} expanded={expanded}>
-      <AccordionSummary className={classes.accordion}>
+      <AccordionSummary className={classes.accordionSumary}>
         <TradeHeader
           userName={""}
           address={initiatorAddress}
