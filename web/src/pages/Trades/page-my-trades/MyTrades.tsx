@@ -1,47 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { FlexiTitle } from 'components/FlexiTitle/FlexiTitle'
-import { NftModal } from 'shared/NftModal/NftModal'
-import { CollectionModal } from 'shared/CollectionModal/CollectionModal'
+import { FlexiTitle } from "components/FlexiTitle/FlexiTitle";
+import { NftModal } from "shared/NftModal/NftModal";
+import { CollectionModal } from "shared/CollectionModal/CollectionModal";
 
-import { useGetMyItemsQuery, useSearchItemsCollectionLazyQuery } from 'packages/graphql/generated'
-import { INftCollection, INftItem } from 'interfaces'
-import { useAuth, useModalsState } from 'hooks'
+import {
+  useGetMyTradesQuery,
+  useSearchItemsCollectionLazyQuery,
+} from "packages/graphql/generated";
+import { INftCollection, INftItem } from "interfaces";
+import { useAuth, useModalsState } from "hooks";
 
-import { TradesModal } from '../enums'
+import { TradesModal } from "../enums";
 
-import { TradesLayout } from '../components/TradesLayout/TradesLayout'
-import { TradeList } from '../components/TradeList/TradeList'
-import { storage } from 'packages/storage'
-import { StorageKey } from 'enums'
+import { TradesLayout } from "../components/TradesLayout/TradesLayout";
+import { TradeList } from "../components/TradeList/TradeList";
 
 const MyTrades: React.FC = () => {
-  const { account } = useAuth()
-  const { data } = useGetMyItemsQuery({ variables: { owner: account } })
-  const [searchCollection, { data: dataCollection }] = useSearchItemsCollectionLazyQuery()
+  const { account } = useAuth();
+  const { data } = useGetMyTradesQuery({ variables: { owner: account } });
+  const [searchCollection, { data: dataCollection }] =
+    useSearchItemsCollectionLazyQuery();
 
-  const [selectedNft, setSelectedNft] = useState<INftItem | null>(null)
-  const [selectedCollection, setSelectedCollection] = useState<INftCollection | null>(null)
+  const [selectedNft, setSelectedNft] = useState<INftItem | null>(null);
+  const [selectedCollection, setSelectedCollection] =
+    useState<INftCollection | null>(null);
 
-  const { openModal, isModalOpened, closeModals } = useModalsState<TradesModal>()
+  const { openModal, isModalOpened, closeModals } =
+    useModalsState<TradesModal>();
 
   const handleClickItem = (item: INftItem) => {
-    setSelectedNft(item)
-    openModal(TradesModal.NftInfo)
-  }
+    setSelectedNft(item);
+    openModal(TradesModal.NftInfo);
+  };
 
   const handleClickCollection = async (collection: INftCollection) => {
-    await searchCollection({ variables: { search: collection.tokenAddress } })
-    // @ts-ignore
-    setSelectedCollection(dataCollection?.getCollection ?? null)
-    openModal(TradesModal.CollectionInfo)
-  }
+    await searchCollection({ variables: { search: collection.tokenAddress } });
+
+    setSelectedCollection(dataCollection?.getCollection ?? null);
+    openModal(TradesModal.CollectionInfo);
+  };
 
   const handleClose = () => {
-    setSelectedNft(null)
-    setSelectedCollection(null)
-    closeModals()
-  }
+    setSelectedNft(null);
+    setSelectedCollection(null);
+    closeModals();
+  };
 
   // console.log('===My trades -> data===', data)
 
@@ -52,16 +56,23 @@ const MyTrades: React.FC = () => {
       <TradesLayout>
         <FlexiTitle>My trades</FlexiTitle>
         <TradeList
-          //@ts-ignore
-          list={data?.itemsByOwnerAddress.items ?? []}
+          list={(data?.trades as any) ?? []}
           onClick={handleClickItem}
           onClickCollection={handleClickCollection}
         />
       </TradesLayout>
-      <NftModal item={selectedNft} open={isModalOpened(TradesModal.NftInfo)} onClose={handleClose} />
-      <CollectionModal collection={selectedCollection} open={isModalOpened(TradesModal.CollectionInfo)} onClose={handleClose} />
+      <NftModal
+        item={selectedNft}
+        open={isModalOpened(TradesModal.NftInfo)}
+        onClose={handleClose}
+      />
+      <CollectionModal
+        collection={selectedCollection}
+        open={isModalOpened(TradesModal.CollectionInfo)}
+        onClose={handleClose}
+      />
     </>
-  )
-}
+  );
+};
 
-export default MyTrades
+export default MyTrades;

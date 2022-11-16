@@ -1,16 +1,18 @@
-import { Maybe } from './maybe.type'
-import { INftCollection, INftItem } from './nft.interface'
+import { Maybe } from "./maybe.type";
+import { INftCollection, INftItem } from "./nft.interface";
 
 export interface ITrade {
-  id: string
-  initiatorAddress: string
-  createdAt: number
-  givings: IGiving
-  receivings: IReceiving[]
+  id: string;
+  initiatorAddress: string;
+  createdAt: number;
+  givings: IGiving;
+  receivings: IReceiving[];
 }
 
 interface IGiving {
-  items: INftItem[]
+  items: {
+    item: INftItem;
+  }[];
 }
 
 export interface IReceivingsItem {

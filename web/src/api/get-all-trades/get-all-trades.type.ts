@@ -13,7 +13,7 @@ interface IItemCollection {
   name?: Maybe<string>;
 }
 
-interface IItem {
+export interface IItem {
   tokenId: string;
   tokenAddress: string;
   name?: Maybe<string>;
@@ -22,7 +22,7 @@ interface IItem {
   collection?: Maybe<IItemCollection>;
 }
 
-interface IGiving {
+export interface IGiving {
   items: IItem[];
 }
 

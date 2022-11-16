@@ -37,6 +37,8 @@ export const FlexiNft: FC<FlexiNftProps> = ({
   const isCenteredEffect = hoverEffect === "tick" || hoverEffect === "cross";
   const isInTopRight = hoverEffect === "info";
 
+  console.log("===item===", item);
+
   return hoverEffect ? (
     <div
       className={classes.hoverContainer}
