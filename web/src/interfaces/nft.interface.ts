@@ -15,15 +15,15 @@ export interface INftItem {
 }
 
 export interface IPreviewItem {
-  file: Maybe<string>;
+  file?: Maybe<string>;
 }
 
 export interface INftCollection {
   tokenAddress: string;
-  name: Maybe<string>;
-  symbol: Maybe<string>;
-  logo: Maybe<string>;
-  previewItems: IPreviewItem[];
+  name?: Maybe<string>;
+  symbol?: Maybe<string>;
+  logo?: Maybe<string>;
+  previewItems?: IPreviewItem[] | null;
 }
 
 // export interface INft {

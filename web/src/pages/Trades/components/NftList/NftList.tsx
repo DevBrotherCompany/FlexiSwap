@@ -28,6 +28,9 @@ export const NftList: React.FC<NftListProps> = ({
     itemsToShow
   );
 
+  console.log("===list===", list);
+  console.log("===displayItems===", displayItems);
+
   return (
     <ul className={classes.list}>
       {displayItems.map((nft) => (

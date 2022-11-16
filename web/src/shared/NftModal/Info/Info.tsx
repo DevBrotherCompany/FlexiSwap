@@ -12,20 +12,20 @@ interface InfoProps {
   item: INftItem;
 }
 
-export const Info: React.FC<InfoProps> = ({
-  item: { collection, tokenId },
-}) => {
+export const Info: React.FC<InfoProps> = ({ item }) => {
   const classes = useNftModalStyles();
+  const { tokenId, name, tokenAddress } = item;
+
   return (
     <Grid container direction={"column"}>
       <Grid item>
-        <Header>Collection name</Header>
-        <Body>{collection?.name}</Body>
+        <Header>Nft name</Header>
+        <Body>{name}</Body>
       </Grid>
 
       <Grid item className={classes.item}>
-        <Header>Collection address</Header>
-        <Body>{collection?.tokenAddress}</Body>
+        <Header>Nft address</Header>
+        <Body>{tokenAddress}</Body>
       </Grid>
 
       <Grid item className={classes.item}>

@@ -27,7 +27,7 @@ export const CollectionModal: React.FC<CollectionModalProps> = ({
     <FlexiModal {...props} cardClassName={classes.card}>
       <Title className={classes.title}>Collection name</Title>
       <ColName>{collection.name}</ColName>
-      <NftList items={collection.previewItems} />
+      <NftList items={collection.previewItems ?? []} />
     </FlexiModal>
   );
 };

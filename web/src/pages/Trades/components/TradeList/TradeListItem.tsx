@@ -17,6 +17,7 @@ import { NftCollectionBlock } from "../NftCollectionBlock/NftCollectionBlock";
 
 import { ArrowSvg } from "./arrowSvg";
 import { useHiddenDetailsTrades } from "./useHiddenDetailsTrades";
+import { useCreatedDate } from "./useCreatedDate";
 
 interface TradeListItemProps {
   item: ITrade;
@@ -42,11 +43,13 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
     isManyReceivings,
   } = useHiddenDetailsTrades(receivings);
 
-  // const { item: testItem } = useExpandedDetails(item);
+  const creationDate = useCreatedDate(createdAt);
 
   const toggleExpand = () => {
     setExpanded((prevState) => !prevState);
   };
+
+  const transformItems = (item: { item: INftItem }) => ({ ...item.item });
 
   return (
     <Accordion className={classes.accordion} expanded={expanded}>
@@ -54,14 +57,14 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
         <TradeHeader
           userName={""}
           address={initiatorAddress}
-          tradeDate={`${createdAt} days ago`}
+          tradeDate={`${creationDate} days ago`}
         />
         {!expanded && (
           <>
             <Grid className={classes.listItem}>
               <Grid item className={classes.givings}>
                 <NftList
-                  list={givings.items ?? []}
+                  list={givings.items.map(transformItems) ?? []}
                   onClick={onClick}
                   isExpanded={expanded}
                 />
@@ -94,16 +97,16 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
                 )}
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item xs={2}>
-                <FlexiButton
-                  onClick={toggleExpand}
-                  variant={!expanded ? "contained" : "outlined"}
-                >
-                  {!expanded ? "Details" : "Hide details"}
-                </FlexiButton>
-              </Grid>
-            </Grid>
+            {/*<Grid container>*/}
+            {/*  <Grid item xs={2}>*/}
+            {/*    <FlexiButton*/}
+            {/*      onClick={toggleExpand}*/}
+            {/*      variant={!expanded ? "contained" : "outlined"}*/}
+            {/*    >*/}
+            {/*      {!expanded ? "Details" : "Hide details"}*/}
+            {/*    </FlexiButton>*/}
+            {/*  </Grid>*/}
+            {/*</Grid>*/}
           </>
         )}
       </AccordionSummary>
@@ -113,7 +116,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
             <Grid className={classes.listItem}>
               <Grid item className={classes.givings}>
                 <NftList
-                  list={givings.items ?? []}
+                  list={givings.items.map(transformItems) ?? []}
                   onClick={onClick}
                   isExpanded={expanded}
                 />
