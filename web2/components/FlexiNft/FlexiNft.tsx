@@ -3,7 +3,6 @@ import cn from "classnames";
 import { useFlexiNftStyles } from "./FlexiNft.style";
 
 import { INftItem } from "@/interfaces";
-// import { INft } from "interfaces/old";
 import { Image } from "@/components/Image/Image";
 
 import { SvgIcon } from "./svgs";
@@ -37,8 +36,6 @@ export const FlexiNft: FC<FlexiNftProps> = ({
   const isCenteredEffect = hoverEffect === "tick" || hoverEffect === "cross";
   const isInTopRight = hoverEffect === "info";
 
-  console.log("===item===", item);
-
   return hoverEffect ? (
     <div
       className={classes.hoverContainer}
@@ -58,7 +55,6 @@ export const FlexiNft: FC<FlexiNftProps> = ({
         className={cn(classes.img, className, {
           [classes.clickable]: clickable,
         })}
-        // onClick={() => handleClickNft(item)}
       />
     </div>
   ) : (

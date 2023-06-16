@@ -10,11 +10,7 @@ query GetAllTrades($first: Int, $skip: Int) {
           tokenAddress
           name
           description
-          file
-          # collection {
-          #   name
-          #   tokenAddress
-          # }
+          file          
         }
       }
     }
@@ -26,11 +22,7 @@ query GetAllTrades($first: Int, $skip: Int) {
           tokenAddress
           name
           description
-          file
-          # collection {
-          #   name
-          #   tokenAddress
-          # }
+          file          
         }
         collection {
           tokenAddress

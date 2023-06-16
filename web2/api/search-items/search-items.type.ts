@@ -1,4 +1,4 @@
-import { Maybe } from "interfaces/maybe.type";
+import { Maybe } from "@/interfaces/maybe.type";
 
 export interface ISearchItems {
   items: IItem[];

@@ -3,7 +3,7 @@ export const useCreatedDate = (createdAt: number) => {
   try {
     creationDate = new Date(createdAt);
   } catch (e) {
-    console.log("===err===", e);
+    console.error(e);
   }
 
   const getDays = (date_1: Date, date_2: Date) => {

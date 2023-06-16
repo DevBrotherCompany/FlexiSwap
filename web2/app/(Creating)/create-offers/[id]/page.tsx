@@ -40,15 +40,11 @@ const CreateOffers: React.FC = () => {
   const classes = useCreateOffersStyles();
 
   const [getNfts, { data }] = useSearchItemsLazyQuery();
-  console.log("===data===", data);
 
   const router = useRouter();
   const { id } = useParams();
   const { offers } = useAppSelector(selectCreateOffer);
   const dispatch = useAppDispatch();
-
-  // const [search, setSearch] = useState('')
-  // const debouncedSearch = useDebounce(search)
 
   const currentOffer = offers.find((o) => o.id === Number(id));
 
@@ -72,24 +68,12 @@ const CreateOffers: React.FC = () => {
   const handleSearchPressed = (e: any) => {
     if (e.key === "Enter") {
       getNfts({ variables: { search: e.target.value, nextPage: 1 } });
-      // onSearchPress && onSearchPress(search)
     }
   };
 
   useEffect(() => {
     getNfts({ variables: { search: "", nextPage: 1 } });
   }, []);
-
-  // console.log('===SearchItems -> data===', data)
-  // useEffect(() => {
-  // TODO validate current page
-  // const id = Number(number);
-  // if (currentOffer && currentOffer.id > id + 1) {
-  //   navigate(RouteName.CreateOffers + `/${id + 1}`);
-  // } else if (id > 1 && offers.length < id) {
-  //   navigate(RouteName.CreateOffers + `/${1}`);
-  // }
-  // }, [id]);
 
   return (
     <>
@@ -100,7 +84,7 @@ const CreateOffers: React.FC = () => {
           onClickNft={handleRemoveNft}
           onBtnClick={handleAddOffer}
           labelBtn={"Add offer"}
-          // disabledBtn={offers.length > 6}
+          //disabledBtn={offers.length > 6}
         />
       </main>
       <main className={classes.chooseNft}>

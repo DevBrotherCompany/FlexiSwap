@@ -20,7 +20,7 @@ export const Image: React.FC<ImageProps> = ({
   return (
     <p className={cn(classes.imgWrapper, className)} onClick={onClick}>
       <img
-        src={src ?? DefaultImage}
+        src={src ?? DefaultImage.src}
         alt={alt ?? "--"}
         className={classes.img}
       />

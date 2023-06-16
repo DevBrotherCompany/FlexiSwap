@@ -16,7 +16,6 @@ export const NftList: React.FC<NftListProps> = ({ items }) => {
     <List className={classes.list}>
       {items.map(({ file }) => (
         <ListItem key={file} className={classes.listItem}>
-          {/*<FlexiNft item={item} />*/}
           <Image src={file} alt={"nft image"} className={classes.img} />
         </ListItem>
       ))}

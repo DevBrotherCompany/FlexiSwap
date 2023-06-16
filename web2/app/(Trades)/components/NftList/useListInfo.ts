@@ -1,4 +1,4 @@
-import { INftItem } from "interfaces";
+import { INftItem } from "@/interfaces";
 
 export const useListInfo = (list: INftItem[], countItemsToShow: number) => {
   const displayItems =

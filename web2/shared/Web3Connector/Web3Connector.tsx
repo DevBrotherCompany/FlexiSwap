@@ -1,5 +1,4 @@
 "use client";
-
 import { MoralisProvider } from "react-moralis";
 
 interface Web3ConnectorProps {

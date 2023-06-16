@@ -7,8 +7,6 @@ import { INftItem } from "@/interfaces";
 
 import { useListInfo } from "./useListInfo";
 
-// import { CollectionItem } from "packages/graphql/generated";
-
 interface NftListProps {
   list: INftItem[];
   onClick?: (item: INftItem) => void;
@@ -27,9 +25,6 @@ export const NftList: React.FC<NftListProps> = ({
     list,
     itemsToShow
   );
-
-  console.log("===list===", list);
-  console.log("===displayItems===", displayItems);
 
   return (
     <ul className={classes.list}>

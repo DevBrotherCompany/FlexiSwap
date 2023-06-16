@@ -28,6 +28,5 @@ export const useTradeListStyles = makeStyles((theme: Theme) => ({
     display: "block !important",
     marginBottom: "0 !important",
   },
-  // givings: { maxWidth: "520px" },
   givings: {},
 }));

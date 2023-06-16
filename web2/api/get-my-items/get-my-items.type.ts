@@ -1,4 +1,4 @@
-import { Maybe } from "interfaces/maybe.type";
+import { Maybe } from "@/interfaces/maybe.type";
 
 export interface IGetMyItems {
   items: IItem[];

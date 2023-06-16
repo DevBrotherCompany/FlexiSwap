@@ -24,7 +24,7 @@ export const NftCollectionBlock: React.FC<NftCollectionBlockProps> = ({
   return (
     <div className={classes.block}>
       <Image
-        src={collection.logo ?? CollectionImage}
+        src={collection.logo ?? CollectionImage.src}
         alt={"nft collection"}
         onClick={handleClick}
       />

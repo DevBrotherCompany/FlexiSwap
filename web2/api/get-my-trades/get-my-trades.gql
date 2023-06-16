@@ -11,10 +11,6 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
           name
           description
           file
-          # collection {
-          #     name
-          #     tokenAddress
-          # }
         }
       }
     }
@@ -27,10 +23,6 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
           name
           description
           file
-          #   collection {
-          #     name
-          #     tokenAddress
-          #   }
         }
         collection {
           tokenAddress

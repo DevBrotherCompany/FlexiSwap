@@ -19,26 +19,8 @@ const useTradesLayoutStyles = () => ({
   mainContainer: "pl-[280px] pt-[23px]",
 });
 
-export default function TradesLayout({
-  onSearchChange,
-  onSearchPress,
-  children,
-}: TradesLayoutProps) {
+export default function TradesLayout({ children }: TradesLayoutProps) {
   const classes = useTradesLayoutStyles();
-
-  //   const { account } = useAuth();
-  //   const [search, setSearch] = useState("");
-
-  //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     onSearchChange && onSearchChange(e.target.value);
-  //     setSearch(e.target.value);
-  //   };
-
-  //   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-  //     if (e.key === "Enter") {
-  //       onSearchPress && onSearchPress(search);
-  //     }
-  //   };
 
   return (
     <main>
@@ -50,7 +32,7 @@ export default function TradesLayout({
         <SidebarList />
         <ConnectWallet />
       </Sidebar>
-      <div className={classes.mainContainer}>        
+      <div className={classes.mainContainer}>
         <Toolbar />
         <Content>{children}</Content>
       </div>

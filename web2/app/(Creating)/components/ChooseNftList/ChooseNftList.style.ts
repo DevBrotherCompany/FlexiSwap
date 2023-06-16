@@ -7,8 +7,6 @@ export const useChooseNftListStyles = makeStyles(() => ({
   },
   listItem: {
     width: "fit-content !important",
-    padding: "0 25px 25px 0 !important",
-    // paddingLeft: "0 !important",
-    // paddingRight: "0 !important",
+    padding: "0 25px 25px 0 !important",   
   },
 }));

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "@/storage/store";
-// import { INft } from "interfaces/old";
 import { INftItem } from "@/interfaces";
 
 interface CreateTradeSliceState {

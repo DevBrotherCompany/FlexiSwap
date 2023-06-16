@@ -67,22 +67,11 @@ export default function OffersLayout({ children }: OfferLayoutProps) {
         items: rec.map((rec2) => ({ item: rec2 })),
       })),
       createdAt: 0,
-      // receivings: [
-      //   {
-      //     id: "1",
-      //     items: receivings.map(rec => ({item: rec.}))
-      //   },
-      // ],
     };
     storage.save(StorageKey.NftTrades, [...fromLocalStorage, toSave]);
   };
 
   const handleCreateOffer = async () => {
-    // const receivings = offers.map(o => o.selected)
-    // saveInStorage(receivings)
-    // clearStrage()
-    // navigate(RouteName.AllTrades)
-    console.log("===signer===", signer);
     if (signer) {
       // FIXME: Resolve types incompatibility
       const flexiSwap = new FlexiSwap(signer as any);

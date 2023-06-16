@@ -13,24 +13,7 @@ interface IAddToOffer {
 }
 
 const initialState: CreateOfferSliceState = {
-  offers: [
-    // {
-    //   id: 1,
-    //   selected: [],
-    // },
-    // {
-    //   id: 2,
-    //   selected: [],
-    // },
-    // {
-    //   id: 3,
-    //   selected: [],
-    // },
-    // {
-    //   id: 4,
-    //   selected: [],
-    // },
-  ],
+  offers: [],
 };
 
 const createOfferSlice = createSlice({

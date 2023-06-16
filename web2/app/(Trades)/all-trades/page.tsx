@@ -17,7 +17,6 @@ export default function AllTrades() {
   const { data } = useGetAllTradesQuery();
   const [searchCollection, { data: dataCollection }] =
     useSearchItemsCollectionLazyQuery();
-  // const [searchItems, { data: searchData }] = useSearchItemsLazyQuery()
 
   const { openModal, isModalOpened, closeModals } =
     useModalsState<TradesModal>();
@@ -27,7 +26,6 @@ export default function AllTrades() {
     useState<INftCollection | null>(null);
 
   const handleClickItem = (item: INftItem) => {
-    console.log("===item===", item);
     setSelectedNft(item);
     openModal(TradesModal.NftInfo);
   };
@@ -36,7 +34,6 @@ export default function AllTrades() {
     await searchCollection({ variables: { search: collection.tokenAddress } });
     setSelectedCollection(dataCollection?.getCollection ?? null);
     openModal(TradesModal.CollectionInfo);
-    // collection.tokenAddress
   };
 
   const handleClose = () => {

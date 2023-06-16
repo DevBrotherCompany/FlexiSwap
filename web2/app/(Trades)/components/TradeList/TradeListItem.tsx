@@ -96,16 +96,6 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
                 )}
               </Grid>
             </Grid>
-            {/*<Grid container>*/}
-            {/*  <Grid item xs={2}>*/}
-            {/*    <FlexiButton*/}
-            {/*      onClick={toggleExpand}*/}
-            {/*      variant={!expanded ? "contained" : "outlined"}*/}
-            {/*    >*/}
-            {/*      {!expanded ? "Details" : "Hide details"}*/}
-            {/*    </FlexiButton>*/}
-            {/*  </Grid>*/}
-            {/*</Grid>*/}
           </>
         )}
       </AccordionSummary>

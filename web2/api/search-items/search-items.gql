@@ -6,15 +6,6 @@ query SearchItems($search: String!, $nextPage: Int) {
       name
       description
       file
-      # collection {
-      #     tokenAddress
-      #     name
-      #     symbol
-      #     logo
-      #     previewItems {
-      #         file
-      #     }
-      # }
     }
     nextPage
   }

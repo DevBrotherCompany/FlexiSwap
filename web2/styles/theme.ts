@@ -2,12 +2,7 @@ import { createTheme } from "@mui/material";
 
 const commonTheme = {
   typography: {
-    fontFamily: ["Roboto", "Nunito Sans", "Sen"].join(", "),
-    // h1: {
-    //   fontSize: '30px',
-    //   fontWeight: 600,
-    //   lineHeight: '40px',
-    // },
+    fontFamily: ["Roboto", "Nunito Sans", "Sen"].join(", "),   
   },
 };
 
