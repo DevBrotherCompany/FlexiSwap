@@ -1,0 +1,39 @@
+query GetAllTrades($first: Int, $skip: Int) {
+  trades(first: $first, skip: $skip) {
+    id
+    initiatorAddress
+    createdAt
+    givings {
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file          
+        }
+      }
+    }
+    receivings {
+      id
+      items {
+        item {
+          tokenId
+          tokenAddress
+          name
+          description
+          file          
+        }
+        collection {
+          tokenAddress
+          name
+          symbol
+          logo
+          previewItems {
+            file
+          }
+        }
+      }
+    }
+  }
+}
