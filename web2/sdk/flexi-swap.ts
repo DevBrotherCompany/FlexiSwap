@@ -1,100 +1,70 @@
-import { ethers } from 'ethers';
-import { FLEXISWAP_ABI, FLEXISWAP_ADDRESS, IERC721_ABI } from './constants';
-
-type Item = {
-  tokenAddress: string;
-  tokenId: ethers.BigNumberish;
-};
-
-type NullableItem = {
-  tokenAddress: string;
-  tokenId: ethers.BigNumberish | null;
-};
+import { Approver } from "./approver";
+import { FlexiSwapContract } from "./contracts/flexi-swap-contract";
+import { Item, ItemInfo, NullableItem } from "./types";
 
 // TODO: Add typechain types
 export class FlexiSwap {
-  private readonly flexiSwapContract: ethers.Contract;
-
-  constructor(private readonly signer: ethers.Signer) {
-    this.flexiSwapContract = new ethers.Contract(FLEXISWAP_ADDRESS, FLEXISWAP_ABI, signer);
+  private readonly flexiSwapContract: FlexiSwapContract;
+  private readonly approver: Approver;
+  constructor() {
+    this.flexiSwapContract = new FlexiSwapContract();
+    this.approver = new Approver();
   }
 
-  private createERC721 = (erc721Address: string): ethers.Contract => {
-    return new ethers.Contract(erc721Address, IERC721_ABI, this.signer);
-  };
-
-  private mapItem = (item: Item | NullableItem) => {
+  private mapItem = (item: Item | NullableItem): ItemInfo => {
     return {
-      nftAddress: item.tokenAddress,
-      tokenId: item.tokenId ?? 0,
+      nftAddress: item.tokenAddress as Address,
+      tokenId: item.tokenId ?? BigInt(0),
       isEmptyToken: item.tokenId === null,
     };
   };
 
-  // TODO: Check if token is already approved
-  private approveItem = async (item: Item): Promise<void> => {
-    const erc721Contract = this.createERC721(item.tokenAddress);
-    const approveTx = await erc721Contract.approve(
-      this.flexiSwapContract.address,
-      item.tokenId,
-    );
-    await approveTx.wait();
-  };
-
   createTrade = async (
     givings: Item[],
-    receivings: NullableItem[][],
+    receivings: NullableItem[][]
   ): Promise<void> => {
-    await Promise.all(givings.map(this.approveItem));
+    await this.approver.approve(givings);
 
     const contractGivings = givings.map(this.mapItem);
-    const contractReceivings = receivings.map(
-      (items) => items.map(this.mapItem),
+    const contractReceivings = receivings.map((items) =>
+      items.map(this.mapItem)
     );
-    const createTradeTx = await this.flexiSwapContract.createTrade(
+    await this.flexiSwapContract.createTrade(
       contractGivings,
-      contractReceivings,
+      contractReceivings
     );
-    await createTradeTx.wait();
   };
 
   acceptOffer = async (
-    tradeId: ethers.BigNumberish,
-    receivingId: ethers.BigNumberish,
+    tradeId: bigint,
+    receivingId: bigint,
     receivings: Item[],
-    additionalItems: Item[],
+    additionalItems: Item[]
   ): Promise<void> => {
-    await Promise.all(
-      [...receivings, ...additionalItems].map(this.approveItem),
-    );
+    await this.approver.approve([...receivings, ...additionalItems]);
 
     const contractAdditionalItems = additionalItems.map(this.mapItem);
-    const acceptOfferTx = await this.flexiSwapContract.acceptOffer(
+    await this.flexiSwapContract.acceptOffer(
       tradeId,
       receivingId,
-      contractAdditionalItems,
+      contractAdditionalItems
     );
-    await acceptOfferTx.wait();
   };
 
   createCounterOffer = async (
-    tradeId: ethers.BigNumberish,
-    items: Item[],
+    tradeId: bigint,
+    items: Item[]
   ): Promise<void> => {
-    await Promise.all(items.map(this.approveItem));
+    this.approver.approve(items);
 
     const contractItems = items.map(this.mapItem);
-    const createCounterOfferTx =
-      await this.flexiSwapContract.createCounterOffer(tradeId, contractItems);
-    await createCounterOfferTx.wait();
+    await this.flexiSwapContract.createCounterOffer(tradeId, contractItems);
   };
 
   acceptCounterOffer = async (
-    tradeId: ethers.BigNumberish,
-    counterOfferId: ethers.BigNumberish,
+    tradeId: bigint,
+    counterOfferId: bigint
   ): Promise<void> => {
-    const acceptCounterOfferTx =
-      await this.flexiSwapContract.acceptCounterOffer(tradeId, counterOfferId);
-    await acceptCounterOfferTx.wait();
+    await this.flexiSwapContract.acceptCounterOffer(tradeId, counterOfferId);
   };
 }

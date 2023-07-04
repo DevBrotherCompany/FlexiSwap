@@ -74,11 +74,11 @@ export default function OffersLayout({ children }: OfferLayoutProps) {
   const handleCreateOffer = async () => {
     if (signer) {
       // FIXME: Resolve types incompatibility
-      const flexiSwap = new FlexiSwap(signer as any);
+      const flexiSwap = new FlexiSwap();
       const receivings = offers.map((o) => o.selected);
       try {
-        await flexiSwap.createTrade(selectedNFTs, receivings);
       } catch (e) {
+        await flexiSwap.createTrade(selectedNFTs, receivings);
         console.error("ERROR: ", e);
       } finally {
         clearStrage();

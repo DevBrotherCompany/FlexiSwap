@@ -1,22 +1,17 @@
 "use client";
-import { mocked_allTrades } from "@/MOCK";
-import { FlexiTitle } from "@/components/FlexiTitle/FlexiTitle";
-import { TradeList } from "../components/TradeList/TradeList";
-import {
-  useGetAllTradesQuery,
-  useSearchItemsCollectionLazyQuery,
-} from "@/packages/graphql/generated";
-import { useModalsState } from "@/hooks";
-import { useState } from "react";
-import { INftCollection, INftItem } from "@/interfaces";
-import { TradesModal } from "../enums";
-import { NftModal } from "@/components/NftModal/NftModal";
 import { CollectionModal } from "@/components/CollectionModal/CollectionModal";
+import { FlexiTitle } from "@/components/FlexiTitle/FlexiTitle";
+import { NftModal } from "@/components/NftModal/NftModal";
+import { useModalsState } from "@/hooks";
+import { useGetAllTrades, useGetCollectionLazy } from "@/hooks/queries";
+import { INftCollection, INftItem, ITrade } from "@/interfaces";
+import { useState } from "react";
+import { TradeList } from "../components/TradeList/TradeList";
+import { TradesModal } from "../enums";
 
 export default function AllTrades() {
-  const { data } = useGetAllTradesQuery();
-  const [searchCollection, { data: dataCollection }] =
-    useSearchItemsCollectionLazyQuery();
+  const { data } = useGetAllTrades();
+  const [searchCollection, { data: dataCollection }] = useGetCollectionLazy();
 
   const { openModal, isModalOpened, closeModals } =
     useModalsState<TradesModal>();
@@ -32,7 +27,7 @@ export default function AllTrades() {
 
   const handleClickCollection = async (collection: INftCollection) => {
     await searchCollection({ variables: { search: collection.tokenAddress } });
-    setSelectedCollection(dataCollection?.getCollection ?? null);
+    setSelectedCollection((dataCollection as INftCollection) ?? null);
     openModal(TradesModal.CollectionInfo);
   };
 
@@ -46,7 +41,7 @@ export default function AllTrades() {
     <>
       <FlexiTitle>All trades</FlexiTitle>
       <TradeList
-        list={mocked_allTrades}
+        list={(data as ITrade[]) ?? []}
         onClick={handleClickItem}
         onClickCollection={handleClickCollection}
       />

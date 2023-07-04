@@ -30,7 +30,7 @@ export const Info: React.FC<InfoProps> = ({ item }) => {
 
       <Grid item className={classes.item}>
         <Header>Token id</Header>
-        <Body>{tokenId}</Body>
+        <Body>{tokenId.toString()}</Body>
       </Grid>
     </Grid>
   );

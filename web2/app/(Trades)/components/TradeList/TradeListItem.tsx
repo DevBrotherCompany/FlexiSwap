@@ -8,7 +8,7 @@ import {
   Grid,
 } from "@mui/material";
 
-import { INftCollection, INftItem, ITrade } from "@/interfaces";
+import { INftCollection, INftItem, IGivingsItem, ITrade } from "@/interfaces";
 import { FlexiButton } from "@/components/FlexiButton/FlexiButton";
 
 import { TradeHeader } from "../TradeHeader/TradeHeader";
@@ -48,7 +48,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
     setExpanded((prevState) => !prevState);
   };
 
-  const transformItems = (item: { item: INftItem }) => ({ ...item.item });
+  const transformItems = (item: IGivingsItem) => ({ ...item.item });
 
   return (
     <Accordion className={classes.accordion} expanded={expanded}>
@@ -63,7 +63,11 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
             <Grid className={classes.listItem}>
               <Grid item className={classes.givings}>
                 <NftList
-                  list={givings.items.map(transformItems) ?? []}
+                  list={
+                    (givings.items
+                      .map(transformItems)
+                      .filter((item) => !!item) as INftItem[]) ?? []
+                  }
                   onClick={onClick}
                   isExpanded={expanded}
                 />
@@ -105,7 +109,11 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
             <Grid className={classes.listItem}>
               <Grid item className={classes.givings}>
                 <NftList
-                  list={givings.items.map(transformItems) ?? []}
+                  list={
+                    (givings.items
+                      .map(transformItems)
+                      .filter((item) => !!item) as INftItem[]) ?? []
+                  }
                   onClick={onClick}
                   isExpanded={expanded}
                 />

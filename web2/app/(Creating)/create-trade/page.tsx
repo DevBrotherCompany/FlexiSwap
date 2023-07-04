@@ -10,11 +10,9 @@ import { FlexiInput } from "@/components/FlexiInput/FlexiInput";
 import { FlexiTitle } from "@/components/FlexiTitle/FlexiTitle";
 
 import { useAuth } from "@/hooks";
-import { useGetMyItemsLazyQuery } from "@/packages/graphql/generated";
 import { RouteName } from "@/shared/routes";
 import { useAppDispatch, useAppSelector } from "@/storage/hooks";
 
-import { mocked_Nfts } from "@/MOCK/creating";
 import { useRouter } from "next/navigation";
 import { ChooseNfts } from "../components/ChooseNfts/ChooseNfts";
 import { YourSelection } from "../components/YourSelection/YourSelection";
@@ -23,6 +21,7 @@ import {
   selectCreateTrade,
   selectNft,
 } from "./createTrade.slice";
+import { useGetMyItemsLazy } from "@/hooks/queries";
 
 export const MAX_SELECTED_NFTS = 10;
 
@@ -44,7 +43,7 @@ const CreateTrade: React.FC = () => {
   const classes = useCreateTradeStyles();
 
   const { account } = useAuth();
-  const [getMyItems, { data }] = useGetMyItemsLazyQuery();
+  const [getMyItems, { data }] = useGetMyItemsLazy();
 
   const { selectedNFTs } = useAppSelector(selectCreateTrade);
   const navigate = useRouter();
@@ -97,7 +96,7 @@ const CreateTrade: React.FC = () => {
           onKeyDown={handleSearchPressed}
         />
         <ChooseNfts
-          nfts={mocked_Nfts}
+          nfts={(data?.items as INftItem[]) ?? []}
           onClickNft={handleSelectNft}
           filterFrom={selectedNFTs}
           isShowAnyOfCollection={false}

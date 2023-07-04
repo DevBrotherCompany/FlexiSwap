@@ -21,7 +21,7 @@ export const TradeList: React.FC<TradeListProps> = ({
     <section className={classes.list}>
       {list.map((item) => (
         <TradeListItem
-          key={item.id}
+          key={item.id.toString()}
           item={item}
           onClick={onClick}
           onClickCollection={onClickCollection}

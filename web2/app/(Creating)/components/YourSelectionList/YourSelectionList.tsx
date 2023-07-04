@@ -20,7 +20,7 @@ export const YourSelectionList: React.FC<YourSelectionListProps> = ({
     <List className={classes.list}>
       {selected.map((item, index) => (
         <ListItem
-          key={item.tokenId}
+          key={item.tokenId.toString()}
           className={cn(classes.listItem, { [classes.lastItem]: index > 7 })}
         >
           <FlexiNft

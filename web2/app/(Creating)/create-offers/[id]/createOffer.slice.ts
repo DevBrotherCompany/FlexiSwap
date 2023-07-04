@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { INftItem } from "@/interfaces";
 import { RootState } from "@/storage/store";
-import { INftItem, IOffer } from "@/interfaces";
+
+interface CreateOfferData {
+  id: number;
+  selected: INftItem[];
+}
 
 interface CreateOfferSliceState {
-  offers: IOffer[];
+  offers: CreateOfferData[];
 }
 
 interface IAddToOffer {
@@ -20,15 +25,15 @@ const createOfferSlice = createSlice({
   name: "createOffer",
   initialState,
   reducers: {
-    addOffer(state, action: PayloadAction<IOffer>) {
+    addOffer(state, action: PayloadAction<CreateOfferData>) {
       state.offers.push(action.payload);
     },
-    removeOffer(state, action: PayloadAction<IOffer>) {
+    removeOffer(state, action: PayloadAction<CreateOfferData>) {
       state.offers = state.offers.filter((nft) => nft.id !== action.payload.id);
     },
     addNftForOffer(state, action: PayloadAction<IAddToOffer>) {
-      let offer: IOffer | undefined = state.offers.find(
-        (o) => o.id === action.payload.id
+      let offer: CreateOfferData | undefined = state.offers.find(
+        (o) => o.id ===action.payload.id
       );
       if (!offer) {
         state.offers.push({
@@ -39,7 +44,7 @@ const createOfferSlice = createSlice({
       offer?.selected.push(action.payload.item);
     },
     removeNftFromOffer(state, action: PayloadAction<IAddToOffer>) {
-      let offer = state.offers.find((o) => o.id === action.payload.id);
+      let offer = state.offers.find((o) => o.id ===action.payload.id);
       if (offer) {
         offer.selected = offer.selected.filter(
           (s) => s.tokenId !== action.payload.item.tokenId

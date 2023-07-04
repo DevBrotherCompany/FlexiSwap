@@ -24,7 +24,7 @@ export const ChooseNftList: React.FC<ChooseNftListProps> = ({ nfts, onClickNft, 
         </ListItem>
       )}
       {nfts.map(nft => (
-        <ListItem key={nft.tokenId} className={classes.listItem}>
+        <ListItem key={nft.tokenId.toString()} className={classes.listItem}>
           <FlexiNft item={nft} clickable onClickNft={onClickNft} hoverEffect={'tick'} />
         </ListItem>
       ))}
