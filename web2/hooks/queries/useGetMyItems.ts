@@ -1,11 +1,8 @@
 import {
-  Exact,
   GetMyItemsQuery,
-  InputMaybe,
   useGetMyItemsLazyQuery,
   useGetMyItemsQuery
 } from "@/packages/graphql/generated";
-import { QueryHookOptions } from "@apollo/client";
 import { mapItem } from "./mapper";
 
 const map = (data?: GetMyItemsQuery) => {
@@ -18,16 +15,9 @@ const map = (data?: GetMyItemsQuery) => {
 };
 
 const useGetMyItems = (
-  baseOptions: QueryHookOptions<
-    GetMyItemsQuery,
-    Exact<{
-      owner: any;
-      tokenAddress?: any;
-      nextPage?: InputMaybe<number> | undefined;
-    }>
-  >
+  ...baseOptions: Parameters<typeof useGetMyItemsQuery>
 ) => {
-  const { data, ...rest } = useGetMyItemsQuery(baseOptions);
+  const { data, ...rest } = useGetMyItemsQuery(...baseOptions);
   return { data: map(data), ...rest } as const;
 };
 

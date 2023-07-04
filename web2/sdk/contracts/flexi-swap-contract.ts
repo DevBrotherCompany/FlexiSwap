@@ -1,68 +1,68 @@
-import { FLEXISWAP_ABI, FLEXISWAP_ADDRESS } from "../constants";
-import { ItemInfo } from "../types";
-import { Contract } from "./contract";
+import { write } from "./../utils";
 import { prepareWriteContract } from "@wagmi/core";
+import { FLEXISWAP_ABI } from "../constants";
+import { ItemInfo } from "../types";
 
-export class FlexiSwapContract extends Contract {
-  private readonly _contractInfo = {
-    address: FLEXISWAP_ADDRESS,
-    abi: FLEXISWAP_ABI,
-  } as const;
+export class FlexiSwapContract {
+  private readonly _contractInfo: {
+    address: Address;
+    abi: typeof FLEXISWAP_ABI;
+  };
 
-  get address(): Address {
-    return this._contractInfo.address;
+  constructor(address: Address) {
+    this._contractInfo = { address, abi: FLEXISWAP_ABI };
   }
 
-  createTrade = async (
+  async createTrade(
     givings: ItemInfo[],
     recievings: ItemInfo[][]
-  ): Promise<void> => {
+  ): Promise<void> {
     const { request } = await prepareWriteContract({
       ...this._contractInfo,
       functionName: "createTrade",
       args: [givings, recievings],
     });
 
-    await this.write(request);
-  };
+    await write(request);
+  }
 
-  acceptOffer = async (
+  async acceptOffer(
     tradeId: bigint,
     receivingId: bigint,
     additionalItems: ItemInfo[]
-  ): Promise<void> => {
+  ): Promise<void> {
     const { request } = await prepareWriteContract({
       ...this._contractInfo,
       functionName: "acceptOffer",
       args: [tradeId, receivingId, additionalItems],
     });
 
-    await this.write(request);
-  };
+    await write(request);
+  }
 
-  createCounterOffer = async (
+  async createCounterOffer(
     tradeId: bigint,
     contractItems: ItemInfo[]
-  ): Promise<void> => {
+  ): Promise<void> {
     const { request } = await prepareWriteContract({
       ...this._contractInfo,
       functionName: "createCounterOffer",
       args: [tradeId, contractItems],
     });
 
-    await this.write(request);
-  };
+    await write(request);
+  }
 
-  acceptCounterOffer = async (
+  async acceptCounterOffer(
     tradeId: bigint,
     counterOfferId: bigint
-  ): Promise<void> => {
+  ): Promise<void> {
     const { request } = await prepareWriteContract({
       ...this._contractInfo,
       functionName: "acceptCounterOffer",
       args: [tradeId, counterOfferId],
     });
 
-    await this.write(request);
-  };
+    await write(request);
+  }
 }

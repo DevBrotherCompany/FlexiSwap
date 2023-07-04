@@ -63,11 +63,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
             <Grid className={classes.listItem}>
               <Grid item className={classes.givings}>
                 <NftList
-                  list={
-                    (givings.items
-                      .map(transformItems)
-                      .filter((item) => !!item) as INftItem[]) ?? []
-                  }
+                  list={givings.items.map(transformItems).filter(Boolean) ?? []}
                   onClick={onClick}
                   isExpanded={expanded}
                 />
@@ -109,11 +105,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
             <Grid className={classes.listItem}>
               <Grid item className={classes.givings}>
                 <NftList
-                  list={
-                    (givings.items
-                      .map(transformItems)
-                      .filter((item) => !!item) as INftItem[]) ?? []
-                  }
+                  list={givings.items.map(transformItems).filter(Boolean) ?? []}
                   onClick={onClick}
                   isExpanded={expanded}
                 />

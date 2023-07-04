@@ -1,3 +1,3 @@
 export const useRainbowKitButtonStyles = () => ({
-    btnContainer: "w-fit"
-})
+  btnContainer: "w-fit",
+});

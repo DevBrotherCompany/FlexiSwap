@@ -32,9 +32,7 @@ const createOfferSlice = createSlice({
       state.offers = state.offers.filter((nft) => nft.id !== action.payload.id);
     },
     addNftForOffer(state, action: PayloadAction<IAddToOffer>) {
-      let offer: CreateOfferData | undefined = state.offers.find(
-        (o) => o.id ===action.payload.id
-      );
+      const offer = state.offers.find(({ id }) => id === action.payload.id);
       if (!offer) {
         state.offers.push({
           id: action.payload.id,
@@ -44,7 +42,7 @@ const createOfferSlice = createSlice({
       offer?.selected.push(action.payload.item);
     },
     removeNftFromOffer(state, action: PayloadAction<IAddToOffer>) {
-      let offer = state.offers.find((o) => o.id ===action.payload.id);
+      const offer = state.offers.find(({ id }) => id === action.payload.id);
       if (offer) {
         offer.selected = offer.selected.filter(
           (s) => s.tokenId !== action.payload.item.tokenId

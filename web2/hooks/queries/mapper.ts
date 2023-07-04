@@ -24,28 +24,23 @@ import {
 } from "type-fest";
 import { ConditionalSimplifyDeep as SimplifyDeep } from "type-fest/source/conditional-simplify";
 
-type NestedPartial<T> = {
-  [K in keyof T]?: T[K] extends Array<infer R>
-    ? Array<NestedPartial<R>>
-    : NestedPartial<T[K]>;
-} & {};
-
 type ToMapped<TFull, TPartial extends PartialDeep<TFull>, TMapped> = {
   [Key in Extract<keyof TMapped, keyof TPartial>]:
   TMapped[Key] extends Primitive
-  ? TMapped[Key]
-  : TMapped[Key] extends any[] | null
+    ? TMapped[Key]
+    : TMapped[Key] extends any[] | null
   // @ts-ignore
   ? ToMapped<IterableElement<TFull[Key]>, IterableElement<TPartial[Key]>, IterableElement<TMapped[Key]>>[] | null
   : TMapped[Key] extends any[] ?
   // @ts-ignore
-  ToMapped<IterableElement<TFull[Key]>, IterableElement<TPartial[Key]>, IterableElement<TMapped[Key]>>[]
+      ToMapped<IterableElement<TFull[Key]>, IterableElement<TPartial[Key]>, IterableElement<TMapped[Key]>>[]
   : TMapped[Key] extends any | null ?
   // @ts-ignore
-  ToMapped<TFull[Key], TPartial[Key], TMapped[Key]> | null
+      ToMapped<TFull[Key], TPartial[Key], TMapped[Key]> | null
   // @ts-ignore
   : ToMapped<TFull[Key], TPartial[Key], TMapped[Key]>;
 };
+
 type Mapper<TFull, TMapped> = <
   TPartial extends PartialDeep<TFull, { recurseIntoArrays: true }>
 >(
@@ -73,7 +68,7 @@ const mapTrade: Mapper<Trade, ITrade> = (trade) => {
     givings: givings && mapGivingsOffer(givings),
     receivings:
       receivings &&
-      receivings.filter((r) => !!r).map((r) => mapReceivingsOffer(r!)),
+      receivings.filter(Boolean).map((r) => mapReceivingsOffer(r!)),
     createdAt,
   }) as any;
 };
@@ -82,7 +77,7 @@ const mapGivingsOffer: Mapper<GivingsOffer, IGivingsOffer> = (givingsOffer) => {
   const { id, items, trade } = givingsOffer;
   return filterUndefined({
     id: id && BigInt(id),
-    items: items && items.filter((i) => !!i).map((i) => mapGivingItem(i!)),
+    items: items && items.filter(Boolean).map((i) => mapGivingItem(i!)),
     trade: trade && mapTrade(trade),
   }) as any;
 };
@@ -93,7 +88,7 @@ const mapReceivingsOffer: Mapper<ReceivingsOffer, IReceivingsOffer> = (
   const { id, items, trade } = receivingsOffer;
   return filterUndefined({
     id: id && BigInt(id),
-    items: items && items.filter((i) => !!i).map((i) => mapReceivingItem(i!)),
+    items: items && items.filter(Boolean).map((i) => mapReceivingItem(i!)),
     trade: trade && mapTrade(trade),
   }) as any;
 };
@@ -130,17 +125,16 @@ const mapCollection: Mapper<Collection, INftCollection> = (collection) => {
     tokenAddress: tokenAddress && (tokenAddress.toString() as Address),
     previewItems:
       previewItems &&
-      previewItems.filter((item) => !!item).map((item) => mapItem(item!)),
+      previewItems.filter(Boolean).map((item) => mapItem(item!)),
     ...rest,
   }) as any;
 };
 
-const filterUndefined = <T>(obj: T) => {
-  for (const key in obj) {
-    if (obj[key] === undefined) delete obj[key];
-  }
-
-  return obj;
+const filterUndefined = <T extends Record<string, unknown>>(obj: T) => {
+  const entries = Array.from(Object.entries(obj)).filter(
+    ([_, value]) => value !== undefined
+  );
+  return Object.fromEntries(entries);
 };
 
 export {

@@ -1,38 +1,36 @@
 import { multicall } from "@wagmi/core";
-import { FLEXISWAP_ADDRESS, IERC721_ABI } from "./constants";
-import { Item } from "./types";
+import { IERC721_ABI } from "./constants";
 import { ERC721Contract } from "./contracts/erc721-contract";
+import { Item } from "./types";
+
 export class Approver {
-  private prepareGetApproved = ({ tokenAddress, tokenId }: Item) => {
-    return {
-      abi: IERC721_ABI,
-      address: tokenAddress,
-      functionName: "getApproved",
-      args: [tokenId],
-    } as const;
-  };
+  private readonly flexiSwapAddress: Address;
 
-  private createERC721 = (erc721Address: Address): ERC721Contract => {
-    return new ERC721Contract(erc721Address);
-  };
+  constructor(flexiSwapAddress: Address) {
+    this.flexiSwapAddress = flexiSwapAddress;
+  }
 
-  getUnapproved = async (items: Item[]): Promise<Item[]> => {
+  async getUnapproved(items: Item[]): Promise<Item[]> {
     const results = await multicall({
-      contracts: items.map(this.prepareGetApproved),
+      contracts: items.map(({ tokenId, tokenAddress }) => ({
+        abi: IERC721_ABI,
+        address: tokenAddress,
+        functionName: "getApproved",
+        args: [tokenId],
+      })),
     });
 
     return items.filter(
-      (item, idx) => results[idx].result !== FLEXISWAP_ADDRESS
+      (item, idx) => results[idx].result !== this.flexiSwapAddress
     );
-  };
+  }
 
-  approve = async (items: Item[]): Promise<void> => {
+  async approve(items: Item[]): Promise<void> {
     const unapproved = await this.getUnapproved(items);
-    Promise.all(
-      unapproved.map(({ tokenAddress, tokenId }) => {
-        const erc721Contract = this.createERC721(tokenAddress);
-        return erc721Contract.approve(FLEXISWAP_ADDRESS, tokenId);
-      })
-    );
-  };
+    
+    for (const { tokenAddress, tokenId } of unapproved) {
+      const erc721Contract = new ERC721Contract(tokenAddress);
+      await erc721Contract.approve(this.flexiSwapAddress, tokenId);
+    }
+  }
 }

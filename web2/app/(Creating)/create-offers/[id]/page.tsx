@@ -45,7 +45,7 @@ const CreateOffers: React.FC = () => {
   const { offers } = useAppSelector(selectCreateOffer);
   const dispatch = useAppDispatch();
 
-  const currentOffer = offers.find((o) => o.id === +id);
+  const currentOffer = offers.find((o) => o.id === Number(id));
 
   const handleAddNftToOffer = (item: INftItem) => {
     dispatch(

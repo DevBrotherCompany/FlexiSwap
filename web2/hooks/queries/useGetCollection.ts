@@ -1,10 +1,8 @@
 import {
-  Exact,
   SearchItemsCollectionQuery,
   useSearchItemsCollectionLazyQuery,
   useSearchItemsCollectionQuery
 } from "@/packages/graphql/generated";
-import { QueryHookOptions } from "@apollo/client";
 import { mapCollection } from "./mapper";
 
 const map = (data?: SearchItemsCollectionQuery) => {
@@ -14,14 +12,9 @@ const map = (data?: SearchItemsCollectionQuery) => {
 };
 
 const useGetCollection = (
-  baseOptions: QueryHookOptions<
-    SearchItemsCollectionQuery,
-    Exact<{
-      search: string;
-    }>
-  >
+  ...baseOptions: Parameters<typeof useSearchItemsCollectionQuery>
 ) => {
-  const { data, ...rest } = useSearchItemsCollectionQuery(baseOptions);
+  const { data, ...rest } = useSearchItemsCollectionQuery(...baseOptions);
   return { data: map(data), ...rest } as const;
 };
 
@@ -32,4 +25,3 @@ const useGetCollectionLazy = () => {
 };
 
 export { useGetCollection, useGetCollectionLazy };
-

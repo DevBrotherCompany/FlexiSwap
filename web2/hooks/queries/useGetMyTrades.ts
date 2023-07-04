@@ -1,11 +1,8 @@
 import {
-  Exact,
   GetMyTradesQuery,
-  InputMaybe,
   useGetMyTradesLazyQuery,
   useGetMyTradesQuery
 } from "@/packages/graphql/generated";
-import { QueryHookOptions } from "@apollo/client";
 import { mapTrade } from "./mapper";
 
 const map = (data?: GetMyTradesQuery) => {
@@ -17,16 +14,9 @@ const map = (data?: GetMyTradesQuery) => {
 };
 
 const useGetMyTrades = (
-  baseOptions: QueryHookOptions<
-    GetMyTradesQuery,
-    Exact<{
-      first?: InputMaybe<number> | undefined;
-      skip?: InputMaybe<number> | undefined;
-      owner: any;
-    }>
-  >
+  ...baseOptions: Parameters<typeof useGetMyTradesQuery>
 ) => {
-  const { data, ...rest } = useGetMyTradesQuery(baseOptions);
+  const { data, ...rest } = useGetMyTradesQuery(...baseOptions);
 
   return { data: map(data), ...rest } as const;
 };

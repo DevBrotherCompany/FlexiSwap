@@ -1,11 +1,8 @@
 import {
-    Exact,
-    InputMaybe,
-    SearchItemsQuery,
-    useSearchItemsLazyQuery,
-    useSearchItemsQuery
+  SearchItemsQuery,
+  useSearchItemsLazyQuery,
+  useSearchItemsQuery
 } from "@/packages/graphql/generated";
-import { QueryHookOptions } from "@apollo/client";
 import { mapItem } from "./mapper";
 
 const map = (data?: SearchItemsQuery) => {
@@ -20,15 +17,9 @@ const map = (data?: SearchItemsQuery) => {
 };
 
 const useSearchItems = (
-  baseOptions: QueryHookOptions<
-    SearchItemsQuery,
-    Exact<{
-      search: string;
-      nextPage?: InputMaybe<number> | undefined;
-    }>
-  >
+  ...baseOptions: Parameters<typeof useSearchItemsQuery>
 ) => {
-  const { data, ...rest } = useSearchItemsQuery(baseOptions);
+  const { data, ...rest } = useSearchItemsQuery(...baseOptions);
   return { data: map(data), ...rest } as const;
 };
 
