@@ -3,7 +3,7 @@ import React from "react";
 import { useConnectWalletStyles } from "./ConnectWallet.style";
 
 import { Grid } from "@mui/material";
-import { MetamaskButton } from "@/components/MetamaskButton/MetamaskButton";
+import { RainbowKitButton } from "@/components/RainbowKitButton/RainbowKitButton";
 
 export const ConnectWallet: React.FC = () => {
   const classes = useConnectWalletStyles();
@@ -11,11 +11,11 @@ export const ConnectWallet: React.FC = () => {
   return (
     <Grid container className={classes.connectWrapper}>
       <Grid item xs={1.5}>
-        <MetamaskButton
+        <RainbowKitButton
           className={classes.connect}
         >
           Connect wallet
-        </MetamaskButton>
+        </RainbowKitButton>
       </Grid>
     </Grid>
   );

@@ -1,26 +1,25 @@
 "use client";
-import React, { useEffect } from "react";
 import { Style } from "@/shared/variables";
 import { makeStyles } from "@mui/styles";
+import React, { useEffect } from "react";
 
 import { FlexiInput } from "@/components/FlexiInput/FlexiInput";
 import { FlexiTitle } from "@/components/FlexiTitle/FlexiTitle";
 import { RouteName } from "@/shared/routes";
 
 import { INftItem } from "@/interfaces";
-import { useSearchItemsLazyQuery } from "@/packages/graphql/generated";
 import { useAppDispatch, useAppSelector } from "@/storage/hooks";
 
 import { ChooseNfts } from "../../components/ChooseNfts/ChooseNfts";
 import { YourSelection } from "../../components/YourSelection/YourSelection";
 
+import { useSearchItemsLazy } from "@/hooks/queries";
+import { useParams, useRouter } from "next/navigation";
 import {
   addNftForOffer,
   removeNftFromOffer,
   selectCreateOffer,
 } from "./createOffer.slice";
-import { useParams, useRouter } from "next/navigation";
-import { mocked_Nfts } from "@/MOCK/creating";
 
 const useCreateOffersStyles = makeStyles(() => ({
   yourSelection: {
@@ -39,7 +38,7 @@ const useCreateOffersStyles = makeStyles(() => ({
 const CreateOffers: React.FC = () => {
   const classes = useCreateOffersStyles();
 
-  const [getNfts, { data }] = useSearchItemsLazyQuery();
+  const [getNfts, { data }] = useSearchItemsLazy();
 
   const router = useRouter();
   const { id } = useParams();
@@ -95,7 +94,7 @@ const CreateOffers: React.FC = () => {
           }
         />
         <ChooseNfts
-          nfts={mocked_Nfts}
+          nfts={(data?.searchItems.items as INftItem[]) ?? []}
           title={"All NFTs"}
           onClickNft={handleAddNftToOffer}
           filterFrom={currentOffer?.selected}

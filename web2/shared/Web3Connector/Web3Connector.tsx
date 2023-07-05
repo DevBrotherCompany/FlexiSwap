@@ -1,5 +1,6 @@
-"use client";
-import { MoralisProvider } from "react-moralis";
+import { WagmiConfig } from "wagmi";
+import { chains, config } from "../wagmi.config";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
 interface Web3ConnectorProps {
   children: React.ReactNode;
@@ -7,11 +8,8 @@ interface Web3ConnectorProps {
 
 export const Web3Connector: React.FC<Web3ConnectorProps> = ({ children }) => {
   return (
-    <MoralisProvider
-      appId={process.env.NEXT_PUBLIC_APP_KEY ?? ""}
-      serverUrl={process.env.NEXT_PUBLIC_SERVER_URL ?? ""}
-    >
-      {children}
-    </MoralisProvider>
+    <WagmiConfig config={config}>
+      <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
+    </WagmiConfig>
   );
 };

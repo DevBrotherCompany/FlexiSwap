@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '@rainbow-me/rainbowkit/styles.css';
 
 body {
   margin: 0;

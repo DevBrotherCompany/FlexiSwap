@@ -1,27 +1,25 @@
-import { Maybe } from "./maybe.type";
-
 export interface IItemCollection {
-  name?: Maybe<string>;
+  name: string | null;
   tokenAddress: string;
 }
 
 export interface INftItem {
-  tokenId: string;
-  tokenAddress: string;
-  name?: Maybe<string>;
-  description?: Maybe<string>;
-  file?: Maybe<string>;
-  collection?: Maybe<IItemCollection>;
+  tokenId: bigint;
+  tokenAddress: Address;
+  name: string | null;
+  description: string | null;
+  file: string | null;
+  collection: INftCollection | null;
 }
 
 export interface IPreviewItem {
-  file?: Maybe<string>;
+  file: string | null;
 }
 
 export interface INftCollection {
-  tokenAddress: string;
-  name?: Maybe<string>;
-  symbol?: Maybe<string>;
-  logo?: Maybe<string>;
-  previewItems?: IPreviewItem[] | null;
+  tokenAddress: Address;
+  name: string | null;
+  symbol: string | null;
+  logo: string | null;
+  previewItems: INftItem[] | null;
 }

@@ -3,24 +3,24 @@ import { makeStyles } from "@mui/styles";
 
 import { Style } from "@/shared/variables";
 
-import { RouteName } from "@/shared/routes";
 import { FlexiButton } from "@/components/FlexiButton/FlexiButton";
+import { RouteName } from "@/shared/routes";
 
 import { TradeOfferSidebar } from "@/app/(Creating)/components/TradeOfferSidebar/TradeOfferSidebar";
 import { selectCreateTrade } from "@/app/(Creating)/create-trade/createTrade.slice";
 
-import { useAppSelector } from "@/storage/hooks";
-import { FlexiSwap } from "@/sdk/flexi-swap";
 import { useAuth } from "@/hooks";
+import { useAppSelector } from "@/storage/hooks";
 
-import { selectCreateOffer } from "./createOffer.slice";
-import { Grid, List, ListItem } from "@mui/material";
-import { useClearStorage } from "./useClearStorage";
-import { storage } from "@/packages/storage";
 import { StorageKey } from "@/enums";
+import useFlexiSwap from "@/hooks/useFlexiSwap";
 import { INftItem } from "@/interfaces";
-import { useRouter } from "next/navigation";
+import { storage } from "@/packages/storage";
+import { Grid, List, ListItem } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { selectCreateOffer } from "./createOffer.slice";
+import { useClearStorage } from "./useClearStorage";
 
 interface OfferLayoutProps {
   children: React.ReactNode;
@@ -45,11 +45,12 @@ export default function OffersLayout({ children }: OfferLayoutProps) {
 
   const { offers } = useAppSelector(selectCreateOffer);
   const { selectedNFTs } = useAppSelector(selectCreateTrade);
-  const { signer, account } = useAuth();
+  const { account } = useAuth();
   const router = useRouter();
 
   const { clearStrage } = useClearStorage();
-
+  const flexiSwap = useFlexiSwap();
+  
   const handleBack = () => {
     router.back();
   };
@@ -72,20 +73,16 @@ export default function OffersLayout({ children }: OfferLayoutProps) {
   };
 
   const handleCreateOffer = async () => {
-    if (signer) {
-      // FIXME: Resolve types incompatibility
-      const flexiSwap = new FlexiSwap(signer as any);
-      const receivings = offers.map((o) => o.selected);
-      try {
-        await flexiSwap.createTrade(selectedNFTs, receivings);
-      } catch (e) {
-        console.error("ERROR: ", e);
-      } finally {
-        clearStrage();
-        router.push(RouteName.AllTrades);
-      }
-    } else {
-      // TODO make a way to login user (moralis issue)
+    if (!flexiSwap) return;
+
+    const receivings = offers.map((o) => o.selected);
+    try {
+      await flexiSwap.createTrade(selectedNFTs, receivings);
+    } catch (e) {
+      console.error("ERROR: ", e);
+    } finally {
+      clearStrage();
+      router.push(RouteName.AllTrades);
     }
   };
 
