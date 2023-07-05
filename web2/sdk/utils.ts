@@ -1,7 +1,12 @@
-import { WriteContractParameters } from "viem";
-import { writeContract, waitForTransaction } from "@wagmi/core";
+import {
+  writeContract,
+  waitForTransaction,
+  prepareWriteContract,
+  PrepareWriteContractConfig,
+} from "@wagmi/core";
 
-export const write = async (request: WriteContractParameters): Promise<void> => {
+export const write = async (config: PrepareWriteContractConfig) => {
+  const { request } = await prepareWriteContract(config);
   const { hash } = await writeContract(request);
   await waitForTransaction({ hash });
 };

@@ -1,15 +1,12 @@
 import { Approver } from "./approver";
-import { FlexiSwapContract } from "./contracts/flexi-swap-contract";
+import { FlexiSwapAdapter } from "./contracts/flexi-swap-adapter";
 import { Item, ItemInfo, NullableItem } from "./types";
 
 export class FlexiSwap {
-  private readonly flexiSwapContract: FlexiSwapContract;
-  private readonly approver: Approver;
-
-  constructor(flexiSwapContract: FlexiSwapContract, approver: Approver) {
-    this.flexiSwapContract = flexiSwapContract;
-    this.approver = approver;
-  }
+  constructor(
+    private readonly flexiSwapAdapter: FlexiSwapAdapter,
+    private readonly approver: Approver
+  ) {}
 
   private mapItem(item: Item | NullableItem): ItemInfo {
     return {
@@ -29,7 +26,7 @@ export class FlexiSwap {
     const contractReceivings = receivings.map((items) =>
       items.map(this.mapItem)
     );
-    await this.flexiSwapContract.createTrade(
+    await this.flexiSwapAdapter.createTrade(
       contractGivings,
       contractReceivings
     );
@@ -44,7 +41,7 @@ export class FlexiSwap {
     await this.approver.approve([...receivings, ...additionalItems]);
 
     const contractAdditionalItems = additionalItems.map(this.mapItem);
-    await this.flexiSwapContract.acceptOffer(
+    await this.flexiSwapAdapter.acceptOffer(
       tradeId,
       receivingId,
       contractAdditionalItems
@@ -55,13 +52,13 @@ export class FlexiSwap {
     this.approver.approve(items);
 
     const contractItems = items.map(this.mapItem);
-    await this.flexiSwapContract.createCounterOffer(tradeId, contractItems);
+    await this.flexiSwapAdapter.createCounterOffer(tradeId, contractItems);
   }
 
   async acceptCounterOffer(
     tradeId: bigint,
     counterOfferId: bigint
   ): Promise<void> {
-    await this.flexiSwapContract.acceptCounterOffer(tradeId, counterOfferId);
+    await this.flexiSwapAdapter.acceptCounterOffer(tradeId, counterOfferId);
   }
 }

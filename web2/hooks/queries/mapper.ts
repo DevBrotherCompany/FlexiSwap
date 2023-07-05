@@ -1,11 +1,11 @@
 import {
+  IGivingsItem,
+  IGivingsOffer,
   INftCollection,
   INftItem,
-  IGivingsOffer,
-  IGivingsItem,
-  ITrade,
-  IReceivingsOffer,
   IReceivingsItem,
+  IReceivingsOffer,
+  ITrade,
 } from "@/interfaces";
 import {
   Collection,
@@ -24,21 +24,28 @@ import {
 } from "type-fest";
 import { ConditionalSimplifyDeep as SimplifyDeep } from "type-fest/source/conditional-simplify";
 
-type ToMapped<TFull, TPartial extends PartialDeep<TFull>, TMapped> = {
-  [Key in Extract<keyof TMapped, keyof TPartial>]:
-  TMapped[Key] extends Primitive
+type ToMappedNullable<TFull, TPartial, TMapped> = TMapped extends any[]
+  ? ToMapped<
+      IterableElement<TFull>,
+      IterableElement<TPartial>,
+      IterableElement<TMapped>
+    >[]
+  : ToMapped<TFull, TPartial, TMapped>;
+
+type ToMapped<TFull, TPartial, TMapped> = {
+  [Key in Extract<
+    keyof TMapped,
+    keyof TPartial
+  >]: TMapped[Key] extends Primitive
     ? TMapped[Key]
-    : TMapped[Key] extends any[] | null
-  // @ts-ignore
-  ? ToMapped<IterableElement<TFull[Key]>, IterableElement<TPartial[Key]>, IterableElement<TMapped[Key]>>[] | null
-  : TMapped[Key] extends any[] ?
-  // @ts-ignore
+    : null extends TMapped[Key]
+    ? // @ts-ignore
+      ToMappedNullable<TFull[Key], TPartial[Key], NonNullable<TMapped[Key]>> | null
+    : TMapped[Key] extends any[]
+    ? // @ts-ignore
       ToMapped<IterableElement<TFull[Key]>, IterableElement<TPartial[Key]>, IterableElement<TMapped[Key]>>[]
-  : TMapped[Key] extends any | null ?
-  // @ts-ignore
-      ToMapped<TFull[Key], TPartial[Key], TMapped[Key]> | null
-  // @ts-ignore
-  : ToMapped<TFull[Key], TPartial[Key], TMapped[Key]>;
+    : // @ts-ignore
+      ToMapped<TFull[Key], TPartial[Key], TMapped[Key]>;
 };
 
 type Mapper<TFull, TMapped> = <
@@ -140,7 +147,9 @@ const filterUndefined = <T extends Record<string, unknown>>(obj: T) => {
 export {
   mapCollection,
   mapItem,
-  mapGivingsOffer as mapOffer,
-  mapGivingItem as mapOfferItem,
-  mapTrade,
+  mapGivingsOffer,
+  mapGivingItem,
+  mapReceivingsOffer,
+  mapReceivingItem,
+  mapTrade
 };

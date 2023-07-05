@@ -1,29 +1,26 @@
-import { write } from "./../utils";
-import { prepareWriteContract } from "@wagmi/core";
 import { FLEXISWAP_ABI } from "../constants";
 import { ItemInfo } from "../types";
+import { write } from "../utils";
 
-export class FlexiSwapContract {
-  private readonly _contractInfo: {
+export class FlexiSwapAdapter {
+  private readonly contractInfo: {
     address: Address;
     abi: typeof FLEXISWAP_ABI;
   };
 
   constructor(address: Address) {
-    this._contractInfo = { address, abi: FLEXISWAP_ABI };
+    this.contractInfo = { address, abi: FLEXISWAP_ABI };
   }
 
   async createTrade(
     givings: ItemInfo[],
     recievings: ItemInfo[][]
   ): Promise<void> {
-    const { request } = await prepareWriteContract({
-      ...this._contractInfo,
+    await write({
+      ...this.contractInfo,
       functionName: "createTrade",
       args: [givings, recievings],
     });
-
-    await write(request);
   }
 
   async acceptOffer(
@@ -31,38 +28,32 @@ export class FlexiSwapContract {
     receivingId: bigint,
     additionalItems: ItemInfo[]
   ): Promise<void> {
-    const { request } = await prepareWriteContract({
-      ...this._contractInfo,
+    await write({
+      ...this.contractInfo,
       functionName: "acceptOffer",
       args: [tradeId, receivingId, additionalItems],
     });
-
-    await write(request);
   }
 
   async createCounterOffer(
     tradeId: bigint,
     contractItems: ItemInfo[]
   ): Promise<void> {
-    const { request } = await prepareWriteContract({
-      ...this._contractInfo,
+    await write({
+      ...this.contractInfo,
       functionName: "createCounterOffer",
       args: [tradeId, contractItems],
     });
-
-    await write(request);
   }
 
   async acceptCounterOffer(
     tradeId: bigint,
     counterOfferId: bigint
   ): Promise<void> {
-    const { request } = await prepareWriteContract({
-      ...this._contractInfo,
+    await write({
+      ...this.contractInfo,
       functionName: "acceptCounterOffer",
       args: [tradeId, counterOfferId],
     });
-
-    await write(request);
   }
 }

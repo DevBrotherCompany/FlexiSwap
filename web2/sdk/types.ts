@@ -1,15 +1,12 @@
-export type Item = {
-  tokenAddress: Address;
-  tokenId: bigint;
-};
+import { INftItem } from "@/interfaces";
 
-export type NullableItem = {
-  tokenAddress: Address;
+export type Item = Pick<INftItem, "tokenAddress" | "tokenId">;
+
+export type NullableItem = Pick<INftItem, "tokenAddress"> & {
   tokenId: bigint | null;
 };
 
-export type ItemInfo = {
+export type ItemInfo = Pick<INftItem, "tokenId"> & {
   nftAddress: Address;
-  tokenId: bigint;
   isEmptyToken: boolean;
 };
