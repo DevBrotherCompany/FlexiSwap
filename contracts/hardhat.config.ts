@@ -1,9 +1,10 @@
 import * as dotenv from 'dotenv';
 
-import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
 import '@nomiclabs/hardhat-ganache';
 import 'hardhat-abi-exporter';
+import { HardhatUserConfig } from 'hardhat/config';
+import 'solidity-docgen';
 
 dotenv.config();
 
@@ -30,6 +31,12 @@ const config: HardhatUserConfig = {
   abiExporter: {
     runOnCompile: true,
     clear: true,
+  },
+  docgen: {
+    outputDir: './docs/generated',
+    templates: './docs/templates',
+    pages: 'files',
+    exclude: [],
   },
 };
 

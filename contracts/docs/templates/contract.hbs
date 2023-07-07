@@ -1,0 +1,43 @@
+{{#if isInterface}}
+{{h 1}} {{name}}
+
+{{natspec.title}}
+{{natspec.notice}}
+{{#if natspec.dev}}
+_Developer note: {{natspec.dev}}_
+{{/if}}
+
+{{#if errors}}
+{{#hsection}}
+{{h}} Errors
+{{#hsection}}
+{{#each errors}}
+{{>item}}
+{{/each}}
+{{/hsection}}
+{{/hsection}}
+{{/if}}
+
+{{#if events}}
+{{#hsection}}
+{{h}} Events
+{{#hsection}}
+{{#each events}}
+{{>item}}
+{{/each}}
+{{/hsection}}
+{{/hsection}}
+{{/if}}
+
+{{#if functions}}
+{{#hsection}}
+{{h}} Events
+{{#hsection}}
+{{#each functions}}
+{{>item}}
+{{/each}}
+{{/hsection}}
+{{/hsection}}
+{{/if}}
+
+{{/if}}
