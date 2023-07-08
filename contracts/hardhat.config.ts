@@ -36,7 +36,7 @@ const config: HardhatUserConfig = {
     outputDir: './docs/generated',
     templates: './docs/templates',
     pages: 'files',
-    exclude: [],
+    exclude: ['TestToken.sol', 'FlexiSwap.sol', 'FlexiSwapCore.sol'],
   },
 };
 
