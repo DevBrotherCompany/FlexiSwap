@@ -44,10 +44,10 @@ export function handleTradeCreated(event: TradeCreated): void {
     const receivingsItems = flexiSwap.items(event.params.trade.receivingsIds[i]);
     for (let j = 0; j < receivingsItems.length; j++) {
       const item = new ReceivingsOfferItem(receivings.id + j.toString());
-      item.tokenAddress = receivingsItems[i].nftAddress;
-      item.tokenId = receivingsItems[i].isEmptyToken
+      item.tokenAddress = receivingsItems[j].nftAddress;
+      item.tokenId = receivingsItems[j].isEmptyToken
         ? null
-        : receivingsItems[i].tokenId;
+        : receivingsItems[j].tokenId;
       item.offer = receivings.id;
       item.save();
     }
