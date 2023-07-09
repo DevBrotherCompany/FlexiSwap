@@ -4,17 +4,15 @@ import * as wagmiChains from "wagmi/chains";
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { createConfig } from "wagmi";
 
-const chain = process.env.NEXT_PUBLIC_CHAIN as keyof typeof wagmiChains;
-const projectId = process.env.NEXT_PUBLIC_WALLECT_CONNECT_PROJECT_ID_DEV as string
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [wagmiChains[chain]],
+  [wagmiChains[process.env.NEXT_PUBLIC_CHAIN]],
   [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
   appName: "FlexiSwap",
   chains,
-  projectId: projectId,
+  projectId: process.env.NEXT_PUBLIC_WALLECT_CONNECT_PROJECT_ID,
 });
 
 const config = createConfig({
