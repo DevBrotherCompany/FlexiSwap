@@ -3,7 +3,9 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
+    "codegen": " npx graphql-code-generator",
     "dev": "next dev",
+    "prebuild": "npm run codegen",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -42,6 +44,7 @@
     "@graphql-codegen/typescript": "^4.0.0",
     "@graphql-codegen/typescript-operations": "^4.0.0",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
-    "apollo": "^2.34.0"
+    "apollo": "^2.34.0",
+    "dotenv": "^16.3.1"
   }
 }
