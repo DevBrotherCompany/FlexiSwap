@@ -1,16 +1,13 @@
+import { ConnectWallet } from "@/app/(Trades)/components/ConnectWallet/ConnectWallet";
 import { FlexiButton } from "@/components/FlexiButton/FlexiButton";
 import { FlexiSubtitle } from "@/components/FlexiSubtitle/FlexiSubtitle";
 import Sidebar from "@/components/SideBar/SideBar";
 import { RouteName } from "@/shared/routes";
 import Link from "next/link";
-import { SidebarList } from "./components/SidebarList/SidebarList";
-import Toolbar from "./components/Toolbar/Toolbar";
 import Content from "./components/Content/Content";
-import { ConnectWallet } from "@/app/(Trades)/components/ConnectWallet/ConnectWallet";
+import { SidebarList } from "./components/SidebarList/SidebarList";
 
 interface TradesLayoutProps {
-  onSearchChange?: (value: string) => void;
-  onSearchPress?: (value: string) => void;
   children: React.ReactNode;
 }
 
@@ -33,7 +30,6 @@ export default function TradesLayout({ children }: TradesLayoutProps) {
         <ConnectWallet />
       </Sidebar>
       <div className={classes.mainContainer}>
-        <Toolbar />
         <Content>{children}</Content>
       </div>
     </main>

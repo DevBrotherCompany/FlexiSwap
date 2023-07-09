@@ -9,8 +9,7 @@ const map = (data?: GetMyItemsQuery) => {
   if (!data) return;
 
   return {
-    items: data.itemsByOwnerAddress.items.map(mapItem),
-    nextPage: data.itemsByOwnerAddress.nextPage,
+    items: data.getTokensByOwner.map(mapItem),
   };
 };
 

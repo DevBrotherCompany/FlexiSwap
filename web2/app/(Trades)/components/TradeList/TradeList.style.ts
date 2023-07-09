@@ -9,6 +9,11 @@ export const useTradeListStyles = makeStyles((theme: Theme) => ({
     gridTemplateColumns: "minmax(540px, 4fr) 1fr 4fr",
     marginBottom: "20px !important",
   },
+  expandedNftList: {
+    marginBottom: "30px !important",
+    paddingBottom: "10px !important",
+    borderBottom: `1px ${theme.palette.secondary.contrastText} solid`,
+  },
   accordion: {
     backgroundColor: `${theme.palette.background.paper} !important`,
     backgroundImage: "none !important",

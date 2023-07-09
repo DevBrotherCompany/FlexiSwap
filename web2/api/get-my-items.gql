@@ -1,0 +1,9 @@
+query GetMyItems($owner: Address!) {
+  getTokensByOwner(owner: $owner) {
+    tokenAddress
+    tokenId
+    name
+    description
+    file
+  }
+}

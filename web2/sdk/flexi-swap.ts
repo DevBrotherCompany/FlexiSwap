@@ -49,7 +49,7 @@ export class FlexiSwap {
   }
 
   async createCounterOffer(tradeId: bigint, items: Item[]): Promise<void> {
-    this.approver.approve(items);
+    await this.approver.approve(items);
 
     const contractItems = items.map(this.mapItem);
     await this.flexiSwapAdapter.createCounterOffer(tradeId, contractItems);
