@@ -66,6 +66,7 @@ export function handleCounterOfferCreated(event: CounterOfferCreated): void {
   const flexiSwap = FlexiSwap.bind(event.address);
 
   const offer = new CounterOffer(event.params.itemsId.toString());
+  offer.createdAt = event.block.timestamp.toI32();
   offer.offererAddress = event.params.counterOfferer;
   offer.trade = event.params.tradeId.toString();
   offer.save();
