@@ -2,7 +2,7 @@
 import { FlexiTitle } from "@/components/FlexiTitle/FlexiTitle";
 import { NftModal } from "@/components/NftModal/NftModal";
 import { useAuth, useModalsState } from "@/hooks";
-import { useGetMyTrades } from "@/hooks/queries";
+import { useGetMyCounterOffers } from "@/hooks/queries";
 import { INftItem, ITrade } from "@/interfaces";
 import { useState } from "react";
 import { TradeList } from "../components/TradeList/TradeList";
@@ -10,7 +10,9 @@ import { TradesModal } from "../enums";
 
 export default function MyCounterOffers() {
   const { account } = useAuth();
-  const { data: trades } = useGetMyTrades({ variables: { owner: account } });
+  const { data: trades } = useGetMyCounterOffers({
+    variables: { owner: account },
+  });
   const [selectedNft, setSelectedNft] = useState<INftItem | null>(null);
 
   const { openModal, isModalOpened, closeModals } =
@@ -24,8 +26,6 @@ export default function MyCounterOffers() {
   const handleClickCollection = async () => {
     openModal(TradesModal.CollectionInfo);
   };
-
-  console.log(trades);
 
   const handleClose = () => {
     setSelectedNft(null);
