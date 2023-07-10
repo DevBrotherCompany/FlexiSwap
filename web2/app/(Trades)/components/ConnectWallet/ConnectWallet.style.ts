@@ -1,4 +1,4 @@
 export const useConnectWalletStyles = () => ({
-  connectWrapper: "fixed bottom-[50px]",
+  connectWrapper: "absolute bottom-[50px] left-[6px] w-[95%]",
   connect: "!w-[100%]",
 });

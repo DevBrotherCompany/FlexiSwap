@@ -1,5 +1,5 @@
 query GetAllTrades($first: Int, $skip: Int) {
-  trades(first: $first, skip: $skip) {
+  trades(first: $first, skip: $skip, orderBy: createdAt, orderDirection: desc) {
     id
     initiatorAddress
     createdAt
