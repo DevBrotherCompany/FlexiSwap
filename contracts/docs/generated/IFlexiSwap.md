@@ -187,7 +187,7 @@ Emitted when counter offer with `itemsId` is accepted for trade with `tradeId`.
 | tradeId | uint256 | The id of the trade. |
 | itemsId | uint256 | The id of the counter offer items. |
 
-## Events
+## Functions
 ### trade
 
 ```solidity
