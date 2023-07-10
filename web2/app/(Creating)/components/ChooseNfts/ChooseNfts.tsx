@@ -1,14 +1,13 @@
 import React from 'react'
 import { useChooseNftsStyles } from './ChooseNfts.style'
 
-// import { INft } from "interfaces/old";
 import { INftItem } from '@/interfaces'
 import { arrDifference } from '@/utils'
 
 import { SectionTitle } from '../Text/SectionTitle'
 import { ChooseNftList } from '../ChooseNftList/ChooseNftList'
 
-interface ChooseNftsProps {
+export interface ChooseNftsProps {
   nfts: INftItem[]
   onClickNft?: (item: INftItem) => void
   filterFrom?: INftItem[]

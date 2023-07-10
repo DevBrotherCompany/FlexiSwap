@@ -5,33 +5,24 @@ query GetAllTrades($first: Int, $skip: Int) {
     createdAt
     givings {
       items {
-        item {
-          tokenId
+        metadata {
           tokenAddress
+          tokenId
           name
           description
-          file          
+          file
         }
       }
     }
     receivings {
       id
       items {
-        item {
-          tokenId
+        metadata {
           tokenAddress
+          tokenId
           name
           description
-          file          
-        }
-        collection {
-          tokenAddress
-          name
-          symbol
-          logo
-          previewItems {
-            file
-          }
+          file
         }
       }
     }

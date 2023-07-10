@@ -5,4 +5,5 @@ export const enum RouteName {
   MyCounterOffers = '/my-counter-offers',
   CreateTrade = '/create-trade',
   CreateOffers = '/create-offers',
+  CreateCounterOffer = '/create-counter-offer'
 }

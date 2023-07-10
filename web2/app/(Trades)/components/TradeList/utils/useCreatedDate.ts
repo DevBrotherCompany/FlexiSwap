@@ -1,7 +1,7 @@
 export const useCreatedDate = (createdAt: number) => {
   let creationDate = new Date();
   try {
-    creationDate = new Date(createdAt);
+    creationDate = new Date(createdAt * 1000);
   } catch (e) {
     console.error(e);
   }

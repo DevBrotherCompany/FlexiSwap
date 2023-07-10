@@ -1,25 +1,36 @@
-import { INftItem, IReceivingsOffer } from "@/interfaces";
+import { INftItem, ITrade } from "@/interfaces";
 
-export const useHiddenDetailsTrades = (receivings: IReceivingsOffer[]) => {
+export const useHiddenDetailsTrades = ({
+  receivings,
+  counterOffers,
+}: Pick<ITrade, "receivings" | "counterOffers">) => {
   let previewReceivingItems: INftItem[] = [];
-  const previewReceivingCollection = receivings[0]?.items[0]?.collection ?? {};
   const isPreviewCollection = receivings[0].items.every((item) => item);
 
   const receivingCount = receivings.length;
+  const counterOffersCount = counterOffers?.length ?? 0;
 
-  if (!isPreviewCollection) {
-    previewReceivingItems = receivings[0].items.map(({ item }) => ({
-      ...item,
-      tokenId: item?.tokenId,
-      tokenAddress: item?.tokenAddress,
-    })) as INftItem[];
-  }
+  const mapItem = (item: INftItem): INftItem => ({
+    ...item,
+    tokenId: item?.tokenId,
+    tokenAddress: item?.tokenAddress,
+  });
+
+  previewReceivingItems = receivings[0].items.map(({ item }) =>
+    mapItem(item!)
+  ) as INftItem[];
+  const previewCounterOffersItems =
+    counterOffersCount !== 0
+      ? counterOffers[0].items.map(({ item }) => mapItem(item))
+      : [];
 
   return {
     previewReceivingItems,
-    previewReceivingCollection,
+    previewCounterOffersItems,
     isPreviewCollection,
     receivingCount,
+    counterOffersCount,
     isManyReceivings: receivingCount > 1,
+    isManyCounterOffers: counterOffersCount > 1,
   };
 };

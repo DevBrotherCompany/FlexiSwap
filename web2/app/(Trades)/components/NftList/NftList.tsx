@@ -29,7 +29,7 @@ export const NftList: React.FC<NftListProps> = ({
   return (
     <ul className={classes.list}>
       {displayItems.map((nft) => (
-        <li key={nft.tokenId.toString()} className={classes.listItem}>
+        <li key={`${nft.tokenId.toString()}:${nft.tokenAddress}`} className={classes.listItem}>
           <FlexiNft
             item={nft}
             hoverEffect={"info"}

@@ -14,6 +14,7 @@ export const useAnyOfCollectionNftStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
   },
   text: {
+    color: theme.palette.secondary.contrastText,
     fontWeight: 600,
     fontSize: "15px",
     lineHeight: "30px",

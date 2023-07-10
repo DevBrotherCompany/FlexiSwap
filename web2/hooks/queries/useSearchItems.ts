@@ -1,17 +1,16 @@
+import { mapItem } from "./mapper";
 import {
   SearchItemsQuery,
   useSearchItemsLazyQuery,
-  useSearchItemsQuery
+  useSearchItemsQuery,
 } from "@/packages/graphql/generated";
-import { mapItem } from "./mapper";
 
 const map = (data?: SearchItemsQuery) => {
   if (!data) return;
 
   return {
     searchItems: {
-      items: data.searchItems.items.map(mapItem),
-      nextPage: data.searchItems.nextPage,
+      items: data.search.map(mapItem),
     },
   };
 };
@@ -29,4 +28,3 @@ const useSearchItemsLazy = () => {
 };
 
 export { useSearchItems, useSearchItemsLazy };
-

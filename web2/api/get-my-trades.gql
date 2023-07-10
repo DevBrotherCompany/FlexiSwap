@@ -5,9 +5,9 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
     createdAt
     givings {
       items {
-        item {
-          tokenId
+        metadata {
           tokenAddress
+          tokenId
           name
           description
           file
@@ -17,23 +17,28 @@ query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
     receivings {
       id
       items {
-        item {
+        metadata {
           tokenId
           tokenAddress
           name
           description
           file
         }
-        collection {
+      }
+    }
+    counterOffers {
+      id
+      createdAt
+      items {
+        metadata {
           tokenAddress
+          tokenId
           name
-          symbol
-          logo
-          previewItems {
-            file
-          }
+          description
+          file
         }
       }
+      offererAddress
     }
   }
 }

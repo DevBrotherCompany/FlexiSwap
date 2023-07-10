@@ -66,12 +66,12 @@ const CreateOffers: React.FC = () => {
 
   const handleSearchPressed = (e: any) => {
     if (e.key === "Enter") {
-      getNfts({ variables: { search: e.target.value, nextPage: 1 } });
+      getNfts({ variables: { searchString: e.target.value } });
     }
   };
 
   useEffect(() => {
-    getNfts({ variables: { search: "", nextPage: 1 } });
+    getNfts({ variables: { searchString: "Ape 12" } });
   }, []);
 
   return (
@@ -94,7 +94,7 @@ const CreateOffers: React.FC = () => {
           }
         />
         <ChooseNfts
-          nfts={(data?.searchItems.items as INftItem[]) ?? []}
+          nfts={data?.searchItems.items ?? []}
           title={"All NFTs"}
           onClickNft={handleAddNftToOffer}
           filterFrom={currentOffer?.selected}

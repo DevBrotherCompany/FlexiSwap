@@ -1,3 +1,4 @@
+'use client'
 import { FlexiInput } from "@/components/FlexiInput/FlexiInput";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { useToolbarStyles } from "./Toolbar.styles";

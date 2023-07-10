@@ -1,8 +1,7 @@
 import * as chains from 'wagmi/chains';
 
-type Address = `0x${string}`;
-
 declare global {
+  type Address = `0x${string}`;
   namespace NodeJS {
     interface ProcessEnv {
       NEXT_PUBLIC_CHAIN: keyof typeof chains;

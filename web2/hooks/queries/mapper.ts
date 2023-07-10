@@ -1,20 +1,22 @@
 import {
+  ICounterOffer,
+  ICounterOfferItem,
   IGivingsItem,
   IGivingsOffer,
-  INftCollection,
   INftItem,
   IReceivingsItem,
   IReceivingsOffer,
   ITrade,
 } from "@/interfaces";
 import {
-  Collection,
-  CollectionItem,
+  Token,
   GivingsOffer,
   GivingsOfferItem,
   ReceivingsOffer,
   ReceivingsOfferItem,
   Trade,
+  CounterOffer,
+  CounterOfferItem,
 } from "@/packages/graphql/generated";
 import {
   IterableElement,
@@ -54,19 +56,28 @@ type Mapper<TFull, TMapped> = <
   item: TPartial
 ) => SimplifyDeep<ReadonlyDeep<ToMapped<TFull, TPartial, TMapped>>>;
 
-const mapItem: Mapper<CollectionItem, INftItem> = (item) => {
-  const { tokenAddress, tokenId, collection, __typename, ...rest } = item;
+const mapItem: Mapper<Token, INftItem> = (item) => {
+  const { tokenAddress, tokenId, __typename, ...rest } = item;
 
   return filterUndefined({
     tokenId: tokenId && BigInt(tokenId.toString()),
     tokenAddress: tokenAddress && (tokenAddress.toString() as Address),
-    collection: collection && mapCollection(collection),
     ...rest,
   }) as any;
 };
 
 const mapTrade: Mapper<Trade, ITrade> = (trade) => {
-  const { id, givings, initiatorAddress, receivings, createdAt } = trade;
+  const {
+    id,
+    givings,
+    initiatorAddress,
+    receivings,
+    createdAt,
+    acceptedCounterOffer,
+    acceptedReceivingsOffer,
+    counterAgentAddress,
+    counterOffers,
+  } = trade;
 
   return filterUndefined({
     id: id && BigInt(id.toString()),
@@ -77,6 +88,14 @@ const mapTrade: Mapper<Trade, ITrade> = (trade) => {
       receivings &&
       receivings.filter(Boolean).map((r) => mapReceivingsOffer(r!)),
     createdAt,
+    counterOffers:
+      counterOffers &&
+      counterOffers.filter(Boolean).map((c) => mapCounterOffer(c!)),
+    acceptedCounterOffer:
+      acceptedCounterOffer && mapCounterOffer(acceptedCounterOffer),
+    acceptedReceivingsOffer:
+      acceptedReceivingsOffer && mapReceivingsOffer(acceptedReceivingsOffer),
+    counterAgentAddress: counterAgentAddress as Address,
   }) as any;
 };
 
@@ -100,14 +119,24 @@ const mapReceivingsOffer: Mapper<ReceivingsOffer, IReceivingsOffer> = (
   }) as any;
 };
 
-const mapGivingItem: Mapper<GivingsOfferItem, IGivingsItem> = (givingItem) => {
-  const { id, item, tokenAddress, tokenId, collection, offer } = givingItem;
+const mapCounterOffer: Mapper<CounterOffer, ICounterOffer> = (counterOffer) => {
+  const { createdAt, id, items, offererAddress, trade } = counterOffer;
   return filterUndefined({
     id: id && BigInt(id),
-    item: item && mapItem(item),
+    items: items && items.filter(Boolean).map((i) => mapCounterOfferItem(i!)),
+    trade: trade && mapTrade(trade),
+    offererAddress: offererAddress as Address,
+    createdAt,
+  }) as any;
+};
+
+const mapGivingItem: Mapper<GivingsOfferItem, IGivingsItem> = (givingItem) => {
+  const { id, metadata, tokenAddress, tokenId, offer } = givingItem;
+  return filterUndefined({
+    id: id && BigInt(id),
+    item: metadata && mapItem(metadata),
     tokenAddress: tokenAddress && (tokenAddress.toString() as Address),
     tokenId: tokenId && BigInt(tokenId.toString()),
-    collection: collection && mapCollection(collection),
     offer: offer && mapGivingsOffer(offer),
   }) as any;
 };
@@ -115,25 +144,26 @@ const mapGivingItem: Mapper<GivingsOfferItem, IGivingsItem> = (givingItem) => {
 const mapReceivingItem: Mapper<ReceivingsOfferItem, IReceivingsItem> = (
   receivingItem
 ) => {
-  const { id, item, tokenAddress, tokenId, collection, offer } = receivingItem;
+  const { id, metadata, tokenAddress, tokenId, offer } = receivingItem;
   return filterUndefined({
     id: id && BigInt(id),
-    item: item && mapItem(item),
+    item: metadata && mapItem(metadata),
     tokenAddress: tokenAddress && (tokenAddress.toString() as Address),
     tokenId: tokenId && BigInt(tokenId.toString()),
-    collection: collection && mapCollection(collection),
     offer: offer && mapReceivingsOffer(offer),
   }) as any;
 };
 
-const mapCollection: Mapper<Collection, INftCollection> = (collection) => {
-  const { __typename, tokenAddress, previewItems, ...rest } = collection;
+const mapCounterOfferItem: Mapper<CounterOfferItem, ICounterOfferItem> = (
+  givingItem
+) => {
+  const { id, metadata, tokenAddress, tokenId, offer } = givingItem;
   return filterUndefined({
+    id: id && BigInt(id),
+    item: metadata && mapItem(metadata),
     tokenAddress: tokenAddress && (tokenAddress.toString() as Address),
-    previewItems:
-      previewItems &&
-      previewItems.filter(Boolean).map((item) => mapItem(item!)),
-    ...rest,
+    tokenId: tokenId && BigInt(tokenId.toString()),
+    offer: offer && mapCounterOffer(offer),
   }) as any;
 };
 
@@ -145,11 +175,12 @@ const filterUndefined = <T extends Record<string, unknown>>(obj: T) => {
 };
 
 export {
-  mapCollection,
   mapItem,
   mapGivingsOffer,
   mapGivingItem,
   mapReceivingsOffer,
   mapReceivingItem,
-  mapTrade
+  mapCounterOffer,
+  mapCounterOfferItem,
+  mapTrade,
 };

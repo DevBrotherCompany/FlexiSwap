@@ -6,24 +6,23 @@ import { makeStyles } from "@mui/styles";
 
 import { INftItem } from "@/interfaces";
 
-import { FlexiInput } from "@/components/FlexiInput/FlexiInput";
 import { FlexiTitle } from "@/components/FlexiTitle/FlexiTitle";
 
 import { useAuth } from "@/hooks";
 import { RouteName } from "@/shared/routes";
 import { useAppDispatch, useAppSelector } from "@/storage/hooks";
 
+import { useGetMyItemsLazy } from "@/hooks/queries";
 import { useRouter } from "next/navigation";
-import { ChooseNfts } from "../components/ChooseNfts/ChooseNfts";
+import YourNfts from "../components/YourNft/YourNfts";
 import { YourSelection } from "../components/YourSelection/YourSelection";
 import {
   removeNftFromSelected,
   selectCreateTrade,
   selectNft,
 } from "./createTrade.slice";
-import { useGetMyItemsLazy } from "@/hooks/queries";
 
-export const MAX_SELECTED_NFTS = 10;
+const MAX_SELECTED_NFTS = 10;
 
 const useCreateTradeStyles = makeStyles(() => ({
   yourSelection: {
@@ -69,8 +68,6 @@ const CreateTrade: React.FC = () => {
       getMyItems({
         variables: {
           owner: account,
-          nextPage: 1,
-          tokenAddress: e.target.value,
         },
       });
     }
@@ -91,21 +88,16 @@ const CreateTrade: React.FC = () => {
         />
       </main>
       <main className={classes.chooseNft}>
-        <FlexiInput
+        {/* <FlexiInput
           placeholder={"Search by NFTs, collection name..."}
           onKeyDown={handleSearchPressed}
-        />
-        <ChooseNfts
+        /> */}
+        <YourNfts
           nfts={(data?.items as INftItem[]) ?? []}
           onClickNft={handleSelectNft}
           filterFrom={selectedNFTs}
           isShowAnyOfCollection={false}
         />
-        {!account && (
-          <h1 className="text-secondaryContrast">
-            Please connect wallet to choose your NFTs
-          </h1>
-        )}
       </main>
     </>
   );

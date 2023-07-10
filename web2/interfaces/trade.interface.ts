@@ -1,4 +1,4 @@
-import { INftCollection, INftItem } from "./nft.interface";
+import { INftItem } from "./nft.interface";
 
 export interface ITrade {
   id: bigint;
@@ -6,6 +6,10 @@ export interface ITrade {
   createdAt: number;
   givings: IGivingsOffer;
   receivings: IReceivingsOffer[];
+  counterOffers: ICounterOffer[];
+  acceptedReceivingOffer: IReceivingsOffer | null;
+  acceptedCounterOffer: ICounterOffer | null;
+  counterAgentAddress: Address | null;
 }
 
 export interface IGivingsOffer {
@@ -18,8 +22,15 @@ export interface IReceivingsOffer extends Omit<IGivingsOffer, "items"> {
   items: IReceivingsItem[];
 }
 
+export interface ICounterOffer {
+  id: bigint;
+  createdAt: number;
+  offererAddress: Address;
+  items: ICounterOfferItem[];
+  trade: ITrade;
+}
+
 export interface IGivingsItem {
-  collection: INftCollection;
   id: bigint;
   item: INftItem;
   offer: IGivingsOffer;
@@ -32,4 +43,8 @@ export interface IReceivingsItem
   offer: IReceivingsOffer;
   item: INftItem | null;
   tokenId: bigint | null;
+}
+
+export interface ICounterOfferItem extends Omit<IGivingsItem, "offer"> {
+  offer: ICounterOffer;
 }

@@ -1,0 +1,9 @@
+query SearchItems($searchString: String!) {
+  search(searchString: $searchString) {
+    tokenAddress
+    tokenId
+    description
+    name
+    file
+  }
+}

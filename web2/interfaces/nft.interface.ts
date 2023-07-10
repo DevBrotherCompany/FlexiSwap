@@ -9,7 +9,6 @@ export interface INftItem {
   name: string | null;
   description: string | null;
   file: string | null;
-  collection: INftCollection | null;
 }
 
 export interface IPreviewItem {
