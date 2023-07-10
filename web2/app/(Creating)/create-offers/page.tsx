@@ -2,9 +2,13 @@
 
 import { RouteName } from "@/shared/routes";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function OfferPage() {
   const router = useRouter();
 
-  return router.replace(`${RouteName.CreateOffers}/1`);
+  useEffect(() => {
+    router.replace(`${RouteName.CreateOffers}/1`);
+  }, [router]);
+  return <></>;
 }
