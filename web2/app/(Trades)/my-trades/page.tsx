@@ -14,7 +14,6 @@ import { TradesModal } from "../enums";
 const MyTrades: React.FC = () => {
   const { account } = useAuth();
   const { data: trades } = useGetMyTrades({ variables: { owner: account } });
-  console.log(trades);
   const [selectedNft, setSelectedNft] = useState<INftItem | null>(null);
 
   const { openModal, isModalOpened, closeModals } =

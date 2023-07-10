@@ -1,0 +1,51 @@
+query GetMyCounterOffers($first: Int, $skip: Int, $owner: Bytes!) {
+  trades(
+    first: $first
+    skip: $skip
+    where: { initiatorAddress: $owner, finishedAt: null }
+    orderBy: createdAt
+    orderDirection: desc
+  ) {
+    id
+    initiatorAddress
+    createdAt
+    givings {
+      items {
+        metadata {
+          tokenAddress
+          tokenId
+          name
+          description
+          file
+        }
+      }
+    }
+    receivings {
+      id
+      items {
+        metadata {
+          tokenAddress
+          tokenId
+          name
+          description
+          file
+        }
+      }
+    }
+    counterOffers {
+      id
+      createdAt
+      items {
+        metadata {
+          tokenAddress
+          tokenId
+          name
+          description
+          file
+        }
+      }
+      offererAddress
+    }
+    finishedAt
+  }
+}

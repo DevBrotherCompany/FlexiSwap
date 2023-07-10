@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useTradeListStyles } from "./TradeList.style";
 
 import {
@@ -11,23 +11,22 @@ import {
 
 import { FlexiButton } from "@/components/FlexiButton/FlexiButton";
 import {
-  ICounterOffer,
   IGivingsItem,
   INftCollection,
   INftItem,
-  IReceivingsOffer,
-  ITrade,
+  ITrade
 } from "@/interfaces";
 
 import { NftList } from "../NftList/NftList";
 import { TradeHeader } from "../TradeHeader/TradeHeader";
 
-import { FlexiSubtitle } from "@/components/FlexiSubtitle/FlexiSubtitle";
+import { useAuth } from "@/hooks";
 import { RouteName } from "@/shared/routes";
 import Link from "next/link";
+import CounterOffersExpandedListItems from "./CounterOffersExpandedListItems";
+import ReceivingsExpandedListItems from "./ReceivingsExpandedListItems";
 import { ArrowSvg } from "./arrowSvg";
 import { useCreatedDate, useHiddenDetailsTrades } from "./utils";
-import { useAuth } from "@/hooks";
 
 export interface TradeListItemProps {
   item: ITrade;
@@ -59,9 +58,6 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
   const creationDate = useCreatedDate(createdAt);
   const { account } = useAuth();
 
-  const offersToExpand =
-    variant === "onlyCounterOffers" ? item.counterOffers : item.receivings;
-
   const toggleExpand = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -69,22 +65,11 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
 
   const isManyOffersLabel = (count: number) => (
     <p>
-      {count} more offer
-      {count > 2 ? "s" : ""}
+      {count - 1} more offer
+      {count - 1 >= 2 ? "s" : ""}
       ...
     </p>
   );
-
-  const acceptReceivingOffer = useCallback(
-    async (offer: IReceivingsOffer) => {},
-    []
-  );
-
-  const acceptCounterOffer = useCallback(async (offer: ICounterOffer) => {},
-  []);
-
-  const onAcceptOffer =
-    variant === "onlyCounterOffers" ? acceptCounterOffer : acceptReceivingOffer;
 
   return (
     <Accordion
@@ -166,38 +151,47 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
               </Grid>
 
               <Grid item>
-                {offersToExpand.map((offer, idx) => (
-                  <div className={classes.expandedNftList}>
-                    <FlexiSubtitle>Offer #{idx + 1}</FlexiSubtitle>
-                    <NftList
-                      list={
-                        offer.items
-                          .map(({ item }) => item)
-                          .filter(Boolean) as INftItem[]
-                      }
-                      onClick={onClick}
-                      isExpanded={expanded}
-                    />
-                    {account && account?.toLocaleLowerCase() !== initiatorAddress && (
-                      <Grid container xs={4}>
-                        <FlexiButton>Accept Offer #{idx + 1}</FlexiButton>
-                      </Grid>
-                    )}
-                  </div>
-                ))}
+                {variant === "onlyCounterOffers"
+                  ? item.counterOffers.map(({ items, id }, idx) => (
+                      <CounterOffersExpandedListItems
+                        initiatorAddress={initiatorAddress}
+                        items={items.map(({ item }) => item).filter(Boolean)}
+                        subtitle={`Counter offer #${idx + 1}`}
+                        onNftClick={onClick}
+                        tradeId={item.id}
+                        id={id}
+                        key={`${id}`}
+                      />
+                    ))
+                  : item.receivings.map(({ items, id }, idx) => (
+                      <ReceivingsExpandedListItems
+                        initiatorAddress={initiatorAddress}
+                        items={
+                          items
+                            .map(({ item }) => item)
+                            .filter(Boolean) as INftItem[]
+                        }
+                        subtitle={`Offer #${idx + 1}`}
+                        onNftClick={onClick}
+                        tradeId={item.id}
+                        id={id}
+                        key={`${id}`}
+                      />
+                    ))}
               </Grid>
               <Grid container gap={"10px"}>
-                {account && account?.toLowerCase() !== item.initiatorAddress && (
-                  <Grid item>
-                    <Link
-                      href={`${
-                        RouteName.CreateCounterOffer
-                      }/${item.id.toString()}`}
-                    >
-                      <FlexiButton>Create counteroffer</FlexiButton>
-                    </Link>
-                  </Grid>
-                )}
+                {account &&
+                  account?.toLowerCase() !== item.initiatorAddress && (
+                    <Grid item>
+                      <Link
+                        href={`${
+                          RouteName.CreateCounterOffer
+                        }/${item.id.toString()}`}
+                      >
+                        <FlexiButton>Create counteroffer</FlexiButton>
+                      </Link>
+                    </Grid>
+                  )}
 
                 <Grid item xs={3}>
                   <FlexiButton onClick={toggleExpand} variant={"outlined"}>
