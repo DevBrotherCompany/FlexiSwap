@@ -6,6 +6,7 @@ import { RouteName } from "@/shared/routes";
 import Link from "next/link";
 import Content from "./components/Content/Content";
 import { SidebarList } from "./components/SidebarList/SidebarList";
+import CreateTradeLink from "./components/CreateTradeLink/CreateTradeLink";
 
 interface TradesLayoutProps {
   children: React.ReactNode;
@@ -22,9 +23,7 @@ export default function TradesLayout({ children }: TradesLayoutProps) {
   return (
     <main>
       <Sidebar>
-        <Link href={RouteName.CreateTrade}>
-          <FlexiButton>Create trade</FlexiButton>
-        </Link>
+        <CreateTradeLink />
         <FlexiSubtitle className={classes.subtitle}>Marketplace</FlexiSubtitle>
         <SidebarList />
         <ConnectWallet />

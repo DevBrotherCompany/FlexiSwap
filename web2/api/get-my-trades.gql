@@ -1,5 +1,5 @@
 query GetMyTrades($first: Int, $skip: Int, $owner: Bytes!) {
-  trades(first: $first, skip: $skip, where: { initiatorAddress: $owner }) {
+  trades(first: $first, skip: $skip, where: { initiatorAddress: $owner }, orderBy: createdAt, orderDirection: desc) {
     id
     initiatorAddress
     createdAt

@@ -178,7 +178,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
                       onClick={onClick}
                       isExpanded={expanded}
                     />
-                    {account?.toLocaleLowerCase() !== initiatorAddress && (
+                    {account && account?.toLocaleLowerCase() !== initiatorAddress && (
                       <Grid container xs={4}>
                         <FlexiButton>Accept Offer #{idx + 1}</FlexiButton>
                       </Grid>
@@ -187,7 +187,7 @@ export const TradeListItem: React.FC<TradeListItemProps> = ({
                 ))}
               </Grid>
               <Grid container gap={"10px"}>
-                {account?.toLowerCase() !== item.initiatorAddress && (
+                {account && account?.toLowerCase() !== item.initiatorAddress && (
                   <Grid item>
                     <Link
                       href={`${
