@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 export class FlexiSwapWithNotifications implements IFlexiSwap {
   constructor(private readonly flexiSwap: IFlexiSwap) {}
-  
+
   createTrade(givings: Item[], receivings: NullableItem[][]): Promise<void> {
     return toast.promise(this.flexiSwap.createTrade(givings, receivings), {
       pending: "Creating trade",
@@ -35,8 +35,8 @@ export class FlexiSwapWithNotifications implements IFlexiSwap {
   createCounterOffer(tradeId: bigint, items: Item[]): Promise<void> {
     return toast.promise(this.flexiSwap.createCounterOffer(tradeId, items), {
       pending: "Creating counteroffer",
-      error: "Error while creating counteeroffer",
-      success: "Counter offer successfully created",
+      error: "Error while creating counteroffer",
+      success: "Counteroffer successfully created",
     });
   }
   acceptCounterOffer(tradeId: bigint, counterOfferId: bigint): Promise<void> {
@@ -45,7 +45,7 @@ export class FlexiSwapWithNotifications implements IFlexiSwap {
       {
         pending: "Accepting counteroffer",
         error: "Error while accepting counteroffer",
-        success: "Counteroffer successfully created",
+        success: "Counteroffer successfully accepted",
       }
     );
   }
