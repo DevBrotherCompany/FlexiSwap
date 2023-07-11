@@ -1,8 +1,9 @@
+import { IFlexiSwap } from "./IFlexiSwap";
 import { Approver } from "./approver";
 import { FlexiSwapAdapter } from "./contracts/flexi-swap-adapter";
 import { Item, ItemInfo, NullableItem } from "./types";
 
-export class FlexiSwap {
+export class FlexiSwap implements IFlexiSwap {
   constructor(
     private readonly flexiSwapAdapter: FlexiSwapAdapter,
     private readonly approver: Approver
