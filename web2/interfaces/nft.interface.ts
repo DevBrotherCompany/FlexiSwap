@@ -11,6 +11,10 @@ export interface INftItem {
   file: string | null;
 }
 
+export interface INullableItem extends Omit<INftItem, "tokenId"> {
+  tokenId: bigint | null;
+}
+
 export interface IPreviewItem {
   file: string | null;
 }

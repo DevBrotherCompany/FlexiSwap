@@ -129,6 +129,10 @@ export const mocked_counteroffer_items: ICounterOfferItem[] = [
   },
 ] as ICounterOfferItem[];
 
+export const mocked_collection = {
+  previewItems: getRandomNFTItems(10),
+};
+
 export function getRandomNFTItems(len: number) {
   const used: number[] = [];
   const res: INftItem[] = [];

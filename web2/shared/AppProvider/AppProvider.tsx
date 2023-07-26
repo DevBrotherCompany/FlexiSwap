@@ -8,6 +8,7 @@ import { store } from "@/storage/store";
 import { ThemeProvider } from "@mui/material";
 import { darkTheme } from "@/styles/theme";
 import ToastProvider from "../ToastProvider/ToastProvider";
+import ContextMenuProvider from "../ContextMenuProvider/ContextMenuProvider";
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -19,7 +20,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       <ApolloProvider client={apolloClient}>
         <ThemeProvider theme={darkTheme}>
           <Web3Connector>
-            <ToastProvider>{children}</ToastProvider>
+            <ToastProvider>
+              <ContextMenuProvider theme="dark">{children}</ContextMenuProvider>
+            </ToastProvider>
           </Web3Connector>
         </ThemeProvider>
       </ApolloProvider>

@@ -78,7 +78,6 @@ const CreateCounterOfferPage: React.FC = () => {
           nfts={data?.items ?? []}
           onClickNft={handleSelectNft}
           filterFrom={selectedNFTs}
-          isShowAnyOfCollection={false}
         />
       </main>
     </>

@@ -12,7 +12,7 @@ export interface ChooseNftsProps {
   onClickNft?: (item: INftItem) => void
   filterFrom?: INftItem[]
   title?: string
-  isShowAnyOfCollection?: boolean
+  onAnyOfCollectionClick?: (tokenId: Address) => void
 }
 
 export const ChooseNfts: React.FC<ChooseNftsProps> = ({ nfts, filterFrom, title = 'Your NFTs', ...props }) => {

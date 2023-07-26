@@ -4,13 +4,14 @@ import { INftItem } from "@/interfaces";
 import { FlexiButton } from "@/components/FlexiButton/FlexiButton";
 
 import { SectionTitle } from "../Text/SectionTitle";
-import { YourSelectionList } from "../YourSelectionList/YourSelectionList";
+import {
+  YourSelectionList,
+  YourSelectionListProps,
+} from "../YourSelectionList/YourSelectionList";
 import { Limit } from "../Text/Limit";
 
-interface YourSelectionProps {
-  selected: INftItem[];
+interface YourSelectionProps extends YourSelectionListProps {
   onBtnClick?: () => void;
-  onClickNft?: (item: INftItem) => void;
   labelBtn?: string;
   disabledBtn?: boolean;
 }
@@ -18,20 +19,26 @@ interface YourSelectionProps {
 export const YourSelection: React.FC<YourSelectionProps> = ({
   selected,
   onClickNft,
+  onCollectionClick,
   onBtnClick,
   labelBtn = "Create offers",
   disabledBtn = false,
 }) => {
   const classes = useYourSelectionStyles();
-  const areNftsSelected = selected.length > 0;
+  const selectedLength = selected.length;
+  const areNftsSelected = selectedLength > 0;
 
   return (
     <>
       <section className={classes.container}>
         <SectionTitle>Your selection</SectionTitle>
-        <YourSelectionList onClickNft={onClickNft} selected={selected} />
+        <YourSelectionList
+          onClickNft={onClickNft}
+          onCollectionClick={onCollectionClick}
+          selected={selected}
+        />
       </section>
-      <Limit>{selected.length} of 10 NFTs selected</Limit>
+      <Limit>{selectedLength} of 10 NFTs selected</Limit>
       <div className={classes.btnContainer}>
         <FlexiButton
           onClick={onBtnClick}

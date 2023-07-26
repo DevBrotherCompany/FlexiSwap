@@ -1,7 +1,7 @@
 import { useImageStyles } from "./Image.style";
 import cn from "classnames";
 
-import DefaultImage from "@/public/assets/images/img.png";
+import DefaultImage from "@/public/assets/images/placeholder.png";
 import { useCallback } from "react";
 
 interface ImageProps {

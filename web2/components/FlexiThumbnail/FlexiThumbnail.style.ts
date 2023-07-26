@@ -1,11 +1,7 @@
 import { makeStyles } from "@mui/styles";
-import { FlexiNftStyle } from "./FlexiNft";
+import { FlexiThumbnailStyle } from "./FlexiThumbnail";
 
-export const useFlexiNftStyles = makeStyles(() => ({
-  img: {
-    width: ({ width, height }: FlexiNftStyle) => width ?? height ?? 100,
-    height: ({ width, height }: FlexiNftStyle) => height ?? width ?? 100,
-  },
+export const useFlexiThumbnailStyles = makeStyles(() => ({
   clickable: {
     cursor: "pointer",
     transition: ".5s all",
@@ -41,5 +37,35 @@ export const useFlexiNftStyles = makeStyles(() => ({
     justifyContent: "flex-end",
     paddingRight: "5px",
     paddingTop: "2px",
+  },
+  imagesContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: ({ width, height }: FlexiThumbnailStyle) => width ?? height ?? 100,
+    height: ({ width, height }: FlexiThumbnailStyle) => height ?? width ?? 100,
+  },
+  imageWrapper: {
+    boxSizing: "border-box",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  halfWidth: {
+    width: "50%",
+  },
+  halfHeight: {
+    height: "50%",
+  },
+  fullWidth: {
+    width: "100%",
+  },
+  fullSize: {
+    width: "100%",
+    height: "100%",
+  },
+  column: {
+    flexDirection: "column",
   },
 }));

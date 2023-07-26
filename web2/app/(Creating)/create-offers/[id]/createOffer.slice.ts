@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { INftItem } from "@/interfaces";
+import { NullableItem } from "@/sdk/types";
 import { RootState } from "@/storage/store";
+import { INullableItem } from "@/interfaces";
 
 interface CreateOfferData {
   id: number;
-  selected: INftItem[];
+  items: INullableItem[]; //INftItem[];
 }
 
 interface CreateOfferSliceState {
@@ -13,7 +14,7 @@ interface CreateOfferSliceState {
 }
 
 interface IAddToOffer {
-  item: INftItem;
+  item: INullableItem;
   id: number;
 }
 
@@ -36,16 +37,28 @@ const createOfferSlice = createSlice({
       if (!offer) {
         state.offers.push({
           id: action.payload.id,
-          selected: [action.payload.item],
+          items: [action.payload.item],
         });
       }
-      offer?.selected.push(action.payload.item);
+      offer?.items.push(action.payload.item);
     },
     removeNftFromOffer(state, action: PayloadAction<IAddToOffer>) {
       const offer = state.offers.find(({ id }) => id === action.payload.id);
       if (offer) {
-        offer.selected = offer.selected.filter(
-          (s) => s.tokenId !== action.payload.item.tokenId
+        offer.items = offer.items.filter(
+          (s) =>
+            !(
+              s.tokenId === action.payload.item.tokenId &&
+              s.tokenAddress === action.payload.item.tokenAddress
+            )
+        );
+      }
+    },
+    removeCollectionFromOffer(state, action: PayloadAction<IAddToOffer>) {
+      const offer = state.offers.find(({ id }) => id === action.payload.id);
+      if (offer) {
+        offer.items = offer.items.filter(
+          (s) => s.tokenAddress !== action.payload.item.tokenAddress
         );
       }
     },
@@ -60,6 +73,7 @@ export const {
   removeOffer,
   addNftForOffer,
   removeNftFromOffer,
+  removeCollectionFromOffer,
   clearOffers,
 } = createOfferSlice.actions;
 export const createOfferReducer = createOfferSlice.reducer;

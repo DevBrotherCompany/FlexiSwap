@@ -17,6 +17,7 @@ import { useSearchItemsLazy } from "@/hooks/queries";
 import { useParams, useRouter } from "next/navigation";
 import {
   addNftForOffer,
+  removeCollectionFromOffer,
   removeNftFromOffer,
   selectCreateOffer,
 } from "./createOffer.slice";
@@ -35,6 +36,8 @@ const useCreateOffersStyles = makeStyles(() => ({
   },
 }));
 
+const MAX_SELECTED_NFTS = 10;
+
 const CreateOffers: React.FC = () => {
   const classes = useCreateOffersStyles();
 
@@ -47,17 +50,58 @@ const CreateOffers: React.FC = () => {
 
   const currentOffer = offers.find((o) => o.id === Number(id));
 
+  const ifCanAddNewItem = () => {
+    // const itemsLength = currentOffer?.items.length ?? 0;
+    // const anyOfCollectionLength = currentOffer?.anyOfCollections.length ?? 0;
+    // const currentOfferLength = itemsLength + anyOfCollectionLength;
+    const currentOfferLength = currentOffer?.items.length ?? 0;
+    return !currentOfferLength || currentOfferLength < MAX_SELECTED_NFTS;
+  };
+
   const handleAddNftToOffer = (item: INftItem) => {
-    dispatch(
-      addNftForOffer({
-        item,
-        id: Number(id),
-      })
-    );
+    if (ifCanAddNewItem())
+      dispatch(
+        addNftForOffer({
+          item: { ...item },
+          id: Number(id),
+        })
+      );
+  };
+
+  const handleAddCollectionToOffer = (tokenAddress: Address) => {
+    if (ifCanAddNewItem()) {
+      dispatch(
+        addNftForOffer({
+          id: Number(id),
+          item: {
+            tokenAddress,
+            file: null,
+            tokenId: null,
+            description: null,
+            name: null,
+          },
+        })
+      );
+    }
   };
 
   const handleRemoveNft = (item: INftItem) => {
     dispatch(removeNftFromOffer({ id: Number(id), item }));
+  };
+
+  const handleRemoveCollection = (tokenAddress: Address) => {
+    dispatch(
+      removeCollectionFromOffer({
+        id: Number(id),
+        item: {
+          tokenAddress,
+          file: null,
+          tokenId: null,
+          description: null,
+          name: null,
+        },
+      })
+    );
   };
 
   const handleAddOffer = () => {
@@ -79,9 +123,10 @@ const CreateOffers: React.FC = () => {
       <main className={classes.yourSelection}>
         <FlexiTitle className={classes.title}>Select NFTs for offer</FlexiTitle>
         <YourSelection
-          selected={currentOffer?.selected ?? []}
+          selected={currentOffer?.items ?? []}
           onClickNft={handleRemoveNft}
           onBtnClick={handleAddOffer}
+          onCollectionClick={handleRemoveCollection}
           labelBtn={"Add offer"}
           //disabledBtn={offers.length > 6}
         />
@@ -97,7 +142,8 @@ const CreateOffers: React.FC = () => {
           nfts={data?.searchItems.items ?? []}
           title={"All NFTs"}
           onClickNft={handleAddNftToOffer}
-          filterFrom={currentOffer?.selected}
+          onAnyOfCollectionClick={handleAddCollectionToOffer}
+          //filterFrom={currentOffer?.items}
         />
       </main>
     </>

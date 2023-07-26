@@ -96,7 +96,6 @@ const CreateTrade: React.FC = () => {
           nfts={(data?.items as INftItem[]) ?? []}
           onClickNft={handleSelectNft}
           filterFrom={selectedNFTs}
-          isShowAnyOfCollection={false}
         />
       </main>
     </>

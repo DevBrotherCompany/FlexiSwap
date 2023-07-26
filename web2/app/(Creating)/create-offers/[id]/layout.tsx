@@ -75,7 +75,7 @@ export default function OffersLayout({ children }: OfferLayoutProps) {
   const handleCreateOffer = async () => {
     if (!flexiSwap) return;
 
-    const receivings = offers.map((o) => o.selected);
+    const receivings = offers.map((o) => o.items);
     try {
       await flexiSwap.createTrade(selectedNFTs, receivings);
     } catch (e) {
